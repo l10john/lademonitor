@@ -187,22 +187,25 @@ tr.overview-row.active td{background:#f0f8f0;}
       <button onclick="toggleExportMenu()" id="exportMenuBtn" style="background:#dde8e0;color:#3a6b52;border:1px solid #b8d4c2;padding:5px 13px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:-.01em">
         📤 Exportieren ▾
       </button>
-      <div id="exportMenu" style="display: none; position: absolute; right: 0px; top: calc(100% + 6px); background: rgb(255, 255, 255); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 16px; min-width: 190px; z-index: 999; overflow: hidden;">
-        <button onclick="exportXLSX();toggleExportMenu()" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 9px 14px; border: none; background: none; font-size: 12px; cursor: pointer; color: rgb(29, 111, 66); text-align: left;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='none'">
+      <div id="exportMenu" style="display:none;position:absolute;right:0;top:calc(100% + 6px);background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 4px 16px rgba(0,0,0,0.08);min-width:190px;z-index:999;overflow:hidden">
+        <button onclick="exportXLSX();toggleExportMenu()" style="display:flex;align-items:center;gap:8px;width:100%;padding:9px 14px;border:none;background:none;font-size:12px;cursor:pointer;color:#1d6f42;text-align:left" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='none'">
           <svg viewBox="0 0 24 24" style="width:13px;height:13px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
           Excel (.xlsx)
         </button>
         <div style="height:1px;background:var(--border);margin:0 10px"></div>
-        <button onclick="exportCSV('home');toggleExportMenu()" style="display: block; width: 100%; padding: 9px 14px; border: none; background: none; font-size: 12px; cursor: pointer; color: rgb(17, 17, 17); text-align: left;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='none'">⚡ Wallbox (.csv)</button>
-        <button onclick="exportCSV('public');toggleExportMenu()" style="display: block; width: 100%; padding: 9px 14px; border: none; background: none; font-size: 12px; cursor: pointer; color: rgb(17, 17, 17); text-align: left;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='none'">🔌 Öffentlich (.csv)</button>
+        <button onclick="exportCSV('home');toggleExportMenu()" style="display:block;width:100%;padding:9px 14px;border:none;background:none;font-size:12px;cursor:pointer;color:#111;text-align:left" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='none'">⚡ Wallbox (.csv)</button>
+        <button onclick="exportCSV('public');toggleExportMenu()" style="display:block;width:100%;padding:9px 14px;border:none;background:none;font-size:12px;cursor:pointer;color:#111;text-align:left" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='none'">🔌 Öffentlich (.csv)</button>
         <div style="height:1px;background:var(--border);margin:0 10px"></div>
-        <button onclick="exportHTML();toggleExportMenu()" style="display: block; width: 100%; padding: 9px 14px; border: none; background: none; font-size: 12px; cursor: pointer; color: rgb(17, 17, 17); text-align: left;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='none'">💾 Snapshot speichern</button>
-        <button onclick="exportHTMLReset();toggleExportMenu()" style="display: block; width: 100%; padding: 9px 14px; border: none; background: none; font-size: 12px; cursor: pointer; color: rgb(17, 17, 17); text-align: left;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='none'">✨ Neu starten (leer)</button>
+        <button onclick="exportHTML();toggleExportMenu()" style="display:block;width:100%;padding:9px 14px;border:none;background:none;font-size:12px;cursor:pointer;color:#111;text-align:left" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='none'">💾 Snapshot speichern</button>
+        <button onclick="exportHTMLReset();toggleExportMenu()" style="display:block;width:100%;padding:9px 14px;border:none;background:none;font-size:12px;cursor:pointer;color:#111;text-align:left" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='none'">✨ Neu starten (leer)</button>
       </div>
     </div>
     <button id="ghPublishBtn" onclick="publishToGithub()" style="display: inline-block; background: rgb(29, 158, 117); color: rgb(255, 255, 255); border: none; padding: 5px 14px; border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer; letter-spacing: -0.01em;">🚀 Veröffentlichen</button>
   </div>
 </div>
+
+<!-- PUBLISH TOAST -->
+<div id="publishToast" style="display: block; padding: 0.6rem 1rem; border-radius: var(--radius); font-size: 12px; margin-bottom: 0.75rem; border: 1px solid rgb(232, 232, 232); transition: 0.2s; color: rgb(68, 68, 68); background: rgb(245, 245, 245);">Snapshot wird erstellt...</div>
 
 <!-- HERO -->
 <div class="hero" id="heroArea" style="display: none;">
@@ -3567,8 +3570,21 @@ async function publishToGithub(){
 }
 
 function setGhStatus(msg,color){
+  // Status im Accordion (falls offen)
   const el=document.getElementById('ghStatus');
   if(el){el.innerHTML=msg;el.style.color=color;}
+  // Toast oben immer sichtbar
+  const toast=document.getElementById('publishToast');
+  if(!toast) return;
+  const isSuccess=color==='var(--green)'||color==='#1D9E75';
+  const isError=color==='#e53935';
+  toast.innerHTML=msg;
+  toast.style.display='block';
+  toast.style.color=isSuccess?'#0F6E56':isError?'#A32D2D':'#444';
+  toast.style.background=isSuccess?'#e1f5ee':isError?'#fcebeb':'#f5f5f5';
+  toast.style.borderColor=isSuccess?'#9FE1CB':isError?'#F7C1C1':'#e8e8e8';
+  // Erfolgs-Toast nach 6s automatisch ausblenden
+  if(isSuccess) setTimeout(()=>{toast.style.display='none';},6000);
 }
 
 function exportHTML(){
