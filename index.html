@@ -207,7 +207,7 @@ tr.overview-row.active td{background:#f0f8f0;}
 </div>
 
 <!-- PUBLISH TOAST -->
-<div id="publishToast" style="display: block; padding: 0.6rem 1rem; border-radius: var(--radius); font-size: 12px; margin-bottom: 0.75rem; border: 1px solid rgb(232, 232, 232); transition: 0.2s; color: rgb(68, 68, 68); background: rgb(245, 245, 245);">Snapshot wird erstellt...</div>
+<div id="publishToast" style="display:none;padding:.6rem 1rem;border-radius:var(--radius);font-size:12px;margin-bottom:.75rem;border:1px solid transparent;transition:all .2s"></div>
 
 <!-- HERO -->
 <div class="hero" id="heroArea" style="display: none;">
@@ -297,7 +297,7 @@ tr.overview-row.active td{background:#f0f8f0;}
       </div>
       <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
         <button onclick="saveGhSettings()" style="background:#111;color:#fff;border:none;padding:6px 16px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer">Einstellungen speichern</button>
-        <span id="ghStatus" style="font-size:12px;color:var(--muted)">Snapshot wird erstellt...</span>
+        <span id="ghStatus" style="font-size:12px;color:var(--muted)"></span>
       </div>
       <p style="font-size:11px;color:#bbb;margin-top:.5rem;margin-bottom:0">Token wird nur lokal gespeichert · URL: <span id="ghUrl"><a href="https://l10john.github.io/lademonitor" target="_blank" style="color:var(--blue)">https://l10john.github.io/lademonitor</a></span></p>
     </div>
@@ -3519,13 +3519,15 @@ function loadGhSettings(){
 
 async function publishToGithub(){
   const s=JSON.parse(localStorage.getItem('gh_settings')||'{}');
-  const user=(document.getElementById('ghUser').value.trim()||s.user||'').trim();
-  const repo=(document.getElementById('ghRepo').value.trim()||s.repo||'').trim();
-  const token=(document.getElementById('ghToken').value.trim()||s.token||'').trim();
-  if(!user||!repo||!token){setGhStatus('Bitte zuerst Einstellungen speichern.','#e53935');return;}
+  const user=(document.getElementById('ghUser')?.value.trim()||s.user||'').trim();
+  const repo=(document.getElementById('ghRepo')?.value.trim()||s.repo||'').trim();
+  const token=(document.getElementById('ghToken')?.value.trim()||s.token||'').trim();
+  if(!user||!repo||!token){
+    setGhStatus('Bitte zuerst GitHub-Einstellungen unter "Einstellungen & Dateien" speichern.','#e53935');
+    return;
+  }
 
-  setGhStatus('Snapshot wird erstellt...','var(--muted)');
-
+  // Snapshot generieren
   const gp=document.getElementById('gp').value;
   const fp=document.getElementById('fp').value;
   const snap={
@@ -3541,7 +3543,6 @@ async function publishToGithub(){
     pubFees:pubFees.map(f=>({...f})),
     loadedFiles,gp,fp
   };
-
   const html=document.documentElement.outerHTML;
   const marker='const HISTORIC_DATA = ';
   const start=html.indexOf(marker);
@@ -3550,20 +3551,19 @@ async function publishToGithub(){
   const newHTML=html.slice(0,start)+marker+JSON.stringify(snap)+html.slice(end);
   const content=btoa(unescape(encodeURIComponent(newHTML)));
 
-  setGhStatus('Verbinde mit GitHub...','var(--muted)');
+  setGhStatus('⏳ Wird hochgeladen...','var(--muted)');
   try{
     const apiBase=`https://api.github.com/repos/${user}/${repo}/contents/index.html`;
     const headers={'Authorization':`token ${token}`,'Content-Type':'application/json'};
     let sha=null;
     const check=await fetch(apiBase,{headers});
     if(check.ok){const j=await check.json();sha=j.sha;}
-    setGhStatus('Wird hochgeladen...','var(--muted)');
     const body={message:`Lademonitor Update ${new Date().toLocaleDateString('de-DE')}`,content};
     if(sha) body.sha=sha;
     const res=await fetch(apiBase,{method:'PUT',headers,body:JSON.stringify(body)});
     if(res.ok){
       const url=`https://${user}.github.io/${repo}`;
-      setGhStatus(`✓ Veröffentlicht! Erreichbar unter <a href="${url}" target="_blank" style="color:var(--blue)">${url}</a> (ca. 30s)`, 'var(--green)');
+      setGhStatus(`✓ Veröffentlicht! Erreichbar unter <a href="${url}" target="_blank" style="color:var(--blue)">${url}</a> (ca. 30s)`,'var(--green)');
     } else {
       const err=await res.json();
       setGhStatus(`Fehler: ${err.message||res.status}`,'#e53935');
