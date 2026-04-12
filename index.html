@@ -182,7 +182,25 @@ tr.overview-row.active td{background:#f0f8f0;}
   <div class="nav-right">
     <span id="storageBadge" style="display: inline; font-size: 11px; color: var(--muted); background: rgb(245, 245, 245); padding: 3px 10px; border-radius: 999px; cursor: pointer;" onclick="clearStorage()">💾 98 Heim + 18 öffentl. Sessions · gespeichert vor heute</span>
     <span id="intervalBadge"></span>
-    <div class="nav-badge">100% lokal · Kein Login</div>
+    <!-- EXPORT DROPDOWN -->
+    <div style="position:relative;display:inline-block">
+      <button onclick="toggleExportMenu()" id="exportMenuBtn" style="background:#dde8e0;color:#3a6b52;border:1px solid #b8d4c2;padding:5px 13px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:-.01em">
+        📤 Exportieren ▾
+      </button>
+      <div id="exportMenu" style="display: none; position: absolute; right: 0px; top: calc(100% + 6px); background: rgb(255, 255, 255); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 16px; min-width: 190px; z-index: 999; overflow: hidden;">
+        <button onclick="exportXLSX();toggleExportMenu()" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 9px 14px; border: none; background: none; font-size: 12px; cursor: pointer; color: rgb(29, 111, 66); text-align: left;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='none'">
+          <svg viewBox="0 0 24 24" style="width:13px;height:13px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          Excel (.xlsx)
+        </button>
+        <div style="height:1px;background:var(--border);margin:0 10px"></div>
+        <button onclick="exportCSV('home');toggleExportMenu()" style="display: block; width: 100%; padding: 9px 14px; border: none; background: none; font-size: 12px; cursor: pointer; color: rgb(17, 17, 17); text-align: left;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='none'">⚡ Wallbox (.csv)</button>
+        <button onclick="exportCSV('public');toggleExportMenu()" style="display: block; width: 100%; padding: 9px 14px; border: none; background: none; font-size: 12px; cursor: pointer; color: rgb(17, 17, 17); text-align: left;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='none'">🔌 Öffentlich (.csv)</button>
+        <div style="height:1px;background:var(--border);margin:0 10px"></div>
+        <button onclick="exportHTML();toggleExportMenu()" style="display: block; width: 100%; padding: 9px 14px; border: none; background: none; font-size: 12px; cursor: pointer; color: rgb(17, 17, 17); text-align: left;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='none'">💾 Snapshot speichern</button>
+        <button onclick="exportHTMLReset();toggleExportMenu()" style="display: block; width: 100%; padding: 9px 14px; border: none; background: none; font-size: 12px; cursor: pointer; color: rgb(17, 17, 17); text-align: left;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='none'">✨ Neu starten (leer)</button>
+      </div>
+    </div>
+    <button id="ghPublishBtn" onclick="publishToGithub()" style="display: inline-block; background: rgb(29, 158, 117); color: rgb(255, 255, 255); border: none; padding: 5px 14px; border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer; letter-spacing: -0.01em;">🚀 Veröffentlichen</button>
   </div>
 </div>
 
@@ -242,7 +260,7 @@ tr.overview-row.active td{background:#f0f8f0;}
     <span style="font-size:12px;color:var(--muted)">Einstellungen &amp; Dateien</span>
     <span id="cfgSummary" style="font-size:11px;color:#bbb;margin-left:4px">Strompreis 43.5 ct/kWh · Einspeisung 11.35 ct/kWh · 18 Dateien</span>
   </div>
-  <div id="cfgBody" style="display: none; padding-top: 0.875rem;">
+  <div id="cfgBody" style="display:none;padding-top:.875rem">
     <!-- SETTINGS -->
     <div class="cfg-bar" id="cfg">
       <div class="cfg-field"><label>Strompreis</label></div>
@@ -255,6 +273,29 @@ tr.overview-row.active td{background:#f0f8f0;}
     </div>
     <!-- FILES -->
     <div class="files-row" id="flist" style="display: flex;"><span class="file-chip-csv">1775860140-1775935740</span><span class="file-chip-csv">917422-1767222000-1769900400</span><span class="file-chip-csv">917422-1769900400-1772319600</span><span class="file-chip-csv">917422-1772319600-1774994400</span><span class="file-chip-csv">917422-0426---sensors-category_powers-energies-1774994400-1775747880</span><span class="file-chip-csv">917422-manuell</span><span class="file-chip-csv">917422-1759269600-1761951600</span><span class="file-chip-csv">917422-1761951600-1764543600</span><span class="file-chip-csv">917422-1764543600-1767222000</span><span class="file-chip-pdf">Rechnung DE 0126-page-2</span><span class="file-chip-pdf">Rechnung DE 0226-page-2</span><span class="file-chip-pdf">Rechnung DE 0326-page-2</span><span class="file-chip-pdf">Rechnung DE 0825-page-2</span><span class="file-chip-pdf">Rechnung DE 0925-page-2</span><span class="file-chip-pdf">Rechnung DE 1025-1-page-2</span><span class="file-chip-pdf">Rechnung DE 1025-2-page-2</span><span class="file-chip-pdf">Rechnung DE 1125-page-2</span><span class="file-chip-pdf">Rechnung DE 1225-page-2</span><span class="add-more">· <label style="color:#555;cursor:pointer;text-decoration:underline" onclick="document.getElementById('fi2').click()">weitere Dateien hinzufügen</label><input type="file" id="fi2" accept=".csv,.txt,.pdf" multiple="" style="display:none"></span></div>
+    <!-- GITHUB SETTINGS -->
+    <div style="margin-top:.875rem;padding-top:.875rem;border-top:1px solid var(--border)">
+      <p class="section-title" style="margin-bottom:.6rem">GitHub Pages – Einstellungen</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin-bottom:.6rem">
+        <div>
+          <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">GitHub Username</label>
+          <input type="text" id="ghUser" placeholder="l10john" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Repository Name</label>
+          <input type="text" id="ghRepo" placeholder="lademonitor" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Personal Access Token</label>
+          <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px">
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
+        <button onclick="saveGhSettings()" style="background:#111;color:#fff;border:none;padding:6px 16px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer">Einstellungen speichern</button>
+        <span id="ghStatus" style="font-size:12px;color:var(--muted)">Snapshot wird erstellt...</span>
+      </div>
+      <p style="font-size:11px;color:#bbb;margin-top:.5rem;margin-bottom:0">Token wird nur lokal gespeichert · URL: <span id="ghUrl"><a href="https://l10john.github.io/lademonitor" target="_blank" style="color:var(--blue)">https://l10john.github.io/lademonitor</a></span></p>
+    </div>
   </div>
 </div>
 
@@ -294,50 +335,6 @@ tr.overview-row.active td{background:#f0f8f0;}
 
   <!-- WARN -->
   <div id="coarseWarning" style="display:none" class="warn-box"></div>
-
-  <!-- EXPORT -->
-  <div class="export-bar">
-    <span class="export-label">Exportieren:</span>
-    <button class="export-btn xlsx" onclick="exportXLSX()">
-      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>Excel (.xlsx)
-    </button>
-    <div class="export-sep"></div>
-    <button class="export-btn" onclick="exportCSV('home')">Wallbox (.csv)</button>
-    <button class="export-btn" onclick="exportCSV('public')">Öffentlich (.csv)</button>
-    <div class="export-sep"></div>
-    <button class="export-btn" onclick="exportHTML()" title="Aktuelle Sessions fest ins HTML einbetten">💾 Snapshot speichern</button>
-    <button class="export-btn" onclick="exportHTMLReset()" title="HTML ohne Historie">✨ Neu starten (leer)</button>
-    <div class="export-sep"></div>
-    <button class="export-btn" onclick="showGithubSettings()" id="ghBtn" title="Auf GitHub Pages veröffentlichen">🚀 Veröffentlichen</button>
-  </div>
-
-  <!-- GITHUB SETTINGS PANEL -->
-  <div id="ghPanel" style="display: block; background: rgb(250, 250, 250); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 1.25rem;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem">
-      <p class="section-title" style="margin:0">GitHub Pages – Einstellungen</p>
-      <button onclick="document.getElementById('ghPanel').style.display='none'" style="background:none;border:none;cursor:pointer;color:#bbb;font-size:18px;line-height:1">✕</button>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;margin-bottom:.875rem">
-      <div>
-        <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">GitHub Username</label>
-        <input type="text" id="ghUser" placeholder="l10john" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px">
-      </div>
-      <div>
-        <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Repository Name</label>
-        <input type="text" id="ghRepo" placeholder="lademonitor" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px">
-      </div>
-      <div>
-        <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Personal Access Token</label>
-        <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px">
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
-      <button onclick="saveGhSettings()" style="background:#111;color:#fff;border:none;padding:7px 18px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer">Einstellungen speichern</button>
-      <button onclick="publishToGithub()" style="background:#1D9E75;color:#fff;border:none;padding:7px 18px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer">🚀 Jetzt veröffentlichen</button>
-      <span id="ghStatus" style="font-size: 12px; color: var(--muted);">Snapshot wird erstellt...</span>
-    </div>
-    <p style="font-size:11px;color:#bbb;margin-top:.75rem;margin-bottom:0">Token wird nur in deinem Browser gespeichert und nie weitergegeben · Deine URL: <span id="ghUrl" style="color:var(--blue)"><a href="https://l10john.github.io/lademonitor" target="_blank" style="color:var(--blue)">https://l10john.github.io/lademonitor</a></span></p>
-  </div>
 
   <!-- TABS -->
   <div class="tabs" id="mainTabs">
@@ -3435,6 +3432,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 
   // LocalStorage prüfen (nur wenn keine Historic-Daten)
   updateStorageBadge();
+  loadGhSettings();
   const stored=localStorage.getItem(LS_KEY);
   if(stored){
     try{
@@ -3466,27 +3464,27 @@ function restoreFromStorage(){
 
 // ── HTML EXPORT (Sessions einbetten) ─────────────────────
 // ── GITHUB PAGES PUBLISH ─────────────────────────────────
-function showGithubSettings(){
-  const panel=document.getElementById('ghPanel');
-  const isVisible=panel.style.display!=='none';
-  panel.style.display=isVisible?'none':'block';
-  if(!isVisible){
-    const s=JSON.parse(localStorage.getItem('gh_settings')||'{}');
-    if(s.user) document.getElementById('ghUser').value=s.user;
-    if(s.repo) document.getElementById('ghRepo').value=s.repo;
-    if(s.token) document.getElementById('ghToken').value=s.token;
-    updateGhUrl();
-  }
+function toggleExportMenu(){
+  const menu=document.getElementById('exportMenu');
+  menu.style.display=menu.style.display==='none'?'block':'none';
 }
+// Klick außerhalb schließt Menü
+document.addEventListener('click',e=>{
+  const btn=document.getElementById('exportMenuBtn');
+  const menu=document.getElementById('exportMenu');
+  if(menu&&btn&&!btn.contains(e.target)&&!menu.contains(e.target)){
+    menu.style.display='none';
+  }
+});
 
 function updateGhUrl(){
-  const user=document.getElementById('ghUser').value.trim();
-  const repo=document.getElementById('ghRepo').value.trim();
+  const user=document.getElementById('ghUser')?.value.trim();
+  const repo=document.getElementById('ghRepo')?.value.trim();
   const urlEl=document.getElementById('ghUrl');
-  if(user&&repo){
+  if(urlEl&&user&&repo){
     const url=`https://${user}.github.io/${repo}`;
     urlEl.innerHTML=`<a href="${url}" target="_blank" style="color:var(--blue)">${url}</a>`;
-  } else urlEl.textContent='';
+  }
 }
 
 function saveGhSettings(){
@@ -3496,7 +3494,22 @@ function saveGhSettings(){
   if(!user||!repo||!token){setGhStatus('Bitte alle Felder ausfüllen.','#e53935');return;}
   localStorage.setItem('gh_settings',JSON.stringify({user,repo,token}));
   updateGhUrl();
-  setGhStatus('Einstellungen gespeichert ✓','var(--green)');
+  // Nav-Button einblenden
+  const btn=document.getElementById('ghPublishBtn');
+  if(btn) btn.style.display='inline-block';
+  setGhStatus('Gespeichert ✓ · Nav-Button aktiv','var(--green)');
+}
+
+function loadGhSettings(){
+  const s=JSON.parse(localStorage.getItem('gh_settings')||'{}');
+  if(s.user) { const el=document.getElementById('ghUser'); if(el) el.value=s.user; }
+  if(s.repo) { const el=document.getElementById('ghRepo'); if(el) el.value=s.repo; }
+  if(s.token){ const el=document.getElementById('ghToken'); if(el) el.value=s.token; }
+  if(s.user&&s.repo){
+    updateGhUrl();
+    const btn=document.getElementById('ghPublishBtn');
+    if(btn) btn.style.display='inline-block';
+  }
 }
 
 async function publishToGithub(){
@@ -3631,6 +3644,7 @@ function toggleCfg(){
   const open=body.style.display==='none';
   body.style.display=open?'block':'none';
   chevron.textContent=open?'▼':'▶';
+  if(open) loadGhSettings();
 }
 
 function updateCfgSummary(){
