@@ -179,10 +179,10 @@ tr.overview-row.active td{background:#f0f8f0;}
     <div class="nav-logo">Lademonitor</div>
     <div class="nav-sub">360° Ladeanalyse · Heim + Öffentlich</div>
   </div>
-  <div class="nav-right">
-    <span id="storageBadge" style="display: inline; font-size: 11px; color: var(--muted); background: rgb(245, 245, 245); padding: 3px 10px; border-radius: 999px; cursor: pointer;" onclick="clearStorage()">💾 98 Heim + 18 öffentl. Sessions · gespeichert vor heute</span>
-    <span id="intervalBadge"></span>
-    <!-- EXPORT DROPDOWN -->
+  <div class="nav-right" style="flex-direction:column;align-items:flex-end;gap:4px">
+    <div style="display:flex;align-items:center;gap:8px">
+      <span id="intervalBadge"></span>
+      <!-- EXPORT DROPDOWN -->
     <div style="position:relative;display:inline-block">
       <button onclick="toggleExportMenu()" id="exportMenuBtn" style="background:#dde8e0;color:#3a6b52;border:1px solid #b8d4c2;padding:5px 13px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:-.01em">
         📤 Exportieren ▾
@@ -201,6 +201,8 @@ tr.overview-row.active td{background:#f0f8f0;}
       </div>
     </div>
     <button id="ghPublishBtn" onclick="publishToGithub()" style="display: inline-block; background: rgb(29, 158, 117); color: rgb(255, 255, 255); border: none; padding: 5px 14px; border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer; letter-spacing: -0.01em;">🚀 Veröffentlichen</button>
+    </div>
+    <span id="storageBadge" style="display: inline; font-size: 11px; color: var(--muted); background: rgb(245, 245, 245); padding: 2px 10px; border-radius: 999px; cursor: pointer;" onclick="clearStorage()">💾 98 Heim + 18 öffentl. Sessions · gespeichert vor heute</span>
   </div>
 </div>
 
