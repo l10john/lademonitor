@@ -363,7 +363,7 @@ tr.overview-row.active td{background:#f0f8f0;}
   </div>
 
   <!-- TAB CONTENTS -->
-  <div id="tOverview" style="display: block;">
+  <div id="tOverview">
     <p class="section-title">Monatsübersicht kombiniert</p>
     <div class="tbl-wrap"><table><thead><tr>
       <th>Monat</th>
@@ -514,7 +514,7 @@ tr.overview-row.active td{background:#f0f8f0;}
       </div>
       <div style="position:relative;width:100%;height:220px"><canvas id="ec" width="852" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 852px;"></canvas></div>
     </div></div>
-  <div id="tHome" style="display: none;">
+  <div id="tHome" style="display:none">
     <p class="section-title">Alle Wallbox-Sessions</p>
     <div class="tbl-wrap"><table><thead><tr>
       <th style="cursor:pointer;user-select:none" onclick="sortHomeTab('date')">Datum ↓</th>
@@ -1308,7 +1308,7 @@ tr.overview-row.active td{background:#f0f8f0;}
     <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
     <td class="neg">-24,67 €</td>
   </tr></tbody></table></div></div>
-  <div id="tPublic" style="display: none;">
+  <div id="tPublic" style="display:none">
     <!-- EINGABEMASKE -->
     <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1.5rem">
       <p class="section-title" style="margin-bottom:.875rem">Manuelle Eingabe</p>
@@ -1687,7 +1687,7 @@ tr.overview-row.active td{background:#f0f8f0;}
       <p class="section-title">PV vs. Netz Heimladen (kWh)</p>
       <div style="position:relative;width:100%;height:324px"><canvas id="mc"></canvas></div>
     </div></div>
-  <div id="tAmort" style="display: none;">
+  <div id="tAmort" style="display:none">
   <div class="amort-grid">
     <div>
       <div class="amort-section-title">Investition</div>
@@ -1696,14 +1696,14 @@ tr.overview-row.active td{background:#f0f8f0;}
         <div style="font-size:11px;color:var(--muted);margin-bottom:6px">EnBW Tarif M (Vergleich öffentl. Säule)</div>
         <div class="amort-field"><label>Grundgebühr</label><input type="number" id="aPubBase" value="5.99" step="0.01" oninput="updateEffPrice()"><span>€/Monat</span></div>
         <div class="amort-field"><label>kWh-Preis</label><input type="number" id="aPubKwh" value="46" step="0.1" oninput="updateEffPrice()"><span>ct/kWh</span></div>
-        <div class="amort-field"><label>Lademenge öffentl.</label><input type="number" id="aPubMonthKwh" value="90" step="1" oninput="amortFieldChanged('aPubMonthKwh');updateEffPrice()"><span>kWh/Monat</span><span id="aPubYearLabel" style="font-size:10px;color:var(--muted);margin-left:4px">(ca. 960 kWh/Jahr)</span></div>
-        <div class="amort-eff"><label>Effektivpreis</label><span id="aEffPrice" style="font-size:14px;font-weight:600;color:var(--green)">53,49</span><span style="font-size:11px;color:var(--muted)">ct/kWh</span><input type="hidden" id="aPubPrice" value="53.4875"></div>
+        <div class="amort-field"><label>Lademenge öffentl.</label><input type="number" id="aPubMonthKwh" value="90" step="1" oninput="amortFieldChanged('aPubMonthKwh');updateEffPrice()"><span>kWh/Monat</span><span id="aPubYearLabel" style="font-size:10px;color:var(--muted);margin-left:4px">(ca. 1.080 kWh/Jahr)</span></div>
+        <div class="amort-eff"><label>Effektivpreis</label><span id="aEffPrice" style="font-size:14px;font-weight:600;color:var(--green)">52,65</span><span style="font-size:11px;color:var(--muted)">ct/kWh</span><input type="hidden" id="aPubPrice" value="52.65"></div>
       </div>
     </div>
     <div>
       <div class="amort-section-title">Jahresprognose <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#bbb">(8 echte / 4 gesch. Monate · Saisonfaktoren: Aus echten Daten)</span></div>
       <div class="amort-field"><label>PV-Nettovorteil / Jahr</label><input type="number" id="aPvYear" value="128.27" step="0.01" oninput="amortFieldChanged('aPvYear')"><span>€/Jahr</span><span id="aPvMonthLabel" style="font-size:10px;color:var(--muted);margin-left:4px">(ca. 10,69 €/Monat)</span></div>
-      <div class="amort-field"><label>Wallbox / Jahr</label><input type="number" id="aNetYear" value="NaN" step="1" oninput="amortFieldChanged('aNetYear')"><span>kWh/Jahr</span><span id="aNetTotalLabel" style="font-size:10px;color:var(--muted);margin-left:4px">(gesamt 3.160 kWh/Jahr inkl. öffentl.)</span></div>
+      <div class="amort-field"><label>Wallbox / Jahr</label><input type="number" id="aNetYear" value="NaN" step="1" oninput="amortFieldChanged('aNetYear')"><span>kWh/Jahr</span><span id="aNetTotalLabel" style="font-size:10px;color:var(--muted);margin-left:4px">(gesamt 1.080 kWh/Jahr inkl. öffentl.)</span></div>
       <div style="margin-top:.75rem">
         <div style="font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.4rem">Monatsaufschlüsselung</div>
         <div><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Sept. 2025</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Okt. 2025</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Nov. 2025</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Dez. 2025</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Jan. 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Feb. 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">März 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Apr. 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:#1a73e8;flex-shrink:0"></span><span style="font-size:11px;color:#1a73e8">Mai 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:#1a73e8;flex-shrink:0"></span><span style="font-size:11px;color:#1a73e8">Juni 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:#1a73e8;flex-shrink:0"></span><span style="font-size:11px;color:#1a73e8">Juli 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:#1a73e8;flex-shrink:0"></span><span style="font-size:11px;color:#1a73e8">Aug. 2026</span></span></div>
@@ -1721,12 +1721,12 @@ tr.overview-row.active td{background:#f0f8f0;}
   <div id="amortResult" style="display: block;">
     <div class="amort-metrics" id="amortMetrics">
     <div class="amort-metric"><div class="lb">PV-Nettovorteil / Jahr</div><div class="vl pos">128,27 <em>€</em></div><div class="sb">Eigenverbrauch vs. Einspeisung</div></div>
-    <div class="amort-metric"><div class="lb">Wallbox-Ersparnis / Jahr</div><div class="vl pos">219,72 <em>€</em></div><div class="sb">vs. EnBW Tarif M</div></div>
-    <div class="amort-metric"><div class="lb">Gesamtvorteil / Jahr</div><div class="vl pos">348,00 <em>€</em></div><div class="sb">PV + Wallbox (Prognose)</div></div>
-    <div class="amort-metric"><div class="lb">Amortisation</div><div class="vl blue">ca. September 2028</div><div class="sb">≈ 36 Monate</div></div></div>
+    <div class="amort-metric"><div class="lb">Wallbox-Ersparnis / Jahr</div><div class="vl pos">0,00 <em>€</em></div><div class="sb">vs. EnBW Tarif M</div></div>
+    <div class="amort-metric"><div class="lb">Gesamtvorteil / Jahr</div><div class="vl pos">128,27 <em>€</em></div><div class="sb">PV + Wallbox (Prognose)</div></div>
+    <div class="amort-metric"><div class="lb">Amortisation</div><div class="vl blue">ca. September 2032</div><div class="sb">≈ 84 Monate</div></div></div>
     <p class="section-title">Amortisationsverlauf</p>
-    <div style="position:relative;width:100%;height:240px"><canvas id="ac" style="box-sizing: border-box; display: block; height: 240px; width: 852px;" width="852" height="240"></canvas></div>
-    <div id="amortNote" style="font-size:11px;color:var(--muted);margin-top:.75rem;line-height:1.6"><strong>Amortisationspunkt:</strong> ca. <strong>September 2028</strong> (≈ 36 Monate ab Kauf Sep 2025).
+    <div style="position:relative;width:100%;height:240px"><canvas id="ac" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas></div>
+    <div id="amortNote" style="font-size:11px;color:var(--muted);margin-top:.75rem;line-height:1.6"><strong>Amortisationspunkt:</strong> ca. <strong>September 2032</strong> (≈ 84 Monate ab Kauf Sep 2025).
      Echte Daten bis April 2026, danach Prognose.</div>
   </div></div>
 </div>
