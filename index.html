@@ -82,9 +82,10 @@ body.dragging::after{content:'Dateien hier ablegen';position:fixed;inset:0;backg
 
 /* GESAMTBILANZ-KACHEL (volle Breite) */
 .kachel-full{grid-column:1/-1;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.kachel-full .kachel-body{grid-template-columns:repeat(4,1fr)}
+.kachel-full .kachel-body{grid-template-columns:repeat(5,1fr)}
 .kachel-full .kachel-metric:nth-child(2n){border-right:1px solid var(--border)}
-.kachel-full .kachel-metric:nth-child(4n){border-right:none}
+.kachel-full .kachel-metric:nth-child(5n){border-right:none}
+.kachel-full .kachel-metric:nth-last-child(-n+5){border-bottom:none}
 
 /* COLORS */
 .pos{color:var(--green)}
@@ -335,10 +336,17 @@ tr.overview-row.active td{background:#f0f8f0;}
   </div>
   <div class="kachel kachel-full">
     <div class="kachel-header"><div class="kachel-header-dot" style="background:#111"></div><div class="kachel-header-title">Gesamtbilanz</div></div>
-    <div class="kachel-body" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kachel-body">
       <div class="kachel-metric"><div class="lb">Gesamt geladen</div><div class="vl">2139.91<em>kWh</em></div><div class="sb">Wallbox + Öffentlich</div></div>
       <div class="kachel-metric"><div class="lb">PV-Eigenverbrauch</div><div class="vl pos">95.05<em>kWh</em></div><div class="sb">7% des Wallbox-Ladens</div></div>
       <div class="kachel-metric"><div class="lb">PV-Nettovorteil</div><div class="vl pos">+30,56 €</div><div class="sb">Ersparnis durch PV</div></div>
+      <div class="kachel-metric"><div class="lb">Effektivpreis gesamt</div>
+        <div class="vl blue" style="display:flex;align-items:baseline;gap:4px">
+          44.12<em>ct/kWh</em>
+          <span style="font-size:16px;color:var(--muted);margin-left:2px" title="Stabil">→</span>
+        </div>
+        <div class="sb">Ø aller Ladevorgänge</div>
+      </div>
       <div class="kachel-metric"><div class="lb">Gesamtkosten</div><div class="vl neg">944,12 €</div><div class="sb">Netz Wallbox + öffentl.</div></div>
     </div>
   </div></div>
@@ -355,7 +363,7 @@ tr.overview-row.active td{background:#f0f8f0;}
   </div>
 
   <!-- TAB CONTENTS -->
-  <div id="tOverview">
+  <div id="tOverview" style="display: block;">
     <p class="section-title">Monatsübersicht kombiniert</p>
     <div class="tbl-wrap"><table><thead><tr>
       <th>Monat</th>
@@ -506,779 +514,25 @@ tr.overview-row.active td{background:#f0f8f0;}
       </div>
       <div style="position:relative;width:100%;height:220px"><canvas id="ec" width="852" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 852px;"></canvas></div>
     </div></div>
-  <div id="tHome" style="display:none">
-    <p class="section-title">Alle Heimlade-Sessions</p>
-    <div class="tbl-wrap"><table><thead><tr><th>Datum</th><th>Zeit</th><th>Dauer</th><th>Energie</th><th>Modus</th><th>PV/Netz</th><th>Bilanz</th></tr></thead>
+  <div id="tHome" style="display: none;">
+    <p class="section-title">Alle Wallbox-Sessions</p>
+    <div class="tbl-wrap"><table><thead><tr>
+      <th style="cursor:pointer;user-select:none" onclick="sortHomeTab('date')">Datum ↓</th>
+      <th>Zeit</th><th>Dauer</th>
+      <th style="cursor:pointer;user-select:none" onclick="sortHomeTab('kwh')">Energie</th>
+      <th>Modus</th><th>PV/Netz</th>
+      <th style="cursor:pointer;user-select:none" onclick="sortHomeTab('nb')">Bilanz</th>
+    </tr></thead>
     <tbody><tr>
-    <td style="color:var(--muted)">19.09.</td>
-    <td>19:00 – 00:39</td>
-    <td style="color:var(--muted)">339 min</td>
-    <td><strong>56.72</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-24,67 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">23.09.</td>
-    <td>19:00 – 21:43</td>
-    <td style="color:var(--muted)">163 min</td>
-    <td><strong>27.46</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-11,95 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">26.09.</td>
-    <td>19:00 – 00:56</td>
-    <td style="color:var(--muted)">356 min</td>
-    <td><strong>59.59</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-25,92 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">22.10.</td>
-    <td>16:27 – 19:13</td>
-    <td style="color:var(--muted)">166 min</td>
-    <td><strong>28.56</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-12,43 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">27.10.</td>
-    <td>16:32 – 20:59</td>
-    <td style="color:var(--muted)">267 min</td>
-    <td><strong>46.55</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-20,25 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">30.10.</td>
-    <td>08:28 – 13:26</td>
-    <td style="color:var(--muted)">298 min</td>
-    <td><strong>49.29</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-21,44 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">01.11.</td>
-    <td>08:27 – 10:34</td>
-    <td style="color:var(--muted)">127 min</td>
-    <td><strong>22.06</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-9,60 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">01.11.</td>
-    <td>10:46 – 12:09</td>
-    <td style="color:var(--muted)">83 min</td>
-    <td><strong>14.24</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-6,19 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">08.11.</td>
-    <td>11:13 – 15:39</td>
-    <td style="color:var(--muted)">266 min</td>
-    <td><strong>45.70</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-19,88 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">14.11.</td>
-    <td>14:30 – 19:28</td>
-    <td style="color:var(--muted)">298 min</td>
-    <td><strong>51.14</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-22,24 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">18.11.</td>
-    <td>17:40 – 21:17</td>
-    <td style="color:var(--muted)">217 min</td>
-    <td><strong>37.37</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-16,26 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">20.11.</td>
-    <td>18:05 – 21:22</td>
-    <td style="color:var(--muted)">197 min</td>
-    <td><strong>34.05</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-14,81 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">25.11.</td>
-    <td>19:55 – 21:26</td>
-    <td style="color:var(--muted)">91 min</td>
-    <td><strong>15.51</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-6,75 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">01.12.</td>
-    <td>20:21 – 22:22</td>
-    <td style="color:var(--muted)">121 min</td>
-    <td><strong>20.72</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-9,01 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">12.12.</td>
-    <td>08:56 – 11:29</td>
-    <td style="color:var(--muted)">153 min</td>
-    <td><strong>26.64</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-11,59 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">12.12.</td>
-    <td>12:17 – 16:12</td>
-    <td style="color:var(--muted)">235 min</td>
-    <td><strong>36.03</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-15,67 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">21.12.</td>
-    <td>13:43 – 18:16</td>
-    <td style="color:var(--muted)">273 min</td>
-    <td><strong>47.56</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-20,69 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">26.12.</td>
-    <td>21:38 – 23:26</td>
-    <td style="color:var(--muted)">108 min</td>
-    <td><strong>18.72</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-8,14 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">27.12.</td>
-    <td>11:21 – 16:08</td>
-    <td style="color:var(--muted)">287 min</td>
-    <td><strong>47.87</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-20,82 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">06.01.</td>
-    <td>18:06 – 22:20</td>
-    <td style="color:var(--muted)">254 min</td>
-    <td><strong>43.76</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-19,04 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">07.01.</td>
-    <td>19:49 – 20:55</td>
-    <td style="color:var(--muted)">66 min</td>
-    <td><strong>11.33</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-4,93 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">08.01.</td>
-    <td>16:10 – 21:45</td>
-    <td style="color:var(--muted)">335 min</td>
-    <td><strong>57.05</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-24,82 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">21.01.</td>
-    <td>18:02 – 21:18</td>
-    <td style="color:var(--muted)">196 min</td>
-    <td><strong>33.52</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-14,58 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">26.01.</td>
-    <td>16:31 – 19:47</td>
-    <td style="color:var(--muted)">196 min</td>
-    <td><strong>33.88</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-14,74 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">28.01.</td>
-    <td>16:54 – 17:12</td>
-    <td style="color:var(--muted)">18 min</td>
-    <td><strong>3.15</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-1,37 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">28.01.</td>
-    <td>17:52 – 20:23</td>
-    <td style="color:var(--muted)">151 min</td>
-    <td><strong>25.78</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-11,21 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">02.02.</td>
-    <td>16:28 – 22:21</td>
-    <td style="color:var(--muted)">353 min</td>
-    <td><strong>59.31</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-25,80 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">07.02.</td>
-    <td>09:02 – 09:15</td>
-    <td style="color:var(--muted)">13 min</td>
-    <td><strong>2.34</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-1,02 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">07.02.</td>
-    <td>09:45 – 11:59</td>
-    <td style="color:var(--muted)">134 min</td>
-    <td><strong>23.27</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-10,12 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">11.02.</td>
-    <td>14:06 – 21:43</td>
-    <td style="color:var(--muted)">457 min</td>
-    <td><strong>66.89</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-29,10 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">17.02.</td>
-    <td>16:46 – 20:39</td>
-    <td style="color:var(--muted)">233 min</td>
-    <td><strong>40.14</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-17,46 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">19.02.</td>
-    <td>15:15 – 20:19</td>
-    <td style="color:var(--muted)">304 min</td>
-    <td><strong>52.14</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-22,68 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">01.03.</td>
-    <td>11:58 – 13:29</td>
-    <td style="color:var(--muted)">91 min</td>
-    <td><strong>3.91</strong> kWh</td>
+    <td style="color:var(--muted)">11.04.2026</td>
+    <td>15:47 – 17:40</td>
+    <td style="color:var(--muted)">113 min</td>
+    <td><strong>3.97</strong> kWh</td>
     <td><span class="bpv">PV</span></td>
     <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+1,26 €</td>
+    <td class="pos">+1,28 €</td>
   </tr><tr>
-    <td style="color:var(--muted)">01.03.</td>
-    <td>14:12 – 14:43</td>
-    <td style="color:var(--muted)">31 min</td>
-    <td><strong>1.08</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,35 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">01.03.</td>
-    <td>14:59 – 15:17</td>
-    <td style="color:var(--muted)">18 min</td>
-    <td><strong>0.58</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,19 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">01.03.</td>
-    <td>15:19 – 15:24</td>
-    <td style="color:var(--muted)">5 min</td>
-    <td><strong>0.12</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,04 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">01.03.</td>
-    <td>16:14 – 19:07</td>
-    <td style="color:var(--muted)">173 min</td>
-    <td><strong>27.56</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-11,99 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">05.03.</td>
-    <td>10:20 – 10:27</td>
-    <td style="color:var(--muted)">7 min</td>
-    <td><strong>0.21</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,07 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">05.03.</td>
-    <td>10:37 – 15:53</td>
-    <td style="color:var(--muted)">316 min</td>
-    <td><strong>11.78</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+3,79 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">05.03.</td>
-    <td>16:01 – 18:54</td>
-    <td style="color:var(--muted)">173 min</td>
-    <td><strong>30.41</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-13,23 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">05.03.</td>
-    <td>19:09 – 20:09</td>
-    <td style="color:var(--muted)">60 min</td>
-    <td><strong>8.54</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-3,71 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">09.03.</td>
-    <td>02:31 – 08:00</td>
-    <td style="color:var(--muted)">329 min</td>
-    <td><strong>52.73</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-22,94 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">12.03.</td>
-    <td>07:55 – 07:59</td>
-    <td style="color:var(--muted)">4 min</td>
-    <td><strong>0.20</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,06 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">12.03.</td>
-    <td>10:44 – 12:25</td>
-    <td style="color:var(--muted)">101 min</td>
-    <td><strong>4.19</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+1,35 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">12.03.</td>
-    <td>12:30 – 12:41</td>
-    <td style="color:var(--muted)">11 min</td>
-    <td><strong>0.50</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,16 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">12.03.</td>
-    <td>12:43 – 16:50</td>
-    <td style="color:var(--muted)">247 min</td>
-    <td><strong>9.16</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+2,95 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">20.03.</td>
-    <td>12:42 – 13:48</td>
-    <td style="color:var(--muted)">66 min</td>
-    <td><strong>2.33</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,75 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">20.03.</td>
-    <td>13:50 – 13:53</td>
-    <td style="color:var(--muted)">3 min</td>
-    <td><strong>0.47</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-0,20 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">20.03.</td>
-    <td>13:58 – 13:58</td>
-    <td style="color:var(--muted)">0 min</td>
-    <td><strong>0.11</strong> kWh</td>
-    <td><span class="bmix">Mix</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-0,05 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">20.03.</td>
-    <td>14:24 – 15:26</td>
-    <td style="color:var(--muted)">62 min</td>
-    <td><strong>11.06</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-4,81 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">22.03.</td>
-    <td>09:26 – 12:47</td>
-    <td style="color:var(--muted)">201 min</td>
-    <td><strong>34.89</strong> kWh</td>
-    <td><span class="bnet">Netz</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
-    <td class="neg">-15,18 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">22.03.</td>
-    <td>13:13 – 13:29</td>
-    <td style="color:var(--muted)">16 min</td>
-    <td><strong>0.45</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,15 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">26.03.</td>
-    <td>11:31 – 12:20</td>
-    <td style="color:var(--muted)">49 min</td>
-    <td><strong>1.92</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,62 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">26.03.</td>
-    <td>12:23 – 12:28</td>
-    <td style="color:var(--muted)">5 min</td>
-    <td><strong>0.11</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,03 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">26.03.</td>
-    <td>12:56 – 13:11</td>
-    <td style="color:var(--muted)">15 min</td>
-    <td><strong>0.52</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,17 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">26.03.</td>
-    <td>13:18 – 13:30</td>
-    <td style="color:var(--muted)">12 min</td>
-    <td><strong>0.30</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,10 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">26.03.</td>
-    <td>13:44 – 13:56</td>
-    <td style="color:var(--muted)">12 min</td>
-    <td><strong>0.44</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,14 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">26.03.</td>
-    <td>14:23 – 14:41</td>
-    <td style="color:var(--muted)">18 min</td>
-    <td><strong>0.54</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,17 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">26.03.</td>
-    <td>14:45 – 15:01</td>
-    <td style="color:var(--muted)">16 min</td>
-    <td><strong>0.48</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,15 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">26.03.</td>
-    <td>15:12 – 15:20</td>
-    <td style="color:var(--muted)">8 min</td>
-    <td><strong>0.30</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,10 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">26.03.</td>
-    <td>15:23 – 15:26</td>
-    <td style="color:var(--muted)">3 min</td>
-    <td><strong>0.09</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,03 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">27.03.</td>
-    <td>09:46 – 10:00</td>
-    <td style="color:var(--muted)">14 min</td>
-    <td><strong>0.41</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,13 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">27.03.</td>
-    <td>10:07 – 10:27</td>
-    <td style="color:var(--muted)">20 min</td>
-    <td><strong>0.69</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,22 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">27.03.</td>
-    <td>10:50 – 11:02</td>
-    <td style="color:var(--muted)">12 min</td>
-    <td><strong>0.31</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,10 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">27.03.</td>
-    <td>11:45 – 11:50</td>
-    <td style="color:var(--muted)">5 min</td>
-    <td><strong>0.12</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,04 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">27.03.</td>
-    <td>12:09 – 12:23</td>
-    <td style="color:var(--muted)">14 min</td>
-    <td><strong>0.42</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,14 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">27.03.</td>
-    <td>12:54 – 13:09</td>
-    <td style="color:var(--muted)">15 min</td>
-    <td><strong>0.43</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,14 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">27.03.</td>
-    <td>13:29 – 13:34</td>
-    <td style="color:var(--muted)">5 min</td>
-    <td><strong>0.12</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,04 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">27.03.</td>
-    <td>13:39 – 13:44</td>
-    <td style="color:var(--muted)">5 min</td>
-    <td><strong>0.19</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,06 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">27.03.</td>
-    <td>14:31 – 16:12</td>
-    <td style="color:var(--muted)">101 min</td>
-    <td><strong>3.50</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+1,12 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">28.03.</td>
-    <td>10:27 – 10:38</td>
-    <td style="color:var(--muted)">11 min</td>
-    <td><strong>0.25</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,08 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">28.03.</td>
-    <td>10:46 – 12:25</td>
-    <td style="color:var(--muted)">99 min</td>
-    <td><strong>3.44</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+1,11 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">28.03.</td>
-    <td>12:35 – 13:15</td>
-    <td style="color:var(--muted)">40 min</td>
-    <td><strong>1.15</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,37 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">28.03.</td>
-    <td>13:17 – 14:26</td>
-    <td style="color:var(--muted)">69 min</td>
-    <td><strong>2.11</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,68 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">29.03.</td>
-    <td>10:35 – 10:38</td>
-    <td style="color:var(--muted)">3 min</td>
-    <td><strong>0.09</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,03 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">29.03.</td>
-    <td>10:53 – 10:57</td>
-    <td style="color:var(--muted)">4 min</td>
-    <td><strong>0.14</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,04 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">29.03.</td>
-    <td>11:14 – 11:20</td>
-    <td style="color:var(--muted)">6 min</td>
-    <td><strong>0.20</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,06 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">29.03.</td>
-    <td>11:39 – 11:46</td>
-    <td style="color:var(--muted)">7 min</td>
-    <td><strong>0.21</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,07 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">29.03.</td>
-    <td>12:29 – 12:34</td>
-    <td style="color:var(--muted)">5 min</td>
-    <td><strong>0.11</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,04 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">29.03.</td>
-    <td>12:49 – 12:59</td>
-    <td style="color:var(--muted)">10 min</td>
-    <td><strong>0.42</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,14 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">29.03.</td>
-    <td>13:13 – 13:22</td>
-    <td style="color:var(--muted)">9 min</td>
-    <td><strong>0.19</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,06 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">29.03.</td>
-    <td>14:13 – 14:18</td>
-    <td style="color:var(--muted)">5 min</td>
-    <td><strong>0.22</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,07 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">29.03.</td>
-    <td>14:25 – 14:39</td>
-    <td style="color:var(--muted)">14 min</td>
-    <td><strong>0.64</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,21 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">29.03.</td>
-    <td>14:42 – 14:51</td>
-    <td style="color:var(--muted)">9 min</td>
-    <td><strong>0.35</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,11 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">29.03.</td>
-    <td>15:02 – 15:06</td>
-    <td style="color:var(--muted)">4 min</td>
-    <td><strong>0.13</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,04 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">29.03.</td>
-    <td>15:58 – 16:33</td>
-    <td style="color:var(--muted)">35 min</td>
-    <td><strong>1.27</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,41 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">29.03.</td>
-    <td>16:55 – 17:02</td>
-    <td style="color:var(--muted)">7 min</td>
-    <td><strong>0.23</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,08 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">29.03.</td>
-    <td>17:20 – 17:24</td>
-    <td style="color:var(--muted)">4 min</td>
-    <td><strong>0.11</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,03 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">07.04.</td>
-    <td>15:34 – 18:32</td>
-    <td style="color:var(--muted)">178 min</td>
-    <td><strong>7.23</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+2,32 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">08.04.</td>
-    <td>16:04 – 18:31</td>
-    <td style="color:var(--muted)">147 min</td>
-    <td><strong>5.62</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+1,81 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">08.04.</td>
-    <td>18:33 – 18:38</td>
-    <td style="color:var(--muted)">5 min</td>
-    <td><strong>0.10</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,03 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">09.04.</td>
-    <td>10:59 – 11:19</td>
-    <td style="color:var(--muted)">20 min</td>
-    <td><strong>0.51</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,16 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">09.04.</td>
-    <td>12:22 – 14:14</td>
-    <td style="color:var(--muted)">112 min</td>
-    <td><strong>3.68</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+1,18 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">09.04.</td>
-    <td>14:18 – 17:17</td>
-    <td style="color:var(--muted)">179 min</td>
-    <td><strong>8.53</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+2,74 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">11.04.</td>
-    <td>11:06 – 11:36</td>
-    <td style="color:var(--muted)">30 min</td>
-    <td><strong>0.98</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+0,31 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">11.04.</td>
-    <td>11:59 – 14:24</td>
-    <td style="color:var(--muted)">145 min</td>
-    <td><strong>7.52</strong> kWh</td>
-    <td><span class="bpv">PV</span></td>
-    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+2,42 €</td>
-  </tr><tr>
-    <td style="color:var(--muted)">11.04.</td>
+    <td style="color:var(--muted)">11.04.2026</td>
     <td>15:35 – 15:44</td>
     <td style="color:var(--muted)">9 min</td>
     <td><strong>0.24</strong> kWh</td>
@@ -1286,15 +540,775 @@ tr.overview-row.active td{background:#f0f8f0;}
     <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
     <td class="pos">+0,08 €</td>
   </tr><tr>
-    <td style="color:var(--muted)">11.04.</td>
-    <td>15:47 – 17:40</td>
-    <td style="color:var(--muted)">113 min</td>
-    <td><strong>3.97</strong> kWh</td>
+    <td style="color:var(--muted)">11.04.2026</td>
+    <td>11:59 – 14:24</td>
+    <td style="color:var(--muted)">145 min</td>
+    <td><strong>7.52</strong> kWh</td>
     <td><span class="bpv">PV</span></td>
     <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
-    <td class="pos">+1,28 €</td>
+    <td class="pos">+2,42 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">11.04.2026</td>
+    <td>11:06 – 11:36</td>
+    <td style="color:var(--muted)">30 min</td>
+    <td><strong>0.98</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,31 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">09.04.2026</td>
+    <td>14:18 – 17:17</td>
+    <td style="color:var(--muted)">179 min</td>
+    <td><strong>8.53</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+2,74 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">09.04.2026</td>
+    <td>12:22 – 14:14</td>
+    <td style="color:var(--muted)">112 min</td>
+    <td><strong>3.68</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+1,18 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">09.04.2026</td>
+    <td>10:59 – 11:19</td>
+    <td style="color:var(--muted)">20 min</td>
+    <td><strong>0.51</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,16 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">08.04.2026</td>
+    <td>18:33 – 18:38</td>
+    <td style="color:var(--muted)">5 min</td>
+    <td><strong>0.10</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,03 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">08.04.2026</td>
+    <td>16:04 – 18:31</td>
+    <td style="color:var(--muted)">147 min</td>
+    <td><strong>5.62</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+1,81 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">07.04.2026</td>
+    <td>15:34 – 18:32</td>
+    <td style="color:var(--muted)">178 min</td>
+    <td><strong>7.23</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+2,32 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">29.03.2026</td>
+    <td>17:20 – 17:24</td>
+    <td style="color:var(--muted)">4 min</td>
+    <td><strong>0.11</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,03 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">29.03.2026</td>
+    <td>16:55 – 17:02</td>
+    <td style="color:var(--muted)">7 min</td>
+    <td><strong>0.23</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,08 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">29.03.2026</td>
+    <td>15:58 – 16:33</td>
+    <td style="color:var(--muted)">35 min</td>
+    <td><strong>1.27</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,41 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">29.03.2026</td>
+    <td>15:02 – 15:06</td>
+    <td style="color:var(--muted)">4 min</td>
+    <td><strong>0.13</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,04 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">29.03.2026</td>
+    <td>14:42 – 14:51</td>
+    <td style="color:var(--muted)">9 min</td>
+    <td><strong>0.35</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,11 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">29.03.2026</td>
+    <td>14:25 – 14:39</td>
+    <td style="color:var(--muted)">14 min</td>
+    <td><strong>0.64</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,21 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">29.03.2026</td>
+    <td>14:13 – 14:18</td>
+    <td style="color:var(--muted)">5 min</td>
+    <td><strong>0.22</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,07 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">29.03.2026</td>
+    <td>13:13 – 13:22</td>
+    <td style="color:var(--muted)">9 min</td>
+    <td><strong>0.19</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,06 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">29.03.2026</td>
+    <td>12:49 – 12:59</td>
+    <td style="color:var(--muted)">10 min</td>
+    <td><strong>0.42</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,14 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">29.03.2026</td>
+    <td>12:29 – 12:34</td>
+    <td style="color:var(--muted)">5 min</td>
+    <td><strong>0.11</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,04 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">29.03.2026</td>
+    <td>11:39 – 11:46</td>
+    <td style="color:var(--muted)">7 min</td>
+    <td><strong>0.21</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,07 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">29.03.2026</td>
+    <td>11:14 – 11:20</td>
+    <td style="color:var(--muted)">6 min</td>
+    <td><strong>0.20</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,06 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">29.03.2026</td>
+    <td>10:53 – 10:57</td>
+    <td style="color:var(--muted)">4 min</td>
+    <td><strong>0.14</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,04 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">29.03.2026</td>
+    <td>10:35 – 10:38</td>
+    <td style="color:var(--muted)">3 min</td>
+    <td><strong>0.09</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,03 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">28.03.2026</td>
+    <td>13:17 – 14:26</td>
+    <td style="color:var(--muted)">69 min</td>
+    <td><strong>2.11</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,68 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">28.03.2026</td>
+    <td>12:35 – 13:15</td>
+    <td style="color:var(--muted)">40 min</td>
+    <td><strong>1.15</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,37 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">28.03.2026</td>
+    <td>10:46 – 12:25</td>
+    <td style="color:var(--muted)">99 min</td>
+    <td><strong>3.44</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+1,11 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">28.03.2026</td>
+    <td>10:27 – 10:38</td>
+    <td style="color:var(--muted)">11 min</td>
+    <td><strong>0.25</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,08 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">27.03.2026</td>
+    <td>14:31 – 16:12</td>
+    <td style="color:var(--muted)">101 min</td>
+    <td><strong>3.50</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+1,12 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">27.03.2026</td>
+    <td>13:39 – 13:44</td>
+    <td style="color:var(--muted)">5 min</td>
+    <td><strong>0.19</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,06 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">27.03.2026</td>
+    <td>13:29 – 13:34</td>
+    <td style="color:var(--muted)">5 min</td>
+    <td><strong>0.12</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,04 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">27.03.2026</td>
+    <td>12:54 – 13:09</td>
+    <td style="color:var(--muted)">15 min</td>
+    <td><strong>0.43</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,14 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">27.03.2026</td>
+    <td>12:09 – 12:23</td>
+    <td style="color:var(--muted)">14 min</td>
+    <td><strong>0.42</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,14 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">27.03.2026</td>
+    <td>11:45 – 11:50</td>
+    <td style="color:var(--muted)">5 min</td>
+    <td><strong>0.12</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,04 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">27.03.2026</td>
+    <td>10:50 – 11:02</td>
+    <td style="color:var(--muted)">12 min</td>
+    <td><strong>0.31</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,10 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">27.03.2026</td>
+    <td>10:07 – 10:27</td>
+    <td style="color:var(--muted)">20 min</td>
+    <td><strong>0.69</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,22 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">27.03.2026</td>
+    <td>09:46 – 10:00</td>
+    <td style="color:var(--muted)">14 min</td>
+    <td><strong>0.41</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,13 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">26.03.2026</td>
+    <td>15:23 – 15:26</td>
+    <td style="color:var(--muted)">3 min</td>
+    <td><strong>0.09</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,03 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">26.03.2026</td>
+    <td>15:12 – 15:20</td>
+    <td style="color:var(--muted)">8 min</td>
+    <td><strong>0.30</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,10 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">26.03.2026</td>
+    <td>14:45 – 15:01</td>
+    <td style="color:var(--muted)">16 min</td>
+    <td><strong>0.48</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,15 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">26.03.2026</td>
+    <td>14:23 – 14:41</td>
+    <td style="color:var(--muted)">18 min</td>
+    <td><strong>0.54</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,17 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">26.03.2026</td>
+    <td>13:44 – 13:56</td>
+    <td style="color:var(--muted)">12 min</td>
+    <td><strong>0.44</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,14 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">26.03.2026</td>
+    <td>13:18 – 13:30</td>
+    <td style="color:var(--muted)">12 min</td>
+    <td><strong>0.30</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,10 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">26.03.2026</td>
+    <td>12:56 – 13:11</td>
+    <td style="color:var(--muted)">15 min</td>
+    <td><strong>0.52</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,17 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">26.03.2026</td>
+    <td>12:23 – 12:28</td>
+    <td style="color:var(--muted)">5 min</td>
+    <td><strong>0.11</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,03 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">26.03.2026</td>
+    <td>11:31 – 12:20</td>
+    <td style="color:var(--muted)">49 min</td>
+    <td><strong>1.92</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,62 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">22.03.2026</td>
+    <td>13:13 – 13:29</td>
+    <td style="color:var(--muted)">16 min</td>
+    <td><strong>0.45</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,15 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">22.03.2026</td>
+    <td>09:26 – 12:47</td>
+    <td style="color:var(--muted)">201 min</td>
+    <td><strong>34.89</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-15,18 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">20.03.2026</td>
+    <td>14:24 – 15:26</td>
+    <td style="color:var(--muted)">62 min</td>
+    <td><strong>11.06</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-4,81 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">20.03.2026</td>
+    <td>13:58 – 13:58</td>
+    <td style="color:var(--muted)">0 min</td>
+    <td><strong>0.11</strong> kWh</td>
+    <td><span class="bmix">Mix</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-0,05 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">20.03.2026</td>
+    <td>13:50 – 13:53</td>
+    <td style="color:var(--muted)">3 min</td>
+    <td><strong>0.47</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-0,20 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">20.03.2026</td>
+    <td>12:42 – 13:48</td>
+    <td style="color:var(--muted)">66 min</td>
+    <td><strong>2.33</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,75 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">12.03.2026</td>
+    <td>12:43 – 16:50</td>
+    <td style="color:var(--muted)">247 min</td>
+    <td><strong>9.16</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+2,95 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">12.03.2026</td>
+    <td>12:30 – 12:41</td>
+    <td style="color:var(--muted)">11 min</td>
+    <td><strong>0.50</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,16 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">12.03.2026</td>
+    <td>10:44 – 12:25</td>
+    <td style="color:var(--muted)">101 min</td>
+    <td><strong>4.19</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+1,35 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">12.03.2026</td>
+    <td>07:55 – 07:59</td>
+    <td style="color:var(--muted)">4 min</td>
+    <td><strong>0.20</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,06 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">09.03.2026</td>
+    <td>02:31 – 08:00</td>
+    <td style="color:var(--muted)">329 min</td>
+    <td><strong>52.73</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-22,94 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">05.03.2026</td>
+    <td>19:09 – 20:09</td>
+    <td style="color:var(--muted)">60 min</td>
+    <td><strong>8.54</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-3,71 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">05.03.2026</td>
+    <td>16:01 – 18:54</td>
+    <td style="color:var(--muted)">173 min</td>
+    <td><strong>30.41</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-13,23 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">05.03.2026</td>
+    <td>10:37 – 15:53</td>
+    <td style="color:var(--muted)">316 min</td>
+    <td><strong>11.78</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+3,79 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">05.03.2026</td>
+    <td>10:20 – 10:27</td>
+    <td style="color:var(--muted)">7 min</td>
+    <td><strong>0.21</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,07 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">01.03.2026</td>
+    <td>16:14 – 19:07</td>
+    <td style="color:var(--muted)">173 min</td>
+    <td><strong>27.56</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-11,99 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">01.03.2026</td>
+    <td>15:19 – 15:24</td>
+    <td style="color:var(--muted)">5 min</td>
+    <td><strong>0.12</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,04 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">01.03.2026</td>
+    <td>14:59 – 15:17</td>
+    <td style="color:var(--muted)">18 min</td>
+    <td><strong>0.58</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,19 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">01.03.2026</td>
+    <td>14:12 – 14:43</td>
+    <td style="color:var(--muted)">31 min</td>
+    <td><strong>1.08</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+0,35 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">01.03.2026</td>
+    <td>11:58 – 13:29</td>
+    <td style="color:var(--muted)">91 min</td>
+    <td><strong>3.91</strong> kWh</td>
+    <td><span class="bpv">PV</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
+    <td class="pos">+1,26 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">19.02.2026</td>
+    <td>15:15 – 20:19</td>
+    <td style="color:var(--muted)">304 min</td>
+    <td><strong>52.14</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-22,68 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">17.02.2026</td>
+    <td>16:46 – 20:39</td>
+    <td style="color:var(--muted)">233 min</td>
+    <td><strong>40.14</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-17,46 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">11.02.2026</td>
+    <td>14:06 – 21:43</td>
+    <td style="color:var(--muted)">457 min</td>
+    <td><strong>66.89</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-29,10 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">07.02.2026</td>
+    <td>09:45 – 11:59</td>
+    <td style="color:var(--muted)">134 min</td>
+    <td><strong>23.27</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-10,12 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">07.02.2026</td>
+    <td>09:02 – 09:15</td>
+    <td style="color:var(--muted)">13 min</td>
+    <td><strong>2.34</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-1,02 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">02.02.2026</td>
+    <td>16:28 – 22:21</td>
+    <td style="color:var(--muted)">353 min</td>
+    <td><strong>59.31</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-25,80 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">28.01.2026</td>
+    <td>17:52 – 20:23</td>
+    <td style="color:var(--muted)">151 min</td>
+    <td><strong>25.78</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-11,21 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">28.01.2026</td>
+    <td>16:54 – 17:12</td>
+    <td style="color:var(--muted)">18 min</td>
+    <td><strong>3.15</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-1,37 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">26.01.2026</td>
+    <td>16:31 – 19:47</td>
+    <td style="color:var(--muted)">196 min</td>
+    <td><strong>33.88</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-14,74 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">21.01.2026</td>
+    <td>18:02 – 21:18</td>
+    <td style="color:var(--muted)">196 min</td>
+    <td><strong>33.52</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-14,58 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">08.01.2026</td>
+    <td>16:10 – 21:45</td>
+    <td style="color:var(--muted)">335 min</td>
+    <td><strong>57.05</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-24,82 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">07.01.2026</td>
+    <td>19:49 – 20:55</td>
+    <td style="color:var(--muted)">66 min</td>
+    <td><strong>11.33</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-4,93 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">06.01.2026</td>
+    <td>18:06 – 22:20</td>
+    <td style="color:var(--muted)">254 min</td>
+    <td><strong>43.76</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-19,04 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">27.12.2025</td>
+    <td>11:21 – 16:08</td>
+    <td style="color:var(--muted)">287 min</td>
+    <td><strong>47.87</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-20,82 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">26.12.2025</td>
+    <td>21:38 – 23:26</td>
+    <td style="color:var(--muted)">108 min</td>
+    <td><strong>18.72</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-8,14 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">21.12.2025</td>
+    <td>13:43 – 18:16</td>
+    <td style="color:var(--muted)">273 min</td>
+    <td><strong>47.56</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-20,69 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">12.12.2025</td>
+    <td>12:17 – 16:12</td>
+    <td style="color:var(--muted)">235 min</td>
+    <td><strong>36.03</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-15,67 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">12.12.2025</td>
+    <td>08:56 – 11:29</td>
+    <td style="color:var(--muted)">153 min</td>
+    <td><strong>26.64</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-11,59 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">01.12.2025</td>
+    <td>20:21 – 22:22</td>
+    <td style="color:var(--muted)">121 min</td>
+    <td><strong>20.72</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-9,01 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">25.11.2025</td>
+    <td>19:55 – 21:26</td>
+    <td style="color:var(--muted)">91 min</td>
+    <td><strong>15.51</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-6,75 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">20.11.2025</td>
+    <td>18:05 – 21:22</td>
+    <td style="color:var(--muted)">197 min</td>
+    <td><strong>34.05</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-14,81 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">18.11.2025</td>
+    <td>17:40 – 21:17</td>
+    <td style="color:var(--muted)">217 min</td>
+    <td><strong>37.37</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-16,26 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">14.11.2025</td>
+    <td>14:30 – 19:28</td>
+    <td style="color:var(--muted)">298 min</td>
+    <td><strong>51.14</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-22,24 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">08.11.2025</td>
+    <td>11:13 – 15:39</td>
+    <td style="color:var(--muted)">266 min</td>
+    <td><strong>45.70</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-19,88 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">01.11.2025</td>
+    <td>10:46 – 12:09</td>
+    <td style="color:var(--muted)">83 min</td>
+    <td><strong>14.24</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-6,19 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">01.11.2025</td>
+    <td>08:27 – 10:34</td>
+    <td style="color:var(--muted)">127 min</td>
+    <td><strong>22.06</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-9,60 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">30.10.2025</td>
+    <td>08:28 – 13:26</td>
+    <td style="color:var(--muted)">298 min</td>
+    <td><strong>49.29</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-21,44 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">27.10.2025</td>
+    <td>16:32 – 20:59</td>
+    <td style="color:var(--muted)">267 min</td>
+    <td><strong>46.55</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-20,25 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">22.10.2025</td>
+    <td>16:27 – 19:13</td>
+    <td style="color:var(--muted)">166 min</td>
+    <td><strong>28.56</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-12,43 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">26.09.2025</td>
+    <td>19:00 – 00:56</td>
+    <td style="color:var(--muted)">356 min</td>
+    <td><strong>59.59</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-25,92 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">23.09.2025</td>
+    <td>19:00 – 21:43</td>
+    <td style="color:var(--muted)">163 min</td>
+    <td><strong>27.46</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-11,95 €</td>
+  </tr><tr>
+    <td style="color:var(--muted)">19.09.2025</td>
+    <td>19:00 – 00:39</td>
+    <td style="color:var(--muted)">339 min</td>
+    <td><strong>56.72</strong> kWh</td>
+    <td><span class="bnet">Netz</span></td>
+    <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
+    <td class="neg">-24,67 €</td>
   </tr></tbody></table></div></div>
-  <div id="tPublic" style="display:none">
+  <div id="tPublic" style="display: none;">
     <!-- EINGABEMASKE -->
     <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1.5rem">
       <p class="section-title" style="margin-bottom:.875rem">Manuelle Eingabe</p>
@@ -1329,7 +1343,11 @@ tr.overview-row.active td{background:#f0f8f0;}
     <!-- SESSIONS TABELLE -->
     <p class="section-title">Ladevorgänge</p>
     <div class="tbl-wrap"><table><thead><tr>
-      <th>Datum</th><th>Adresse</th><th>Art</th><th>kWh</th><th>Brutto</th><th>Quelle</th><th></th>
+      <th style="cursor:pointer;user-select:none" onclick="sortPubTab('date')">Datum ↓</th>
+      <th>Adresse</th><th>Art</th>
+      <th style="cursor:pointer;user-select:none" onclick="sortPubTab('kwh')">kWh</th>
+      <th style="cursor:pointer;user-select:none" onclick="sortPubTab('brutto')">Brutto</th>
+      <th>Quelle</th><th></th>
     </tr></thead>
     <tbody><tr>
     <td style="color:var(--muted)">01.04.2026</td>
@@ -1338,135 +1356,8 @@ tr.overview-row.active td{background:#f0f8f0;}
     <td><strong>45.39</strong> kWh</td>
     <td class="neg">20,88 €</td>
     <td><span style="font-size:10px;background:#fff3e0;color:#e65100;padding:1px 6px;border-radius:999px;font-weight:600">Manuell</span></td>
-    <td><button onclick="deleteManualSession(17)" style="background:none;border:none;cursor:pointer;color:#bbb;font-size:14px;padding:0 4px" title="Löschen">✕</button></td>
-  </tr><tr>
-    <td style="color:var(--muted)">15.09.2025</td>
-    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
-    <td><span class="bdc">DC</span></td>
-    <td><strong>49.24</strong> kWh</td>
-    <td class="neg">24,12 €</td>
-    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td></td>
-  </tr><tr>
-    <td style="color:var(--muted)">20.09.2025</td>
-    <td style="font-size:11px">Beethovenstraße 9 · 99706 Sondershausen</td>
-    <td><span class="bdc">DC</span></td>
-    <td><strong>13.48</strong> kWh</td>
-    <td class="neg">6,60 €</td>
-    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td></td>
-  </tr><tr>
-    <td style="color:var(--muted)">20.09.2025</td>
-    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
-    <td><span class="bdc">DC</span></td>
-    <td><strong>34.98</strong> kWh</td>
-    <td class="neg">17,14 €</td>
-    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td></td>
-  </tr><tr>
-    <td style="color:var(--muted)">25.10.2025</td>
-    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
-    <td><span class="bdc">DC</span></td>
-    <td><strong>29.92</strong> kWh</td>
-    <td class="neg">14,66 €</td>
-    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td></td>
-  </tr><tr>
-    <td style="color:var(--muted)">31.10.2025</td>
-    <td style="font-size:11px">Güstener Straße 19C · 06449 Aschersleben</td>
-    <td><span class="bdc">DC</span></td>
-    <td><strong>18.69</strong> kWh</td>
-    <td class="neg">9,15 €</td>
-    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td></td>
-  </tr><tr>
-    <td style="color:var(--muted)">18.11.2025</td>
-    <td style="font-size:11px">Merseburger Straße 40 · 06110 Halle</td>
-    <td><span class="bdc">DC</span></td>
-    <td><strong>28.44</strong> kWh</td>
-    <td class="neg">18,20 €</td>
-    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td></td>
-  </tr><tr>
-    <td style="color:var(--muted)">24.11.2025</td>
-    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
-    <td><span class="bdc">DC</span></td>
-    <td><strong>57.37</strong> kWh</td>
-    <td class="neg">28,10 €</td>
-    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td></td>
-  </tr><tr>
-    <td style="color:var(--muted)">26.11.2025</td>
-    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
-    <td><span class="bdc">DC</span></td>
-    <td><strong>53.18</strong> kWh</td>
-    <td class="neg">26,05 €</td>
-    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td></td>
-  </tr><tr>
-    <td style="color:var(--muted)">06.12.2025</td>
-    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
-    <td><span class="bdc">DC</span></td>
-    <td><strong>64.59</strong> kWh</td>
-    <td class="neg">29,71 €</td>
-    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td></td>
-  </tr><tr>
-    <td style="color:var(--muted)">15.12.2025</td>
-    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
-    <td><span class="bdc">DC</span></td>
-    <td><strong>29.25</strong> kWh</td>
-    <td class="neg">13,45 €</td>
-    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td></td>
-  </tr><tr>
-    <td style="color:var(--muted)">17.01.2026</td>
-    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
-    <td><span class="bdc">DC</span></td>
-    <td><strong>65.58</strong> kWh</td>
-    <td class="neg">30,16 €</td>
-    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td></td>
-  </tr><tr>
-    <td style="color:var(--muted)">24.01.2026</td>
-    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
-    <td><span class="bdc">DC</span></td>
-    <td><strong>43.49</strong> kWh</td>
-    <td class="neg">20,00 €</td>
-    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td></td>
-  </tr><tr>
-    <td style="color:var(--muted)">31.01.2026</td>
-    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
-    <td><span class="bdc">DC</span></td>
-    <td><strong>24.66</strong> kWh</td>
-    <td class="neg">11,34 €</td>
-    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td></td>
-  </tr><tr>
-    <td style="color:var(--muted)">07.02.2026</td>
-    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
-    <td><span class="bdc">DC</span></td>
-    <td><strong>46.28</strong> kWh</td>
-    <td class="neg">21,28 €</td>
-    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td></td>
-  </tr><tr>
-    <td style="color:var(--muted)">06.03.2026</td>
-    <td style="font-size:11px">Chausseestraße 8 · 15745 Wildau</td>
-    <td><span class="bdc">DC</span></td>
-    <td><strong>34.82</strong> kWh</td>
-    <td class="neg">16,01 €</td>
-    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td></td>
-  </tr><tr>
-    <td style="color:var(--muted)">09.03.2026</td>
-    <td style="font-size:11px">Am Sonnenfeld 1 · 06766 Bitterfeld-Wolfen</td>
-    <td><span class="bdc">DC</span></td>
-    <td><strong>35.68</strong> kWh</td>
-    <td class="neg">16,41 €</td>
-    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td></td>
+    <td><button onclick="deleteManualSession(17)" style="background:none;border:none;cursor:pointer;color:#bbb;font-size:14px;padding:0 4px" title="Löschen">✕</button>
+    </td>
   </tr><tr>
     <td style="color:var(--muted)">16.03.2026</td>
     <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
@@ -1474,13 +1365,163 @@ tr.overview-row.active td{background:#f0f8f0;}
     <td><strong>65.71</strong> kWh</td>
     <td class="neg">30,22 €</td>
     <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td></td>
+    <td>
+    </td>
+  </tr><tr>
+    <td style="color:var(--muted)">09.03.2026</td>
+    <td style="font-size:11px">Am Sonnenfeld 1 · 06766 Bitterfeld-Wolfen</td>
+    <td><span class="bdc">DC</span></td>
+    <td><strong>35.68</strong> kWh</td>
+    <td class="neg">16,41 €</td>
+    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
+    <td>
+    </td>
+  </tr><tr>
+    <td style="color:var(--muted)">06.03.2026</td>
+    <td style="font-size:11px">Chausseestraße 8 · 15745 Wildau</td>
+    <td><span class="bdc">DC</span></td>
+    <td><strong>34.82</strong> kWh</td>
+    <td class="neg">16,01 €</td>
+    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
+    <td>
+    </td>
+  </tr><tr>
+    <td style="color:var(--muted)">07.02.2026</td>
+    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
+    <td><span class="bdc">DC</span></td>
+    <td><strong>46.28</strong> kWh</td>
+    <td class="neg">21,28 €</td>
+    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
+    <td>
+    </td>
+  </tr><tr>
+    <td style="color:var(--muted)">31.01.2026</td>
+    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
+    <td><span class="bdc">DC</span></td>
+    <td><strong>24.66</strong> kWh</td>
+    <td class="neg">11,34 €</td>
+    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
+    <td>
+    </td>
+  </tr><tr>
+    <td style="color:var(--muted)">24.01.2026</td>
+    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
+    <td><span class="bdc">DC</span></td>
+    <td><strong>43.49</strong> kWh</td>
+    <td class="neg">20,00 €</td>
+    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
+    <td>
+    </td>
+  </tr><tr>
+    <td style="color:var(--muted)">17.01.2026</td>
+    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
+    <td><span class="bdc">DC</span></td>
+    <td><strong>65.58</strong> kWh</td>
+    <td class="neg">30,16 €</td>
+    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
+    <td>
+    </td>
+  </tr><tr>
+    <td style="color:var(--muted)">15.12.2025</td>
+    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
+    <td><span class="bdc">DC</span></td>
+    <td><strong>29.25</strong> kWh</td>
+    <td class="neg">13,45 €</td>
+    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
+    <td>
+    </td>
+  </tr><tr>
+    <td style="color:var(--muted)">06.12.2025</td>
+    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
+    <td><span class="bdc">DC</span></td>
+    <td><strong>64.59</strong> kWh</td>
+    <td class="neg">29,71 €</td>
+    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
+    <td>
+    </td>
+  </tr><tr>
+    <td style="color:var(--muted)">26.11.2025</td>
+    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
+    <td><span class="bdc">DC</span></td>
+    <td><strong>53.18</strong> kWh</td>
+    <td class="neg">26,05 €</td>
+    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
+    <td>
+    </td>
+  </tr><tr>
+    <td style="color:var(--muted)">24.11.2025</td>
+    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
+    <td><span class="bdc">DC</span></td>
+    <td><strong>57.37</strong> kWh</td>
+    <td class="neg">28,10 €</td>
+    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
+    <td>
+    </td>
+  </tr><tr>
+    <td style="color:var(--muted)">18.11.2025</td>
+    <td style="font-size:11px">Merseburger Straße 40 · 06110 Halle</td>
+    <td><span class="bdc">DC</span></td>
+    <td><strong>28.44</strong> kWh</td>
+    <td class="neg">18,20 €</td>
+    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
+    <td>
+    </td>
+  </tr><tr>
+    <td style="color:var(--muted)">31.10.2025</td>
+    <td style="font-size:11px">Güstener Straße 19C · 06449 Aschersleben</td>
+    <td><span class="bdc">DC</span></td>
+    <td><strong>18.69</strong> kWh</td>
+    <td class="neg">9,15 €</td>
+    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
+    <td>
+    </td>
+  </tr><tr>
+    <td style="color:var(--muted)">25.10.2025</td>
+    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
+    <td><span class="bdc">DC</span></td>
+    <td><strong>29.92</strong> kWh</td>
+    <td class="neg">14,66 €</td>
+    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
+    <td>
+    </td>
+  </tr><tr>
+    <td style="color:var(--muted)">20.09.2025</td>
+    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
+    <td><span class="bdc">DC</span></td>
+    <td><strong>34.98</strong> kWh</td>
+    <td class="neg">17,14 €</td>
+    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
+    <td>
+    </td>
+  </tr><tr>
+    <td style="color:var(--muted)">20.09.2025</td>
+    <td style="font-size:11px">Beethovenstraße 9 · 99706 Sondershausen</td>
+    <td><span class="bdc">DC</span></td>
+    <td><strong>13.48</strong> kWh</td>
+    <td class="neg">6,60 €</td>
+    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
+    <td>
+    </td>
+  </tr><tr>
+    <td style="color:var(--muted)">15.09.2025</td>
+    <td style="font-size:11px">An der Passage 1 · 04356 Leipzig</td>
+    <td><span class="bdc">DC</span></td>
+    <td><strong>49.24</strong> kWh</td>
+    <td class="neg">24,12 €</td>
+    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
+    <td>
+    </td>
   </tr></tbody>
     </table></div>
 
     
     <p class="section-title" style="margin-top:1.5rem">Grundgebühren</p>
-    <div class="tbl-wrap"><table><thead><tr><th>Monat</th><th>Tarif</th><th>Brutto</th><th>Quelle</th><th></th></tr></thead>
+    <div class="tbl-wrap"><table><thead><tr>
+      <th style="cursor:pointer;user-select:none" onclick="sortFeeTab('date')">Monat ↓</th>
+      <th>Tarif</th>
+      <th style="cursor:pointer;user-select:none" onclick="sortFeeTab('brutto')">Brutto</th>
+      <th>Quelle</th><th></th>
+    </tr></thead>
     <tbody><tr>
     <td style="color:var(--muted)">April 2026</td>
     <td style="font-size:11px">Ladetarif M</td>
@@ -1489,7 +1530,7 @@ tr.overview-row.active td{background:#f0f8f0;}
     <td><button onclick="deleteManualFee('01.04.2026')" style="background:none;border:none;cursor:pointer;color:#bbb;font-size:14px;padding:0 4px" title="Löschen">✕</button>
     </td>
   </tr><tr>
-    <td style="color:var(--muted)">Januar 2026</td>
+    <td style="color:var(--muted)">März 2026</td>
     <td style="font-size:11px">Ladetarif M</td>
     <td class="neg">5,99 €</td>
     <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
@@ -1503,28 +1544,14 @@ tr.overview-row.active td{background:#f0f8f0;}
     <td>
     </td>
   </tr><tr>
-    <td style="color:var(--muted)">rz 2026</td>
+    <td style="color:var(--muted)">Januar 2026</td>
     <td style="font-size:11px">Ladetarif M</td>
     <td class="neg">5,99 €</td>
     <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
     <td>
     </td>
   </tr><tr>
-    <td style="color:var(--muted)">August 2025</td>
-    <td style="font-size:11px">Ladetarif M</td>
-    <td class="neg">5,99 €</td>
-    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td>
-    </td>
-  </tr><tr>
-    <td style="color:var(--muted)">September 2025</td>
-    <td style="font-size:11px">Ladetarif M</td>
-    <td class="neg">5,99 €</td>
-    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td>
-    </td>
-  </tr><tr>
-    <td style="color:var(--muted)">Oktober 2025</td>
+    <td style="color:var(--muted)">Dezember 2025</td>
     <td style="font-size:11px">Ladetarif M</td>
     <td class="neg">5,99 €</td>
     <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
@@ -1538,7 +1565,21 @@ tr.overview-row.active td{background:#f0f8f0;}
     <td>
     </td>
   </tr><tr>
-    <td style="color:var(--muted)">Dezember 2025</td>
+    <td style="color:var(--muted)">Oktober 2025</td>
+    <td style="font-size:11px">Ladetarif M</td>
+    <td class="neg">5,99 €</td>
+    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
+    <td>
+    </td>
+  </tr><tr>
+    <td style="color:var(--muted)">September 2025</td>
+    <td style="font-size:11px">Ladetarif M</td>
+    <td class="neg">5,99 €</td>
+    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
+    <td>
+    </td>
+  </tr><tr>
+    <td style="color:var(--muted)">August 2025</td>
     <td style="font-size:11px">Ladetarif M</td>
     <td class="neg">5,99 €</td>
     <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
@@ -1646,7 +1687,7 @@ tr.overview-row.active td{background:#f0f8f0;}
       <p class="section-title">PV vs. Netz Heimladen (kWh)</p>
       <div style="position:relative;width:100%;height:324px"><canvas id="mc"></canvas></div>
     </div></div>
-  <div id="tAmort" style="display:none">
+  <div id="tAmort" style="display: none;">
   <div class="amort-grid">
     <div>
       <div class="amort-section-title">Investition</div>
@@ -1655,14 +1696,14 @@ tr.overview-row.active td{background:#f0f8f0;}
         <div style="font-size:11px;color:var(--muted);margin-bottom:6px">EnBW Tarif M (Vergleich öffentl. Säule)</div>
         <div class="amort-field"><label>Grundgebühr</label><input type="number" id="aPubBase" value="5.99" step="0.01" oninput="updateEffPrice()"><span>€/Monat</span></div>
         <div class="amort-field"><label>kWh-Preis</label><input type="number" id="aPubKwh" value="46" step="0.1" oninput="updateEffPrice()"><span>ct/kWh</span></div>
-        <div class="amort-field"><label>Lademenge öffentl.</label><input type="number" id="aPubMonthKwh" value="90" step="1" oninput="amortFieldChanged('aPubMonthKwh');updateEffPrice()"><span>kWh/Monat</span><span id="aPubYearLabel" style="font-size:10px;color:var(--muted);margin-left:4px">(ca. 1.080 kWh/Jahr)</span></div>
-        <div class="amort-eff"><label>Effektivpreis</label><span id="aEffPrice" style="font-size:14px;font-weight:600;color:var(--green)">52,65</span><span style="font-size:11px;color:var(--muted)">ct/kWh</span><input type="hidden" id="aPubPrice" value="52.65"></div>
+        <div class="amort-field"><label>Lademenge öffentl.</label><input type="number" id="aPubMonthKwh" value="90" step="1" oninput="amortFieldChanged('aPubMonthKwh');updateEffPrice()"><span>kWh/Monat</span><span id="aPubYearLabel" style="font-size:10px;color:var(--muted);margin-left:4px">(ca. 960 kWh/Jahr)</span></div>
+        <div class="amort-eff"><label>Effektivpreis</label><span id="aEffPrice" style="font-size:14px;font-weight:600;color:var(--green)">53,49</span><span style="font-size:11px;color:var(--muted)">ct/kWh</span><input type="hidden" id="aPubPrice" value="53.4875"></div>
       </div>
     </div>
     <div>
       <div class="amort-section-title">Jahresprognose <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#bbb">(8 echte / 4 gesch. Monate · Saisonfaktoren: Aus echten Daten)</span></div>
       <div class="amort-field"><label>PV-Nettovorteil / Jahr</label><input type="number" id="aPvYear" value="128.27" step="0.01" oninput="amortFieldChanged('aPvYear')"><span>€/Jahr</span><span id="aPvMonthLabel" style="font-size:10px;color:var(--muted);margin-left:4px">(ca. 10,69 €/Monat)</span></div>
-      <div class="amort-field"><label>Wallbox / Jahr</label><input type="number" id="aNetYear" value="NaN" step="1" oninput="amortFieldChanged('aNetYear')"><span>kWh/Jahr</span><span id="aNetTotalLabel" style="font-size:10px;color:var(--muted);margin-left:4px">(gesamt 1.080 kWh/Jahr inkl. öffentl.)</span></div>
+      <div class="amort-field"><label>Wallbox / Jahr</label><input type="number" id="aNetYear" value="NaN" step="1" oninput="amortFieldChanged('aNetYear')"><span>kWh/Jahr</span><span id="aNetTotalLabel" style="font-size:10px;color:var(--muted);margin-left:4px">(gesamt 3.160 kWh/Jahr inkl. öffentl.)</span></div>
       <div style="margin-top:.75rem">
         <div style="font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.4rem">Monatsaufschlüsselung</div>
         <div><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Sept. 2025</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Okt. 2025</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Nov. 2025</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Dez. 2025</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Jan. 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Feb. 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">März 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Apr. 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:#1a73e8;flex-shrink:0"></span><span style="font-size:11px;color:#1a73e8">Mai 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:#1a73e8;flex-shrink:0"></span><span style="font-size:11px;color:#1a73e8">Juni 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:#1a73e8;flex-shrink:0"></span><span style="font-size:11px;color:#1a73e8">Juli 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:#1a73e8;flex-shrink:0"></span><span style="font-size:11px;color:#1a73e8">Aug. 2026</span></span></div>
@@ -1680,12 +1721,12 @@ tr.overview-row.active td{background:#f0f8f0;}
   <div id="amortResult" style="display: block;">
     <div class="amort-metrics" id="amortMetrics">
     <div class="amort-metric"><div class="lb">PV-Nettovorteil / Jahr</div><div class="vl pos">128,27 <em>€</em></div><div class="sb">Eigenverbrauch vs. Einspeisung</div></div>
-    <div class="amort-metric"><div class="lb">Wallbox-Ersparnis / Jahr</div><div class="vl pos">0,00 <em>€</em></div><div class="sb">vs. EnBW Tarif M</div></div>
-    <div class="amort-metric"><div class="lb">Gesamtvorteil / Jahr</div><div class="vl pos">128,27 <em>€</em></div><div class="sb">PV + Wallbox (Prognose)</div></div>
-    <div class="amort-metric"><div class="lb">Amortisation</div><div class="vl blue">ca. September 2032</div><div class="sb">≈ 84 Monate</div></div></div>
+    <div class="amort-metric"><div class="lb">Wallbox-Ersparnis / Jahr</div><div class="vl pos">219,72 <em>€</em></div><div class="sb">vs. EnBW Tarif M</div></div>
+    <div class="amort-metric"><div class="lb">Gesamtvorteil / Jahr</div><div class="vl pos">348,00 <em>€</em></div><div class="sb">PV + Wallbox (Prognose)</div></div>
+    <div class="amort-metric"><div class="lb">Amortisation</div><div class="vl blue">ca. September 2028</div><div class="sb">≈ 36 Monate</div></div></div>
     <p class="section-title">Amortisationsverlauf</p>
-    <div style="position:relative;width:100%;height:240px"><canvas id="ac" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas></div>
-    <div id="amortNote" style="font-size:11px;color:var(--muted);margin-top:.75rem;line-height:1.6"><strong>Amortisationspunkt:</strong> ca. <strong>September 2032</strong> (≈ 84 Monate ab Kauf Sep 2025).
+    <div style="position:relative;width:100%;height:240px"><canvas id="ac" style="box-sizing: border-box; display: block; height: 240px; width: 852px;" width="852" height="240"></canvas></div>
+    <div id="amortNote" style="font-size:11px;color:var(--muted);margin-top:.75rem;line-height:1.6"><strong>Amortisationspunkt:</strong> ca. <strong>September 2028</strong> (≈ 36 Monate ab Kauf Sep 2025).
      Echte Daten bis April 2026, danach Prognose.</div>
   </div></div>
 </div>
@@ -2061,16 +2102,44 @@ function renderKacheln(gp,fp){
     </div>
   </div>`;
 
-  if(hasHome&&hasPub) html+=`
+  if(hasHome&&hasPub){
+    // Gesamt-Effektivpreis = Gesamtkosten / Gesamtkwh
+    const totEff=totKwh>0?(totCost/totKwh*100):0;
+
+    // Trend: letzten gespeicherten Effektivpreis vergleichen
+    const prevEff=parseFloat(localStorage.getItem('lm_prev_eff')||'0');
+    let trendArrow='', trendColor='var(--muted)', trendTitle='';
+    if(prevEff>0 && totEff>0){
+      const diff=totEff-prevEff;
+      if(Math.abs(diff)<0.05){
+        trendArrow='→'; trendColor='var(--muted)'; trendTitle='Stabil';
+      } else if(diff<0){
+        trendArrow='↘'; trendColor='var(--green)'; trendTitle=`-${Math.abs(diff).toFixed(2)} ct günstiger`;
+      } else {
+        trendArrow='↗'; trendColor='#e53935'; trendTitle=`+${diff.toFixed(2)} ct teurer`;
+      }
+    }
+    // Aktuellen Wert speichern für nächsten Vergleich
+    localStorage.setItem('lm_prev_eff', totEff.toFixed(4));
+
+    html+=`
   <div class="kachel kachel-full">
     <div class="kachel-header"><div class="kachel-header-dot" style="background:#111"></div><div class="kachel-header-title">Gesamtbilanz</div></div>
-    <div class="kachel-body" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kachel-body">
       <div class="kachel-metric"><div class="lb">Gesamt geladen</div><div class="vl">${totKwh.toFixed(2)}<em>kWh</em></div><div class="sb">Wallbox + Öffentlich</div></div>
       <div class="kachel-metric"><div class="lb">PV-Eigenverbrauch</div><div class="vl pos">${hPv.toFixed(2)}<em>kWh</em></div><div class="sb">${hPvPct}% des Wallbox-Ladens</div></div>
       <div class="kachel-metric"><div class="lb">PV-Nettovorteil</div><div class="vl ${bilCls(pvVorteil)}">${eur(pvVorteil,true)}</div><div class="sb">Ersparnis durch PV</div></div>
+      <div class="kachel-metric"><div class="lb">Effektivpreis gesamt</div>
+        <div class="vl blue" style="display:flex;align-items:baseline;gap:4px">
+          ${totEff.toFixed(2)}<em>ct/kWh</em>
+          ${trendArrow?`<span style="font-size:16px;color:${trendColor};margin-left:2px" title="${trendTitle}">${trendArrow}</span>`:''}
+        </div>
+        <div class="sb">${trendArrow&&trendTitle!='Stabil'?trendTitle:'Ø aller Ladevorgänge'}</div>
+      </div>
       <div class="kachel-metric"><div class="lb">Gesamtkosten</div><div class="vl neg">${eur(totCost)}</div><div class="sb">Netz Wallbox + öffentl.</div></div>
     </div>
   </div>`;
+  }
 
   document.getElementById('kacheln').innerHTML=html;
 }
@@ -2509,10 +2578,39 @@ function buildOverviewChart(mode){
 }
 
 // ── HOME TAB ─────────────────────────────────────────────
+// Sortierzustand für Wallbox-Tab
+let _homeSortCol='date', _homeSortAsc=false; // default: neueste zuerst
+
+function sortHomeTab(col){
+  if(_homeSortCol===col){_homeSortAsc=!_homeSortAsc;}
+  else{_homeSortCol=col;_homeSortAsc=false;}
+  renderHomeTab();
+}
+
+function parseDateDE(s){
+  // s.dateKey: "DD.MM.YYYY" oder s.start als Date
+  if(s.start instanceof Date) return s.start.getTime();
+  if(s.dateKey){const[d,m,y]=s.dateKey.split('.');return new Date(`${y}-${m}-${d}`).getTime();}
+  return 0;
+}
+
 function renderHomeTab(){
   if(!homeSessions.length){document.getElementById('tHome').innerHTML='<p style="color:var(--muted);font-size:13px">Keine go-e CSV Daten geladen.</p>';return;}
-  const rows=homeSessions.map(s=>`<tr>
-    <td style="color:var(--muted)">${s.dateShort}</td>
+
+  const sorted=[...homeSessions].sort((a,b)=>{
+    let va,vb;
+    if(_homeSortCol==='date'){va=parseDateDE(a);vb=parseDateDE(b);}
+    else if(_homeSortCol==='kwh'){va=a.kwh;vb=b.kwh;}
+    else if(_homeSortCol==='nb'){va=a.nb;vb=b.nb;}
+    else{va=parseDateDE(a);vb=parseDateDE(b);}
+    return _homeSortAsc?(va>vb?1:-1):(va<vb?1:-1);
+  });
+
+  const arrow=col=>_homeSortCol===col?(_homeSortAsc?' ↑':' ↓'):'';
+  const thStyle='cursor:pointer;user-select:none';
+
+  const rows=sorted.map(s=>`<tr>
+    <td style="color:var(--muted)">${s.dateKey||s.dateShort}</td>
     <td>${timeStr(s.start)} – ${timeStr(s.end)}</td>
     <td style="color:var(--muted)">${s.durMin} min</td>
     <td><strong>${s.kwh.toFixed(2)}</strong> kWh</td>
@@ -2520,48 +2618,105 @@ function renderHomeTab(){
     <td>${stk(s.pvR)}</td>
     <td class="${bilCls(s.nb)}">${eur(s.nb,true)}</td>
   </tr>`).join('');
+
   document.getElementById('tHome').innerHTML=`
-    <p class="section-title">Alle Heimlade-Sessions</p>
-    <div class="tbl-wrap"><table><thead><tr><th>Datum</th><th>Zeit</th><th>Dauer</th><th>Energie</th><th>Modus</th><th>PV/Netz</th><th>Bilanz</th></tr></thead>
+    <p class="section-title">Alle Wallbox-Sessions</p>
+    <div class="tbl-wrap"><table><thead><tr>
+      <th style="${thStyle}" onclick="sortHomeTab('date')">Datum${arrow('date')}</th>
+      <th>Zeit</th><th>Dauer</th>
+      <th style="${thStyle}" onclick="sortHomeTab('kwh')">Energie${arrow('kwh')}</th>
+      <th>Modus</th><th>PV/Netz</th>
+      <th style="${thStyle}" onclick="sortHomeTab('nb')">Bilanz${arrow('nb')}</th>
+    </tr></thead>
     <tbody>${rows}</tbody></table></div>`;
+}
+
+// Sortierzustand für Grundgebühren
+let _feeSortCol='date', _feeSortAsc=false;
+let _pubSortCol='date', _pubSortAsc=false;
+function sortFeeTab(col){
+  if(_feeSortCol===col){_feeSortAsc=!_feeSortAsc;}
+  else{_feeSortCol=col;_feeSortAsc=false;}
+  renderPublicTab();
+}
+function parseFeeDate(f){
+  if(!f.von)return 0;
+  const[d,m,y]=f.von.split('.');
+  return new Date(`${y}-${m}-01`).getTime();
+}
+
+// ── PUBLIC TAB ───────────────────────────────────────────
+
+function parsePubDate(s){
+  if(!s.datum)return 0;
+  const[d,m,y]=s.datum.split('.');
+  return new Date(`${y}-${m}-${d}`).getTime();
+}
+
+function sortPubTab(col){
+  if(_pubSortCol===col){_pubSortAsc=!_pubSortAsc;}
+  else{_pubSortCol=col;_pubSortAsc=false;}
+  renderPublicTab();
 }
 
 // ── PUBLIC TAB ───────────────────────────────────────────
 function renderPublicTab(){
   const manualSessions=pubSessions.filter(s=>s.manual);
   const pdfSessions=pubSessions.filter(s=>!s.manual);
+  const allSessions=[...manualSessions,...pdfSessions];
 
-  // Manuelle Sessions Tabelle
-  const manualRows=manualSessions.length?manualSessions.map((s,i)=>`<tr>
-    <td style="color:var(--muted)">${s.datum}</td>
+  // Sortierung anwenden
+  const sorted=allSessions.sort((a,b)=>{
+    let va,vb;
+    if(_pubSortCol==='date'){va=parsePubDate(a);vb=parsePubDate(b);}
+    else if(_pubSortCol==='kwh'){va=a.kwh||0;vb=b.kwh||0;}
+    else if(_pubSortCol==='brutto'){va=a.brutto_eur||0;vb=b.brutto_eur||0;}
+    else{va=parsePubDate(a);vb=parsePubDate(b);}
+    return _pubSortAsc?(va>vb?1:-1):(va<vb?1:-1);
+  });
+
+  const arrow=col=>_pubSortCol===col?(_pubSortAsc?' ↑':' ↓'):'';
+  const thS='cursor:pointer;user-select:none';
+
+  const sessionRows=sorted.map((s)=>`<tr>
+    <td style="color:var(--muted)">${s.datum||'–'}</td>
     <td style="font-size:11px">${s.adresse||'–'}</td>
     <td><span class="b${(s.ladeart||'ac').toLowerCase()}">${s.ladeart||'AC'}</span></td>
-    <td><strong>${s.kwh.toFixed(2)}</strong> kWh</td>
-    <td class="neg">${eur(s.brutto_eur)}</td>
-    <td><span style="font-size:10px;background:#fff3e0;color:#e65100;padding:1px 6px;border-radius:999px;font-weight:600">Manuell</span></td>
-    <td><button onclick="deleteManualSession(${pubSessions.indexOf(s)})" style="background:none;border:none;cursor:pointer;color:#bbb;font-size:14px;padding:0 4px" title="Löschen">✕</button></td>
-  </tr>`).join(''):'';
-
-  // PDF Sessions Tabelle
-  const pdfRows=pdfSessions.map(s=>`<tr>
-    <td style="color:var(--muted)">${s.datum}</td>
-    <td style="font-size:11px">${s.adresse}</td>
-    <td><span class="b${s.ladeart.toLowerCase()}">${s.ladeart}</span></td>
-    <td><strong>${s.kwh.toFixed(2)}</strong> kWh</td>
-    <td class="neg">${eur(s.brutto_eur)}</td>
-    <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
-    <td></td>
+    <td><strong>${(s.kwh||0).toFixed(2)}</strong> kWh</td>
+    <td class="neg">${eur(s.brutto_eur||0)}</td>
+    <td><span style="font-size:10px;background:${s.manual?'#fff3e0':'var(--blue-light)'};color:${s.manual?'#e65100':'var(--blue)'};padding:1px 6px;border-radius:999px;font-weight:600">${s.manual?'Manuell':'EnBW PDF'}</span></td>
+    <td>${s.manual?`<button onclick="deleteManualSession(${pubSessions.indexOf(s)})" style="background:none;border:none;cursor:pointer;color:#bbb;font-size:14px;padding:0 4px" title="Löschen">✕</button>`:''}
+    </td>
   </tr>`).join('');
 
-  // Grundgebühr-Übersicht
-  const feeRows=pubFees.map(f=>`<tr>
-    <td style="color:var(--muted)">${f.monat||f.von||'–'}</td>
+  // Grundgebühr-Übersicht – sortiert
+  const feeArrow=col=>_feeSortCol===col?(_feeSortAsc?' ↑':' ↓'):'';
+  const sortedFees=[...pubFees].sort((a,b)=>{
+    let va,vb;
+    if(_feeSortCol==='date'){va=parseFeeDate(a);vb=parseFeeDate(b);}
+    else if(_feeSortCol==='brutto'){
+      va=parseFloat((a.brutto||'0').replace(',','.'));
+      vb=parseFloat((b.brutto||'0').replace(',','.'));
+    }
+    else{va=parseFeeDate(a);vb=parseFeeDate(b);}
+    return _feeSortAsc?(va>vb?1:-1):(va<vb?1:-1);
+  });
+  const feeRows=sortedFees.map(f=>{
+    let monatLabel=f.monat||f.von||'–';
+    if(f.von){
+      try{
+        const[d,m,y]=f.von.split('.');
+        monatLabel=new Date(parseInt(y),parseInt(m)-1,1).toLocaleDateString('de-DE',{month:'long',year:'numeric'});
+      }catch(e){}
+    }
+    return `<tr>
+    <td style="color:var(--muted)">${monatLabel}</td>
     <td style="font-size:11px">${f.tarif||'Ladetarif M'}</td>
     <td class="neg">${eur(parseFloat((f.brutto||'0').replace(',','.')))}</td>
     <td><span style="font-size:10px;background:${f.manual?'#fff3e0':'var(--blue-light)'};color:${f.manual?'#e65100':'var(--blue)'};padding:1px 6px;border-radius:999px;font-weight:600">${f.manual?'Manuell':'EnBW PDF'}</span></td>
     <td>${f.manual?`<button onclick="deleteManualFee('${f.von}')" style="background:none;border:none;cursor:pointer;color:#bbb;font-size:14px;padding:0 4px" title="Löschen">✕</button>`:''}
     </td>
-  </tr>`).join('');
+  </tr>`;}).join('');
 
   document.getElementById('tPublic').innerHTML=`
     <!-- EINGABEMASKE -->
@@ -2598,14 +2753,23 @@ function renderPublicTab(){
     <!-- SESSIONS TABELLE -->
     <p class="section-title">Ladevorgänge</p>
     <div class="tbl-wrap"><table><thead><tr>
-      <th>Datum</th><th>Adresse</th><th>Art</th><th>kWh</th><th>Brutto</th><th>Quelle</th><th></th>
+      <th style="${thS}" onclick="sortPubTab('date')">Datum${arrow('date')}</th>
+      <th>Adresse</th><th>Art</th>
+      <th style="${thS}" onclick="sortPubTab('kwh')">kWh${arrow('kwh')}</th>
+      <th style="${thS}" onclick="sortPubTab('brutto')">Brutto${arrow('brutto')}</th>
+      <th>Quelle</th><th></th>
     </tr></thead>
-    <tbody>${manualRows}${pdfRows}${!manualRows&&!pdfRows?'<tr><td colspan="7" style="color:#bbb;font-size:12px;padding:1rem">Noch keine Einträge</td></tr>':''}</tbody>
+    <tbody>${sessionRows}${!sessionRows?'<tr><td colspan="7" style="color:#bbb;font-size:12px;padding:1rem">Noch keine Einträge</td></tr>':''}</tbody>
     </table></div>
 
     ${pubFees.length?`
     <p class="section-title" style="margin-top:1.5rem">Grundgebühren</p>
-    <div class="tbl-wrap"><table><thead><tr><th>Monat</th><th>Tarif</th><th>Brutto</th><th>Quelle</th><th></th></tr></thead>
+    <div class="tbl-wrap"><table><thead><tr>
+      <th style="cursor:pointer;user-select:none" onclick="sortFeeTab('date')">Monat${feeArrow('date')}</th>
+      <th>Tarif</th>
+      <th style="cursor:pointer;user-select:none" onclick="sortFeeTab('brutto')">Brutto${feeArrow('brutto')}</th>
+      <th>Quelle</th><th></th>
+    </tr></thead>
     <tbody>${feeRows}</tbody></table></div>`:''}`;
 }
 
