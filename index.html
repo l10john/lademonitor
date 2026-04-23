@@ -2125,37 +2125,54 @@ tr.overview-row.active td{background:#f0f8f0;}
         <td><span class="bnet">Netz</span></td>
         <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:0%"></div><div class="stk-net" style="width:100%"></div></div><span class="stk-pct">0%PV</span></div></td>
         <td class="neg">-24,67 €</td>
-      </tr></tbody></table></div></div>
-  <div id="tPublic" style="display: block;">
-    <!-- EINGABEMASKE -->
-    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1.5rem">
-      <p class="section-title" style="margin-bottom:.875rem">Manuelle Eingabe</p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.6rem;margin-bottom:.75rem">
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Datum</label>
-          <input type="date" id="mDatum" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px"></div>
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">kWh</label>
-          <input type="number" id="mKwh" step="0.01" placeholder="34.82" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px"></div>
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Betrag brutto (€)</label>
-          <input type="number" id="mBrutto" step="0.01" placeholder="16.01" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px"></div>
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Art</label>
-          <select id="mArt" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px">
-            <option value="DC">DC</option><option value="AC">AC</option>
-          </select></div>
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Adresse (optional)</label>
-          <input type="text" id="mAdresse" placeholder="Ort / Straße" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px"></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
-        <button onclick="addManualSession()" style="background:#111;color:#fff;border:none;padding:7px 18px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer">+ Session hinzufügen</button>
-        <span style="color:var(--muted);font-size:11px">oder</span>
-        <div style="display:flex;align-items:center;gap:6px">
-          <label style="font-size:11px;color:var(--muted)">Grundgebühr</label>
-          <input type="month" id="mFeeMonth" style="padding:4px 7px;border:1px solid #ddd;border-radius:4px;font-size:12px">
-          <input type="number" id="mFeeAmount" value="5.99" step="0.01" style="width:65px;padding:4px 7px;border:1px solid #ddd;border-radius:4px;font-size:12px">
-          <span style="font-size:11px;color:var(--muted)">€</span>
-          <button onclick="addManualFee()" style="background:#111;color:#fff;border:none;padding:5px 13px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer">+ Grundgebühr</button>
+      </tr></tbody></table></div>
+
+    <div style="margin-top:2rem">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem">
+        <p class="section-title" style="margin:0">Wallbox – Monatsvergleich</p>
+        <div style="display:flex;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;font-size:12px">
+          <button id="hToggleKwh" onclick="switchHomeChart('kwh')" style="padding:4px 14px;border:none;background:#111;color:#fff;cursor:pointer;font-size:12px;font-weight:600">kWh</button>
+          <button id="hToggleEur" onclick="switchHomeChart('eur')" style="padding:4px 14px;border:none;background:#fff;color:var(--muted);cursor:pointer;font-size:12px">€</button>
         </div>
       </div>
-      <div id="manualMsg" style="font-size:12px;color:var(--green);margin-top:.5rem;display:none"></div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:.75rem" id="hChartLegend"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #1D9E75"></span>PV-Überschuss</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #8BD5B8"></span>Netzbezug</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>Ø 185.79 kWh</span></div>
+      <div style="position:relative;width:100%;height:220px"><canvas id="hTabCanvas" role="img" aria-label="Wallbox Monatsvergleich" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 852px;" width="852"></canvas></div>
+    </div></div>
+  <div id="tPublic" style="display: block;">
+    <!-- EINGABEMASKE (klappbar) -->
+    <div style="margin-bottom:1.25rem;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+      <div onclick="toggleManualInput()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;padding:.5rem .75rem;background:#fafafa">
+        <span id="manualInputChevron" style="font-size:11px;color:var(--muted)">▶</span>
+        <span style="font-size:12px;color:var(--muted)">Manuelle Eingabe</span>
+      </div>
+      <div id="manualInputBody" style="display: none; padding: 1rem 1.25rem; border-top: 1px solid var(--border);">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.6rem;margin-bottom:.75rem">
+          <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Datum</label>
+            <input type="date" id="mDatum" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px"></div>
+          <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">kWh</label>
+            <input type="number" id="mKwh" step="0.01" placeholder="34.82" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px"></div>
+          <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Betrag brutto (€)</label>
+            <input type="number" id="mBrutto" step="0.01" placeholder="16.01" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px"></div>
+          <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Art</label>
+            <select id="mArt" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px">
+              <option value="DC">DC</option><option value="AC">AC</option>
+            </select></div>
+          <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Adresse (optional)</label>
+            <input type="text" id="mAdresse" placeholder="Ort / Straße" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
+          <button onclick="addManualSession()" style="background:#111;color:#fff;border:none;padding:7px 18px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer">+ Session hinzufügen</button>
+          <span style="color:var(--muted);font-size:11px">oder</span>
+          <div style="display:flex;align-items:center;gap:6px">
+            <label style="font-size:11px;color:var(--muted)">Grundgebühr</label>
+            <input type="month" id="mFeeMonth" style="padding:4px 7px;border:1px solid #ddd;border-radius:4px;font-size:12px">
+            <input type="number" id="mFeeAmount" value="5.99" step="0.01" style="width:65px;padding:4px 7px;border:1px solid #ddd;border-radius:4px;font-size:12px">
+            <span style="font-size:11px;color:var(--muted)">€</span>
+            <button onclick="addManualFee()" style="background:#111;color:#fff;border:none;padding:5px 13px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer">+ Grundgebühr</button>
+          </div>
+        </div>
+        <div id="manualMsg" style="font-size:12px;color:var(--green);margin-top:.5rem;display:none"></div>
+      </div>
     </div>
 
     <!-- SESSIONS TABELLE -->
@@ -2456,7 +2473,19 @@ tr.overview-row.active td{background:#f0f8f0;}
       <td><span style="font-size:10px;background:var(--blue-light);color:var(--blue);padding:1px 6px;border-radius:999px;font-weight:600">EnBW PDF</span></td>
       <td></td>
     </tr></tbody>
-    </table></div></div>
+    </table></div>
+
+    <div style="margin-top:2rem">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem">
+        <p class="section-title" style="margin:0">Öffentlich – Monatsvergleich</p>
+        <div style="display:flex;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;font-size:12px">
+          <button id="pToggleKwh" onclick="switchPubChart('kwh')" style="padding:4px 14px;border:none;background:#fff;color:var(--muted);cursor:pointer;font-size:12px">kWh</button>
+          <button id="pToggleEur" onclick="switchPubChart('eur')" style="padding:4px 14px;border:none;background:#111;color:#fff;cursor:pointer;font-size:12px;font-weight:600">€</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:.75rem" id="pChartLegend"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #378ADD"></span>Ladekosten</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #1a73e8"></span>Grundgebühr</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>Ø 50.17 €</span></div>
+      <div style="position:relative;width:100%;height:220px"><canvas id="pTabCanvas" role="img" aria-label="Öffentlich Monatsvergleich" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 852px;" width="852"></canvas></div>
+    </div></div>
   <div id="tMonths" style="display:none"><div style="display:flex;gap:14px;font-size:11px;color:var(--muted);margin-bottom:.75rem;flex-wrap:wrap">
     <span><span class="ld" style="background:var(--green)"></span>PV</span>
     <span><span class="ld" style="background:#1a73e8"></span>Netz</span>
@@ -2619,7 +2648,7 @@ const HISTORIC_DATA = {"homeSessions":[{"start":"2025-09-19T17:00:00.000Z","end"
 
 // ── STATE ────────────────────────────────────────────────
 let allRawData=[], loadedFiles=[], homeSessions=[], pubSessions=[], pubFees=[];
-let pChart=null, mChart=null, aChart=null, oChart=null, eChart=null;
+let pChart=null, mChart=null, aChart=null, oChart=null, eChart=null, hTabChart=null, pTabChart=null;
 let _monthSorted=[], _monthSortCol='key', _monthSortAsc=true;
 let lastHomeSessions=[];
 
@@ -3597,7 +3626,21 @@ function renderHomeTab(){
       <th>Modus</th><th>PV/Netz</th>
       <th style="${thStyle}" onclick="sortHomeTab('nb')">Bilanz${arrow('nb')}</th>
     </tr></thead>
-    <tbody>${rows}</tbody></table></div>`;
+    <tbody>${rows}</tbody></table></div>
+
+    <div style="margin-top:2rem">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem">
+        <p class="section-title" style="margin:0">Wallbox – Monatsvergleich</p>
+        <div style="display:flex;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;font-size:12px">
+          <button id="hToggleKwh" onclick="switchHomeChart('kwh')" style="padding:4px 14px;border:none;background:#111;color:#fff;cursor:pointer;font-size:12px;font-weight:600">kWh</button>
+          <button id="hToggleEur" onclick="switchHomeChart('eur')" style="padding:4px 14px;border:none;background:#fff;color:var(--muted);cursor:pointer;font-size:12px">€</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:.75rem" id="hChartLegend"></div>
+      <div style="position:relative;width:100%;height:220px"><canvas id="hTabCanvas" role="img" aria-label="Wallbox Monatsvergleich"></canvas></div>
+    </div>`;
+
+  renderHomeChart('kwh', monthOrder, monthMap);
 }
 
 function toggleHomeMonth(mId){
@@ -3777,35 +3820,40 @@ function renderPublicTab(){
   </tr>`;}).join('');
 
   document.getElementById('tPublic').innerHTML=`
-    <!-- EINGABEMASKE -->
-    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1.5rem">
-      <p class="section-title" style="margin-bottom:.875rem">Manuelle Eingabe</p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.6rem;margin-bottom:.75rem">
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Datum</label>
-          <input type="date" id="mDatum" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px"></div>
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">kWh</label>
-          <input type="number" id="mKwh" step="0.01" placeholder="34.82" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px"></div>
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Betrag brutto (€)</label>
-          <input type="number" id="mBrutto" step="0.01" placeholder="16.01" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px"></div>
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Art</label>
-          <select id="mArt" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px">
-            <option value="DC">DC</option><option value="AC">AC</option>
-          </select></div>
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Adresse (optional)</label>
-          <input type="text" id="mAdresse" placeholder="Ort / Straße" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px"></div>
+    <!-- EINGABEMASKE (klappbar) -->
+    <div style="margin-bottom:1.25rem;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+      <div onclick="toggleManualInput()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;padding:.5rem .75rem;background:#fafafa">
+        <span id="manualInputChevron" style="font-size:11px;color:var(--muted)">▶</span>
+        <span style="font-size:12px;color:var(--muted)">Manuelle Eingabe</span>
       </div>
-      <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
-        <button onclick="addManualSession()" style="background:#111;color:#fff;border:none;padding:7px 18px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer">+ Session hinzufügen</button>
-        <span style="color:var(--muted);font-size:11px">oder</span>
-        <div style="display:flex;align-items:center;gap:6px">
-          <label style="font-size:11px;color:var(--muted)">Grundgebühr</label>
-          <input type="month" id="mFeeMonth" style="padding:4px 7px;border:1px solid #ddd;border-radius:4px;font-size:12px">
-          <input type="number" id="mFeeAmount" value="5.99" step="0.01" style="width:65px;padding:4px 7px;border:1px solid #ddd;border-radius:4px;font-size:12px">
-          <span style="font-size:11px;color:var(--muted)">€</span>
-          <button onclick="addManualFee()" style="background:#111;color:#fff;border:none;padding:5px 13px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer">+ Grundgebühr</button>
+      <div id="manualInputBody" style="display:none;padding:1rem 1.25rem;border-top:1px solid var(--border)">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.6rem;margin-bottom:.75rem">
+          <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Datum</label>
+            <input type="date" id="mDatum" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px"></div>
+          <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">kWh</label>
+            <input type="number" id="mKwh" step="0.01" placeholder="34.82" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px"></div>
+          <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Betrag brutto (€)</label>
+            <input type="number" id="mBrutto" step="0.01" placeholder="16.01" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px"></div>
+          <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Art</label>
+            <select id="mArt" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px">
+              <option value="DC">DC</option><option value="AC">AC</option>
+            </select></div>
+          <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Adresse (optional)</label>
+            <input type="text" id="mAdresse" placeholder="Ort / Straße" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px"></div>
         </div>
+        <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
+          <button onclick="addManualSession()" style="background:#111;color:#fff;border:none;padding:7px 18px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer">+ Session hinzufügen</button>
+          <span style="color:var(--muted);font-size:11px">oder</span>
+          <div style="display:flex;align-items:center;gap:6px">
+            <label style="font-size:11px;color:var(--muted)">Grundgebühr</label>
+            <input type="month" id="mFeeMonth" style="padding:4px 7px;border:1px solid #ddd;border-radius:4px;font-size:12px">
+            <input type="number" id="mFeeAmount" value="5.99" step="0.01" style="width:65px;padding:4px 7px;border:1px solid #ddd;border-radius:4px;font-size:12px">
+            <span style="font-size:11px;color:var(--muted)">€</span>
+            <button onclick="addManualFee()" style="background:#111;color:#fff;border:none;padding:5px 13px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer">+ Grundgebühr</button>
+          </div>
+        </div>
+        <div id="manualMsg" style="font-size:12px;color:var(--green);margin-top:.5rem;display:none"></div>
       </div>
-      <div id="manualMsg" style="font-size:12px;color:var(--green);margin-top:.5rem;display:none"></div>
     </div>
 
     <!-- SESSIONS TABELLE -->
@@ -3818,7 +3866,192 @@ function renderPublicTab(){
       <th>Quelle</th><th></th>
     </tr></thead>
     <tbody>${sessionRows||'<tr><td colspan="7" style="color:#bbb;font-size:12px;padding:1rem">Noch keine Einträge</td></tr>'}</tbody>
-    </table></div>`;
+    </table></div>
+
+    <div style="margin-top:2rem">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem">
+        <p class="section-title" style="margin:0">Öffentlich – Monatsvergleich</p>
+        <div style="display:flex;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;font-size:12px">
+          <button id="pToggleKwh" onclick="switchPubChart('kwh')" style="padding:4px 14px;border:none;background:#fff;color:var(--muted);cursor:pointer;font-size:12px">kWh</button>
+          <button id="pToggleEur" onclick="switchPubChart('eur')" style="padding:4px 14px;border:none;background:#111;color:#fff;cursor:pointer;font-size:12px;font-weight:600">€</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:.75rem" id="pChartLegend"></div>
+      <div style="position:relative;width:100%;height:220px"><canvas id="pTabCanvas" role="img" aria-label="Öffentlich Monatsvergleich"></canvas></div>
+    </div>`;
+  renderPubChart(monthOrder, monthMap);
+}
+
+// ── HOME TAB CHART ───────────────────────────────────────
+function switchHomeChart(mode){
+  const kwh=document.getElementById('hToggleKwh');
+  const eur=document.getElementById('hToggleEur');
+  if(kwh){kwh.style.background=mode==='kwh'?'#111':'#fff';kwh.style.color=mode==='kwh'?'#fff':'var(--muted)';kwh.style.fontWeight=mode==='kwh'?'600':'400';}
+  if(eur){eur.style.background=mode==='eur'?'#111':'#fff';eur.style.color=mode==='eur'?'#fff':'var(--muted)';eur.style.fontWeight=mode==='eur'?'600':'400';}
+  if(window._hTabData) renderHomeChart(mode, window._hTabData.monthOrder, window._hTabData.monthMap);
+}
+
+function switchPubChart(mode){
+  const kwh=document.getElementById('pToggleKwh');
+  const eur=document.getElementById('pToggleEur');
+  if(kwh){kwh.style.background=mode==='kwh'?'#111':'#fff';kwh.style.color=mode==='kwh'?'#fff':'var(--muted)';kwh.style.fontWeight=mode==='kwh'?'600':'400';}
+  if(eur){eur.style.background=mode==='eur'?'#111':'#fff';eur.style.color=mode==='eur'?'#fff':'var(--muted)';eur.style.fontWeight=mode==='eur'?'600':'400';}
+  if(window._pTabData) renderPubChart(window._pTabData.monthOrder, window._pTabData.monthMap, mode);
+}
+
+function renderHomeChart(mode, monthOrder, monthMap){
+  window._hTabData={monthOrder,monthMap};
+  const gp=parseFloat(document.getElementById('gp').value)/100;
+  const fp=parseFloat(document.getElementById('fp').value)/100;
+  const canvas=document.getElementById('hTabCanvas');
+  if(!canvas) return;
+  if(hTabChart){hTabChart.destroy();hTabChart=null;}
+
+  const sortedMonthOrder=[...monthOrder].sort((a,b)=>a.localeCompare(b));
+  const labels=sortedMonthOrder.map(mk=>new Date(mk+'-01').toLocaleDateString('de-DE',{month:'short',year:'numeric'}));
+  const allMonthSessions=sortedMonthOrder.map(mk=>monthMap[mk].dayOrder.flatMap(dk=>monthMap[mk].days[dk]));
+  const isEur=mode==='eur';
+  const gridC='rgba(128,128,128,0.08)';
+  let datasets, legend, totals;
+
+  if(!isEur){
+    const pvData=allMonthSessions.map(ss=>+ss.reduce((a,s)=>a+s.pvKwh,0).toFixed(2));
+    const netData=allMonthSessions.map(ss=>+ss.reduce((a,s)=>a+s.netKwh,0).toFixed(2));
+    totals=allMonthSessions.map(ss=>+ss.reduce((a,s)=>a+s.kwh,0).toFixed(2));
+    datasets=[
+      {label:'PV-Überschuss',data:pvData,backgroundColor:'rgba(29,158,117,0.30)',borderColor:'#1D9E75',borderWidth:1.5,borderRadius:{topLeft:2,topRight:2},borderSkipped:false,stack:'s'},
+      {label:'Netzbezug',data:netData,backgroundColor:'rgba(139,213,184,0.15)',borderColor:'#8BD5B8',borderWidth:1.5,borderSkipped:false,stack:'s'},
+    ];
+    legend=[{color:'#1D9E75',label:'PV-Überschuss'},{color:'#8BD5B8',label:'Netzbezug'}];
+  } else {
+    const pvVorteil=allMonthSessions.map(ss=>{const pv=ss.reduce((a,s)=>a+s.pvKwh,0);return+(pv*gp-pv*fp).toFixed(2);});
+    const netzK=allMonthSessions.map((ss,i)=>{const net=ss.reduce((a,s)=>a+s.netKwh,0);return+Math.max(0,net*gp-pvVorteil[i]).toFixed(2);});
+    totals=netzK.map((v,i)=>+(v).toFixed(2));
+    datasets=[
+      {label:'Netzkosten (inkl. PV)',data:netzK,backgroundColor:'rgba(139,213,184,0.15)',borderColor:'#8BD5B8',borderWidth:1.5,borderRadius:{topLeft:2,topRight:2},borderSkipped:false,stack:'s'},
+      {label:'PV-Nettovorteil',data:pvVorteil.map(v=>+(-v).toFixed(2)),backgroundColor:'rgba(29,158,117,0.30)',borderColor:'#1D9E75',borderWidth:1.5,borderRadius:2,borderSkipped:false,stack:'s'},
+    ];
+    legend=[{color:'#8BD5B8',label:'Netzkosten'},{color:'#1D9E75',label:'PV-Nettovorteil (Ersparnis)'}];
+  }
+
+  // Ø-Linie (nur positive Werte, ab Sep 2025)
+  const positiveTotals=totals.filter((v,i)=>v>0&&monthOrder[i]>='2025-09');
+  const avg=positiveTotals.length?+(positiveTotals.reduce((a,b)=>a+b,0)/positiveTotals.length).toFixed(2):null;
+  if(avg) datasets.push({label:`Ø ${avg.toFixed(2)}${isEur?' €':' kWh'}`,data:labels.map(()=>avg),type:'line',borderColor:'#999',borderWidth:1.5,borderDash:[5,4],pointRadius:0,fill:false,stack:undefined,order:0});
+
+  const legendEl=document.getElementById('hChartLegend');
+  if(legendEl) legendEl.innerHTML=[...legend,...(avg?[{color:'#999',label:`Ø ${avg.toFixed(2)}${isEur?' €':' kWh'}`,dash:true}]:[])].map(l=>
+    l.dash?`<span style="display:inline-flex;align-items:center;gap:4px"><span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>${l.label}</span>`
+    :`<span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid ${l.color}"></span>${l.label}</span>`
+  ).join('');
+
+  const posLastBarIdx=isEur?0:1;
+  hTabChart=new Chart(canvas.getContext('2d'),{
+    type:'bar',
+    data:{labels,datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      layout:{padding:{right:90,top:20}},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{if(ctx.dataset.label?.startsWith('Ø'))return null;return`${ctx.dataset.label}: ${Math.abs(ctx.parsed.y).toFixed(2)}${isEur?' €':' kWh'}`;}}}},
+      scales:{
+        x:{stacked:true,ticks:{color:'#888',font:{size:11},maxRotation:0,autoSkip:false},grid:{color:gridC},border:{display:false}},
+        y:{stacked:true,ticks:{color:'#aaa',font:{size:10},callback:v=>Math.abs(v)+(isEur?' €':' kWh')},grid:{color:gridC},border:{display:false}},
+      },
+      animation:{onComplete:function(){
+        const ctx=this.ctx;ctx.save();
+        ctx.font='bold 11px -apple-system,sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillStyle='#555';
+        const meta=this.getDatasetMeta(posLastBarIdx);
+        totals.forEach((t,i)=>{const bar=meta.data[i];if(!bar||!t)return;ctx.fillText(Math.abs(t).toFixed(2)+(isEur?' €':' kWh'),bar.x,bar.y-4);});
+        // Ø-Label rechts
+        if(avg){
+          const avgMeta=this.getDatasetMeta(datasets.length-1);
+          if(avgMeta?.data?.length){const pt=avgMeta.data[avgMeta.data.length-1];if(pt){ctx.font='bold 11px -apple-system,sans-serif';ctx.fillStyle='#999';ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText('Ø '+avg.toFixed(2)+(isEur?' €':' kWh'),pt.x+8,pt.y);}}
+        }
+        ctx.restore();
+      }}
+    }
+  });
+}
+
+// ── PUB TAB CHART ────────────────────────────────────────
+
+function renderPubChart(monthOrder, monthMap, mode='eur'){
+  window._pTabData={monthOrder,monthMap};
+  const canvas=document.getElementById('pTabCanvas');
+  if(!canvas) return;
+  if(pTabChart){pTabChart.destroy();pTabChart=null;}
+
+  const sortedMonthOrder=[...monthOrder].sort((a,b)=>a.localeCompare(b));
+  const labels=sortedMonthOrder.map(mk=>new Date(mk+'-01').toLocaleDateString('de-DE',{month:'short',year:'numeric'}));
+  const isEur=mode!=='kwh';
+  const gridC='rgba(128,128,128,0.08)';
+
+  const ladeKwh=sortedMonthOrder.map(mk=>+monthMap[mk].sessions.reduce((a,s)=>a+(s.kwh||0),0).toFixed(2));
+  const ladeEur=sortedMonthOrder.map(mk=>+monthMap[mk].sessions.reduce((a,s)=>a+(s.brutto_eur||0),0).toFixed(2));
+  const feeEur=sortedMonthOrder.map(mk=>{
+    const f=pubFees.find(f=>{if(!f.von)return false;const[d,m,y]=f.von.split('.');return`${y}-${m}`===mk;});
+    return f?+parseFloat((f.brutto||'0').replace(',','.')).toFixed(2):0;
+  });
+
+  let d1,d2,totals,legend;
+  if(!isEur){
+    d1={label:'Geladene kWh',data:ladeKwh,backgroundColor:'rgba(55,138,221,0.12)',borderColor:'#378ADD',borderWidth:1.5,borderRadius:{topLeft:2,topRight:2},borderSkipped:false,stack:'s'};
+    d2=null;
+    totals=ladeKwh;
+    legend=[{color:'#378ADD',label:'Geladene kWh'}];
+  } else {
+    d1={label:'Ladekosten',data:ladeEur,backgroundColor:'rgba(55,138,221,0.12)',borderColor:'#378ADD',borderWidth:1.5,borderRadius:0,borderSkipped:false,stack:'s'};
+    d2={label:'Grundgebühr',data:feeEur,backgroundColor:'rgba(26,115,232,0.25)',borderColor:'#1a73e8',borderWidth:1.5,borderRadius:{topLeft:2,topRight:2},borderSkipped:false,stack:'s'};
+    totals=sortedMonthOrder.map((_,i)=>+(ladeEur[i]+feeEur[i]).toFixed(2));
+    legend=[{color:'#378ADD',label:'Ladekosten'},{color:'#1a73e8',label:'Grundgebühr'}];
+  }
+  const datasets=[d1,...(d2?[d2]:[])];
+
+  // Ø-Linie
+  const posTotals=totals.filter(v=>v>0);
+  const avg=posTotals.length?+(posTotals.reduce((a,b)=>a+b,0)/posTotals.length).toFixed(2):null;
+  if(avg) datasets.push({label:`Ø ${avg.toFixed(2)}${isEur?' €':' kWh'}`,data:labels.map(()=>avg),type:'line',borderColor:'#999',borderWidth:1.5,borderDash:[5,4],pointRadius:0,fill:false,stack:undefined,order:0});
+
+  const legendEl=document.getElementById('pChartLegend');
+  if(legendEl) legendEl.innerHTML=[...legend,...(avg?[{color:'#999',label:`Ø ${avg.toFixed(2)}${isEur?' €':' kWh'}`,dash:true}]:[])].map(l=>
+    l.dash?`<span style="display:inline-flex;align-items:center;gap:4px"><span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>${l.label}</span>`
+    :`<span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid ${l.color}"></span>${l.label}</span>`
+  ).join('');
+
+  const posLastBarIdx=d2?1:0;
+  pTabChart=new Chart(canvas.getContext('2d'),{
+    type:'bar',
+    data:{labels,datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      layout:{padding:{right:90,top:20}},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{if(ctx.dataset.label?.startsWith('Ø'))return null;return`${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)}${isEur?' €':' kWh'}`;}}}},
+      scales:{
+        x:{stacked:true,ticks:{color:'#888',font:{size:11},maxRotation:0,autoSkip:false},grid:{color:gridC},border:{display:false}},
+        y:{stacked:true,ticks:{color:'#aaa',font:{size:10},callback:v=>v+(isEur?' €':' kWh')},grid:{color:gridC},border:{display:false}},
+      },
+      animation:{onComplete:function(){
+        const ctx=this.ctx;ctx.save();
+        ctx.font='bold 11px -apple-system,sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillStyle='#555';
+        const meta=this.getDatasetMeta(posLastBarIdx);
+        totals.forEach((t,i)=>{const bar=meta.data[i];if(!bar||!t)return;ctx.fillText(t.toFixed(2)+(isEur?' €':' kWh'),bar.x,bar.y-4);});
+        if(avg){
+          const avgMeta=this.getDatasetMeta(datasets.length-1);
+          if(avgMeta?.data?.length){const pt=avgMeta.data[avgMeta.data.length-1];if(pt){ctx.font='bold 11px -apple-system,sans-serif';ctx.fillStyle='#999';ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText('Ø '+avg.toFixed(2)+(isEur?' €':' kWh'),pt.x+8,pt.y);}}
+        }
+        ctx.restore();
+      }}
+    }
+  });
+}
+
+function toggleManualInput(){
+  const body=document.getElementById('manualInputBody');
+  const chevron=document.getElementById('manualInputChevron');
+  if(!body) return;
+  const open=body.style.display==='none';
+  body.style.display=open?'block':'none';
+  if(chevron) chevron.textContent=open?'▼':'▶';
 }
 
 function togglePubMonth(mId){
