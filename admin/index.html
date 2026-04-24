@@ -218,7 +218,7 @@ tr.overview-row.active td{background:#f0f8f0;}
 </div>
 
 <!-- PUBLISH TOAST -->
-<div id="publishToast" style="display: none; padding: 0.6rem 1rem; border-radius: var(--radius); font-size: 12px; margin-bottom: 0.75rem; border: 1px solid rgb(159, 225, 203); transition: 0.2s; color: rgb(15, 110, 86); background: rgb(225, 245, 238);">✓ Admin: <a href="https://l10john.github.io/lademonitor/admin/" target="_blank" style="color:var(--blue)">https://l10john.github.io/lademonitor/admin/</a> · Lite: <a href="https://l10john.github.io/lademonitor/" target="_blank" style="color:var(--blue)">https://l10john.github.io/lademonitor/</a></div>
+<div id="publishToast" style="display:none;padding:.6rem 1rem;border-radius:var(--radius);font-size:12px;margin-bottom:.75rem;border:1px solid transparent;transition:all .2s"></div>
 
 <!-- HERO -->
 <div class="hero" id="heroArea" style="display: none;">
@@ -276,7 +276,7 @@ tr.overview-row.active td{background:#f0f8f0;}
     <span style="font-size:12px;color:var(--muted)">Einstellungen &amp; Dateien</span>
     <span id="cfgSummary" style="font-size:11px;color:#bbb;margin-left:4px">Strompreis 43.5 ct/kWh · Einspeisung 11.35 ct/kWh · 21 Dateien</span>
   </div>
-  <div id="cfgBody" style="display:none;padding-top:.875rem">
+  <div id="cfgBody" style="display: none; padding-top: 0.875rem;">
     <!-- SETTINGS -->
     <div class="cfg-bar" id="cfg">
       <div class="cfg-field"><label>Strompreis</label></div>
@@ -308,7 +308,7 @@ tr.overview-row.active td{background:#f0f8f0;}
       </div>
       <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
         <button onclick="saveGhSettings()" style="background:#111;color:#fff;border:none;padding:6px 16px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer">Einstellungen speichern</button>
-        <span id="ghStatus" style="font-size: 12px; color: var(--green);">✓ Admin: <a href="https://l10john.github.io/lademonitor/admin/" target="_blank" style="color:var(--blue)">https://l10john.github.io/lademonitor/admin/</a> · Lite: <a href="https://l10john.github.io/lademonitor/" target="_blank" style="color:var(--blue)">https://l10john.github.io/lademonitor/</a></span>
+        <span id="ghStatus" style="font-size:12px;color:var(--muted)"></span>
       </div>
       <p style="font-size:11px;color:#bbb;margin-top:.5rem;margin-bottom:0">Token wird nur lokal gespeichert · URL: <span id="ghUrl"><a href="https://l10john.github.io/lademonitor" target="_blank" style="color:var(--blue)">https://l10john.github.io/lademonitor</a></span></p>
     </div>
@@ -366,6 +366,7 @@ tr.overview-row.active td{background:#f0f8f0;}
     <button class="tab" onclick="showTab('public',this,'blue')">Öffentlich</button>
     <button class="tab" onclick="showTab('amort',this,'dark')">Amortisation</button>
     <button class="tab" onclick="showTab('trip',this,'green')">⚡ Trip-Planer</button>
+    <button class="tab" onclick="showTab('analyse',this,'dark')">📊 Analyse</button>
   </div>
 
   <!-- TAB CONTENTS -->
@@ -520,7 +521,7 @@ tr.overview-row.active td{background:#f0f8f0;}
       </div>
       <div style="position:relative;width:100%;height:220px"><canvas id="ec" width="852" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 852px;"></canvas></div>
     </div></div>
-  <div id="tHome" style="display: none;">
+  <div id="tHome" style="display:none">
     <p class="section-title">Alle Wallbox-Sessions <span style="font-size:11px;font-weight:400;color:var(--muted)">(▶ Monate → Tage aufklappen)</span></p>
     <div class="tbl-wrap"><table><thead><tr>
       <th style="cursor:pointer;user-select:none" onclick="sortHomeTab('date')">Monat / Tag ↓</th>
@@ -2154,16 +2155,16 @@ tr.overview-row.active td{background:#f0f8f0;}
         </div>
       </div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:.75rem" id="hChartLegend"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #1D9E75"></span>PV-Überschuss</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #8BD5B8"></span>Netzbezug</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>Ø 186.19 kWh</span></div>
-      <div style="position:relative;width:100%;height:220px"><canvas id="hTabCanvas" role="img" aria-label="Wallbox Monatsvergleich" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 852px;" width="852"></canvas></div>
+      <div style="position:relative;width:100%;height:220px"><canvas id="hTabCanvas" role="img" aria-label="Wallbox Monatsvergleich" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas></div>
     </div></div>
-  <div id="tPublic" style="display: none;">
+  <div id="tPublic" style="display:none">
     <!-- EINGABEMASKE (klappbar) -->
     <div style="margin-bottom:1.25rem;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
       <div onclick="toggleManualInput()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;padding:.5rem .75rem;background:#fafafa">
         <span id="manualInputChevron" style="font-size:11px;color:var(--muted)">▶</span>
         <span style="font-size:12px;color:var(--muted)">Manuelle Eingabe</span>
       </div>
-      <div id="manualInputBody" style="display: none; padding: 1rem 1.25rem; border-top: 1px solid var(--border);">
+      <div id="manualInputBody" style="display:none;padding:1rem 1.25rem;border-top:1px solid var(--border)">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.6rem;margin-bottom:.75rem">
           <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Datum</label>
             <input type="date" id="mDatum" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px"></div>
@@ -2502,7 +2503,7 @@ tr.overview-row.active td{background:#f0f8f0;}
         </div>
       </div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:.75rem" id="pChartLegend"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #378ADD"></span>Ladekosten</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #1a73e8"></span>Grundgebühr</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>Ø 50.17 €</span></div>
-      <div style="position:relative;width:100%;height:220px"><canvas id="pTabCanvas" role="img" aria-label="Öffentlich Monatsvergleich" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 852px;" width="852"></canvas></div>
+      <div style="position:relative;width:100%;height:220px"><canvas id="pTabCanvas" role="img" aria-label="Öffentlich Monatsvergleich" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas></div>
     </div></div>
   <div id="tMonths" style="display:none"><div style="display:flex;gap:14px;font-size:11px;color:var(--muted);margin-bottom:.75rem;flex-wrap:wrap">
     <span><span class="ld" style="background:var(--green)"></span>PV</span>
@@ -2647,143 +2648,55 @@ tr.overview-row.active td{background:#f0f8f0;}
     <div id="amortNote" style="font-size:11px;color:var(--muted);margin-top:.75rem;line-height:1.6"><strong>Amortisationspunkt:</strong> ca. <strong>Juli 2028</strong> (≈ 34 Monate ab Kauf Sep 2025).
      Echte Daten bis April 2026, danach Prognose.</div>
   </div></div>
-  <div id="tTrip" style="display: none;">
-  <p class="section-title">⚡ Trip-Planer – Ladebedarfsrechner</p>
+  <div id="tTrip" style="display:none"></div>
+  <div id="tAnalyse" style="display: none;">
 
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem">
-
-    <!-- EINGABEN -->
-    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem">
-      <p class="section-title" style="margin-bottom:.875rem">Fahrzeug &amp; Strecke</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
-
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Akkukapazität</label>
-          <div style="display:flex;align-items:center;gap:6px">
-            <input type="number" id="tBattCap" value="73" step="0.1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
-            <span style="font-size:11px;color:var(--muted);white-space:nowrap">kWh</span>
-          </div>
-        </div>
-
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Aktuelle Ladung</label>
-          <div style="display:flex;align-items:center;gap:6px">
-            <input type="number" id="tSoC" value="33" min="0" max="100" step="1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
-            <span style="font-size:11px;color:var(--muted)">%</span>
-          </div>
-        </div>
-
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Strecke (hin + zurück)</label>
-          <div style="display:flex;align-items:center;gap:6px">
-            <input type="number" id="tKm" value="38" step="1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
-            <span style="font-size:11px;color:var(--muted)">km</span>
-          </div>
-        </div>
-
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">
-          Verbrauch
-          
-        </label>
-          <div style="display:flex;align-items:center;gap:6px">
-            <input type="number" id="tConsumption" value="22" step="0.1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
-            <span style="font-size:11px;color:var(--muted);white-space:nowrap">kWh/100km</span>
-          </div>
-        </div>
-
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Ziel-Ladestand nach Trip</label>
-          <div style="display:flex;align-items:center;gap:6px">
-            <input type="number" id="tTargetSoC" value="10" min="0" max="100" step="1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
-            <span style="font-size:11px;color:var(--muted)">%</span>
-          </div>
-        </div>
-
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Max. Ladestand (Batterieschonung)</label>
-          <div style="display:flex;align-items:center;gap:6px">
-            <input type="number" id="tMaxSoC" value="80" min="50" max="100" step="1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
-            <span style="font-size:11px;color:var(--muted)">%</span>
-          </div>
-        </div>
-
-      </div>
-
-      <div style="margin-top:.875rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
-        <div style="display:flex;align-items:center;gap:6px">
-          <label style="font-size:11px;color:var(--muted)">Wallbox-Leistung</label>
-          <input type="number" id="tWallboxKw" value="11" step="0.1" style="width:60px;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
-          <span style="font-size:11px;color:var(--muted)">kW</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:6px">
-          <label style="font-size:11px;color:var(--muted)">Ladestart</label>
-          <input type="time" id="tStartTime" value="20:00" style="padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
-        </div>
-      </div>
-    </div>
-
-    <!-- ERGEBNIS -->
-    <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem">
-      <p class="section-title" style="margin-bottom:.875rem">Ergebnis</p>
-      <div id="tripResult" style="font-size:13px;color:var(--muted)">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:.75rem">
-        <span style="font-size:22px">✅</span>
-        <div>
-          <div style="font-size:15px;font-weight:600;color:#111">Kein Laden nötig!</div>
-          <div style="font-size:12px;color:var(--muted)">Aktuelle Ladung reicht für den Trip inkl. Reserve</div>
-        </div>
-      </div>
-      <div style="display:grid;gap:.5rem;margin-top:.5rem">
-        <div style="display:flex;justify-content:space-between;padding:.5rem .75rem;background:#f8f8f8;border-radius:6px">
-          <span style="font-size:12px;color:var(--muted)">Jetzt</span>
-          <span style="font-size:13px;font-weight:700;color:#111">33% · 24.1 kWh</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:.5rem .75rem;background:#f8f8f8;border-radius:6px">
-          <span style="font-size:12px;color:var(--muted)">Nach dem Trip</span>
-          <span style="font-size:13px;font-weight:700;color:var(--green)">22% · 15.7 kWh</span>
-        </div>
-        <div style="font-size:11px;color:#bbb;margin-top:2px">Benötigt: 8.4 kWh · Verfügbar: 24.1 kWh</div>
-      </div></div>
-    </div>
-
+  <p class="section-title">Kosten-Übersicht</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:.75rem;margin-bottom:1.25rem">
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Ø Gesamtkosten / Monat</div><div style="font-size:22px;font-weight:700;color:#111">122,91 €<span style="font-size:14px;color:var(--green);margin-left:4px"> ↘</span></div><div style="font-size:11px;color:#bbb">Wallbox + öffentlich</div></div>
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Ø Wallbox / Monat</div><div style="font-size:22px;font-weight:700;color:var(--green)">72,74 €</div><div style="font-size:11px;color:#bbb">inkl. PV-Vorteil</div></div>
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Ø Öffentlich / Monat</div><div style="font-size:22px;font-weight:700;color:var(--blue)">50,18 €</div><div style="font-size:11px;color:#bbb">inkl. Grundgebühr</div></div>
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Jahreshochrechnung</div><div style="font-size:22px;font-weight:700;color:#111">1.474,97 €</div><div style="font-size:11px;color:#bbb">Ø Monat × 12</div></div>
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Kosten / 100 km</div><div style="font-size:22px;font-weight:700;color:#111">7,50 €</div><div style="font-size:11px;color:#bbb">bei 17 kWh/100km</div></div>
   </div>
 
-  <!-- AKKU-VISUALISIERUNG -->
-  <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem">
-    <p class="section-title" style="margin-bottom:.75rem">Akkustand-Visualisierung</p>
-    <div id="tripBattViz" style="font-size:12px;color:var(--muted)">
-    
-    <div style="margin-bottom:.5rem">
-      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px">
-        <span>Jetzt</span><span></span>
-      </div>
-      <div style="height:22px;background:#f0f0f0;border-radius:4px;overflow:hidden;position:relative">
-        <div style="height:100%;width:33%;background:#8BD5B8;border-radius:4px;transition:width .4s"></div>
-        <div style="position:absolute;top:0;bottom:0;left:10%;width:1.5px;background:rgba(0,0,0,0.2)" title="Ziel-Reserve 10%"></div>
-        <div style="position:absolute;top:0;bottom:0;left:80%;width:1.5px;background:rgba(0,0,0,0.35)" title="Max 80%"></div>
-      </div>
+  <div style="background:linear-gradient(135deg,rgba(29,158,117,0.04),rgba(55,138,221,0.04));border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1.25rem">
+    <p class="section-title" style="margin-bottom:.5rem">📈 Kostenprognose Mai 2026</p>
+    <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px">
+      <span style="font-size:24px;font-weight:700;color:#111">ca. 105,23 €</span>
+      <span style="font-size:12px;color:var(--muted)">erwartete Gesamtkosten</span>
     </div>
-    
-    <div style="margin-bottom:.5rem">
-      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px">
-        <span>Nach dem Laden</span><span></span>
-      </div>
-      <div style="height:22px;background:#f0f0f0;border-radius:4px;overflow:hidden;position:relative">
-        <div style="height:100%;width:33%;background:#1D9E75;border-radius:4px;transition:width .4s"></div>
-        <div style="position:absolute;top:0;bottom:0;left:10%;width:1.5px;background:rgba(0,0,0,0.2)" title="Ziel-Reserve 10%"></div>
-        <div style="position:absolute;top:0;bottom:0;left:80%;width:1.5px;background:rgba(0,0,0,0.35)" title="Max 80%"></div>
-      </div>
+    <div style="font-size:11px;color:#bbb">Basiert auf Ø der letzten 3 Monate</div>
+    <p style="font-size:11px;color:#bbb;margin:4px 0 0">Basiert auf 3 Monaten – wird mit mehr Daten präziser</p>
+  </div>
+
+  <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem;margin-bottom:1.5rem">
+    <p class="section-title" style="margin-bottom:.75rem">Monatliche Gesamtkosten im Verlauf</p>
+    <div style="position:relative;height:200px"><canvas id="anChart1" width="818" height="200" style="display: block; box-sizing: border-box; height: 200px; width: 818px;"></canvas></div>
+    <p style="font-size:11px;color:#bbb;margin:4px 0 0">Basiert auf 8 Monaten – wird mit mehr Daten präziser</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.75rem;margin-bottom:1.25rem">
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem"><div style="font-size:11px;color:var(--muted);margin-bottom:6px">🏆 Günstigster Monat</div><div style="font-size:15px;font-weight:700;color:var(--green)">Apr. 2026</div><div style="font-size:13px;color:#555">41,50 €</div></div>
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem"><div style="font-size:11px;color:var(--muted);margin-bottom:6px">💸 Teuerster Monat</div><div style="font-size:15px;font-weight:700;color:#e53935">Nov. 2025</div><div style="font-size:13px;color:#555">174,07 €</div></div>
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem"><div style="font-size:11px;color:var(--muted);margin-bottom:6px">☀️ Meister PV-Anteil</div><div style="font-size:15px;font-weight:700;color:var(--green)">Apr. 2026</div><div style="font-size:13px;color:#555">74% PV-Anteil</div></div>
+  </div>
+  <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem;margin-bottom:1.5rem">
+    <p class="section-title" style="margin-bottom:.75rem">Kostenvergleich alle Monate</p>
+    <div style="position:relative;height:288px"><canvas id="anChart2" width="818" height="288" style="display: block; box-sizing: border-box; height: 288px; width: 818px;"></canvas></div>
+  </div>
+
+  <p class="section-title">Ladeverhalten</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem">
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem">
+      <p class="section-title" style="margin-bottom:4px">Wochentag-Verteilung</p>
+      <div style="font-size:11px;color:#bbb;margin-bottom:.5rem">Ø 3.7 Sessions / Woche</div>
+      <div style="position:relative;height:160px"><canvas id="anChart3" width="384" height="160" style="display: block; box-sizing: border-box; height: 160px; width: 384px;"></canvas></div>
     </div>
-    
-    <div style="margin-bottom:.5rem">
-      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px">
-        <span>Nach dem Trip</span><span></span>
-      </div>
-      <div style="height:22px;background:#f0f0f0;border-radius:4px;overflow:hidden;position:relative">
-        <div style="height:100%;width:21.54794520547945%;background:#FFA726;border-radius:4px;transition:width .4s"></div>
-        <div style="position:absolute;top:0;bottom:0;left:10%;width:1.5px;background:rgba(0,0,0,0.2)" title="Ziel-Reserve 10%"></div>
-        <div style="position:absolute;top:0;bottom:0;left:80%;width:1.5px;background:rgba(0,0,0,0.35)" title="Max 80%"></div>
-      </div>
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem">
+      <p class="section-title" style="margin-bottom:4px">Tageszeit-Verteilung</p>
+      <div style="font-size:11px;color:#bbb;margin-bottom:.5rem">128 Wallbox-Sessions gesamt</div>
+      <div style="position:relative;height:160px"><canvas id="anChart4" width="384" height="160" style="display: block; box-sizing: border-box; height: 160px; width: 384px;"></canvas></div>
     </div>
-    <div style="display:flex;gap:1.5rem;margin-top:.5rem;font-size:11px;color:#bbb">
-      <span>│ = Ziel-Reserve (10%)</span>
-      <span>│ = Max. Ladestand (80%)</span>
-    </div></div>
   </div></div>
 </div>
 
@@ -2804,6 +2717,7 @@ const HISTORIC_DATA = {"homeSessions":[{"start":"2025-09-19T17:00:00.000Z","end"
 // ── STATE ────────────────────────────────────────────────
 let allRawData=[], loadedFiles=[], homeSessions=[], pubSessions=[], pubFees=[];
 let pChart=null, mChart=null, aChart=null, oChart=null, eChart=null, hTabChart=null, pTabChart=null;
+let anChart1=null, anChart2=null, anChart3=null, anChart4=null;
 let _monthSorted=[], _monthSortCol='key', _monthSortAsc=true;
 let lastHomeSessions=[];
 
@@ -4882,12 +4796,13 @@ function renderEffektivpreisChart(){
 function showTab(name,btn,color){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active-green','active-blue','active-dark'));
   btn.classList.add('active-'+color);
-  ['tOverview','tHome','tPublic','tMonths','tAmort','tTrip'].forEach(id=>{
+  ['tOverview','tHome','tPublic','tMonths','tAmort','tTrip','tAnalyse'].forEach(id=>{
     const el=document.getElementById(id);
     if(el) el.style.display='none';
   });
   document.getElementById('t'+name.charAt(0).toUpperCase()+name.slice(1)).style.display='block';
   if(name==='trip') renderTripTab();
+  if(name==='analyse') renderAnalyseTab();
 }
 
 // ── TRIP PLANER ──────────────────────────────────────────
@@ -5125,6 +5040,197 @@ function renderBattViz(soc, socAfterCharge, socAfterTrip, targetSoC, maxSoC, nee
       <span>│ = Max. Ladestand (${maxSoC}%)</span>
     </div>`;
 }
+// ── ANALYSE TAB ──────────────────────────────────────────
+function renderAnalyseTab(){
+  const gp=parseFloat(document.getElementById('gp').value)/100;
+  const fp=parseFloat(document.getElementById('fp').value)/100;
+  const tripSettings=JSON.parse(localStorage.getItem('trip_settings')||'{}');
+  const consumption=parseFloat(tripSettings.consumption||19);
+
+  if(!homeSessions.length&&!pubSessions.length){
+    document.getElementById('tAnalyse').innerHTML='<p style="color:var(--muted);font-size:13px">Noch keine Daten für die Analyse.</p>';
+    return;
+  }
+
+  // ── Monatsdaten aufbauen
+  const months={};
+  const addMo=k=>{if(!months[k])months[k]={hKwh:0,hPv:0,hNet:0,hCost:0,pKwh:0,pCost:0,sessions:[],pubSess:[]};};
+  homeSessions.forEach(s=>{
+    addMo(s.monthKey);const m=months[s.monthKey];
+    m.hKwh+=s.kwh;m.hPv+=s.pvKwh;m.hNet+=s.netKwh;
+    const pvV=s.pvKwh*gp-s.pvKwh*fp;
+    m.hCost+=Math.max(0,s.netKwh*gp-pvV);m.sessions.push(s);
+  });
+  pubSessions.forEach(s=>{
+    if(!s.datum)return;
+    const[d,mo,y]=s.datum.split('.');const k=`${y}-${mo}`;
+    addMo(k);months[k].pKwh+=s.kwh||0;months[k].pCost+=s.brutto_eur||0;months[k].pubSess.push(s);
+  });
+  pubFees.forEach(f=>{
+    if(!f.von)return;
+    const[d,mo,y]=f.von.split('.');const k=`${y}-${mo}`;
+    addMo(k);months[k].pCost+=parseFloat((f.brutto||'0').replace(',','.'));
+  });
+
+  const mkKeys=Object.keys(months).filter(k=>k!=='2025-08').sort();
+  const nMo=mkKeys.length;
+  const minNote=n=>`<p style="font-size:11px;color:#bbb;margin:4px 0 0">Basiert auf ${n} Monat${n!==1?'en':''} – wird mit mehr Daten präziser</p>`;
+
+  // Block 1: Kosten
+  const totHCost=mkKeys.reduce((a,k)=>a+months[k].hCost,0);
+  const totPCost=mkKeys.reduce((a,k)=>a+months[k].pCost,0);
+  const totCost=totHCost+totPCost;
+  const avgMoCost=nMo>0?totCost/nMo:0;
+  const avgMoH=nMo>0?totHCost/nMo:0;
+  const avgMoP=nMo>0?totPCost/nMo:0;
+  const jahresProg=avgMoCost*12;
+  const totKwh=mkKeys.reduce((a,k)=>a+months[k].hKwh+months[k].pKwh,0);
+  const effPre=totKwh>0?(totCost/totKwh*100):0;
+  const costPer100=consumption*effPre/100;
+  const benzinTotal=1.79*7;
+  const ersparnis100=benzinTotal-costPer100;
+  let trendArrow='',trendColor='var(--muted)';
+  if(mkKeys.length>=2){
+    const lc=months[mkKeys[mkKeys.length-1]].hCost+months[mkKeys[mkKeys.length-1]].pCost;
+    const pc=months[mkKeys[mkKeys.length-2]].hCost+months[mkKeys[mkKeys.length-2]].pCost;
+    const diff=lc-pc;
+    trendArrow=Math.abs(diff)<0.5?' →':(diff<0?' ↘':' ↗');
+    trendColor=Math.abs(diff)<0.5?'var(--muted)':(diff<0?'var(--green)':'#e53935');
+  }
+
+  // Block 2: Ranking
+  const moByPrice=[...mkKeys].sort((a,b)=>(months[a].hCost+months[a].pCost)-(months[b].hCost+months[b].pCost));
+  const cheapest=moByPrice[0],priciest=moByPrice[moByPrice.length-1];
+  const moByPv=[...mkKeys].sort((a,b)=>{
+    const pa=months[a].hKwh>0?months[a].hPv/months[a].hKwh:0;
+    const pb=months[b].hKwh>0?months[b].hPv/months[b].hKwh:0;
+    return pb-pa;
+  });
+  const bestPvMo=moByPv[0];
+
+  // Block 3: Ladeverhalten
+  const weekdays=['Mo','Di','Mi','Do','Fr','Sa','So'];
+  const wdCount=new Array(7).fill(0),wdKwh=new Array(7).fill(0);
+  homeSessions.forEach(s=>{const d=asDate(s.start);const wd=(d.getDay()+6)%7;wdCount[wd]++;wdKwh[wd]+=s.kwh;});
+  const timeSlots=['Nacht (0–6h)','Morgen (6–12h)','Mittag (12–18h)','Abend (18–24h)'];
+  const tsCount=new Array(4).fill(0);
+  homeSessions.forEach(s=>{const h=asDate(s.start).getHours();tsCount[h<6?0:h<12?1:h<18?2:3]++;});
+  const totalSess=homeSessions.length;
+  const avgSessPerWeek=(totalSess/(nMo*4.33)).toFixed(1);
+
+  // Block 4: Prognose
+  const lastN=Math.min(3,mkKeys.length);
+  const recentAvg=mkKeys.slice(-lastN).reduce((a,k)=>a+months[k].hCost+months[k].pCost,0)/lastN;
+  const nextMo=new Date();nextMo.setDate(1);nextMo.setMonth(nextMo.getMonth()+1);
+  const nextMoLabel=monthLabel(`${nextMo.getFullYear()}-${String(nextMo.getMonth()+1).padStart(2,'0')}`);
+
+  [anChart1,anChart2,anChart3,anChart4].forEach(c=>{if(c)c.destroy();});
+  anChart1=anChart2=anChart3=anChart4=null;
+
+  const kachelStyle='background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem';
+  document.getElementById('tAnalyse').innerHTML=`
+
+  <p class="section-title">Kosten-Übersicht</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:.75rem;margin-bottom:1.25rem">
+    <div style="${kachelStyle}"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Ø Gesamtkosten / Monat</div><div style="font-size:22px;font-weight:700;color:#111">${eur(avgMoCost)}<span style="font-size:14px;color:${trendColor};margin-left:4px">${trendArrow}</span></div><div style="font-size:11px;color:#bbb">Wallbox + öffentlich</div></div>
+    <div style="${kachelStyle}"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Ø Wallbox / Monat</div><div style="font-size:22px;font-weight:700;color:var(--green)">${eur(avgMoH)}</div><div style="font-size:11px;color:#bbb">inkl. PV-Vorteil</div></div>
+    <div style="${kachelStyle}"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Ø Öffentlich / Monat</div><div style="font-size:22px;font-weight:700;color:var(--blue)">${eur(avgMoP)}</div><div style="font-size:11px;color:#bbb">inkl. Grundgebühr</div></div>
+    <div style="${kachelStyle}"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Jahreshochrechnung</div><div style="font-size:22px;font-weight:700;color:#111">${eur(jahresProg)}</div><div style="font-size:11px;color:#bbb">Ø Monat × 12</div></div>
+    <div style="${kachelStyle}"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Kosten / 100 km</div><div style="font-size:22px;font-weight:700;color:#111">${costPer100.toFixed(2).replace('.',',')} €</div><div style="font-size:11px;color:#bbb">bei ${consumption} kWh/100km</div></div>
+  </div>
+
+  <div style="background:linear-gradient(135deg,rgba(29,158,117,0.04),rgba(55,138,221,0.04));border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1.25rem">
+    <p class="section-title" style="margin-bottom:.5rem">📈 Kostenprognose ${nextMoLabel}</p>
+    <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px">
+      <span style="font-size:24px;font-weight:700;color:#111">ca. ${eur(recentAvg)}</span>
+      <span style="font-size:12px;color:var(--muted)">erwartete Gesamtkosten</span>
+    </div>
+    <div style="font-size:11px;color:#bbb">Basiert auf Ø der letzten ${lastN} Monate</div>
+    ${minNote(lastN)}
+  </div>
+
+  <div style="${kachelStyle};margin-bottom:1.5rem">
+    <p class="section-title" style="margin-bottom:.75rem">Monatliche Gesamtkosten im Verlauf</p>
+    <div style="position:relative;height:200px"><canvas id="anChart1"></canvas></div>
+    ${minNote(nMo)}
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.75rem;margin-bottom:1.25rem">
+    <div style="${kachelStyle}"><div style="font-size:11px;color:var(--muted);margin-bottom:6px">🏆 Günstigster Monat</div><div style="font-size:15px;font-weight:700;color:var(--green)">${monthLabel(cheapest)}</div><div style="font-size:13px;color:#555">${eur(months[cheapest].hCost+months[cheapest].pCost)}</div></div>
+    <div style="${kachelStyle}"><div style="font-size:11px;color:var(--muted);margin-bottom:6px">💸 Teuerster Monat</div><div style="font-size:15px;font-weight:700;color:#e53935">${monthLabel(priciest)}</div><div style="font-size:13px;color:#555">${eur(months[priciest].hCost+months[priciest].pCost)}</div></div>
+    <div style="${kachelStyle}"><div style="font-size:11px;color:var(--muted);margin-bottom:6px">☀️ Meister PV-Anteil</div><div style="font-size:15px;font-weight:700;color:var(--green)">${monthLabel(bestPvMo)}</div><div style="font-size:13px;color:#555">${months[bestPvMo].hKwh>0?Math.round(months[bestPvMo].hPv/months[bestPvMo].hKwh*100):0}% PV-Anteil</div></div>
+  </div>
+  <div style="${kachelStyle};margin-bottom:1.5rem">
+    <p class="section-title" style="margin-bottom:.75rem">Kostenvergleich alle Monate</p>
+    <div style="position:relative;height:${Math.max(160,nMo*36)}px"><canvas id="anChart2"></canvas></div>
+  </div>
+
+  <p class="section-title">Ladeverhalten</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem">
+    <div style="${kachelStyle}">
+      <p class="section-title" style="margin-bottom:4px">Wochentag-Verteilung</p>
+      <div style="font-size:11px;color:#bbb;margin-bottom:.5rem">Ø ${avgSessPerWeek} Sessions / Woche</div>
+      <div style="position:relative;height:160px"><canvas id="anChart3"></canvas></div>
+    </div>
+    <div style="${kachelStyle}">
+      <p class="section-title" style="margin-bottom:4px">Tageszeit-Verteilung</p>
+      <div style="font-size:11px;color:#bbb;margin-bottom:.5rem">${totalSess} Wallbox-Sessions gesamt</div>
+      <div style="position:relative;height:160px"><canvas id="anChart4"></canvas></div>
+    </div>
+  </div>`;
+
+  // ── Charts ──────────────────────────────────────────
+  const gridC='rgba(128,128,128,0.08)';
+
+  // Chart 1: Gesamtkosten Linie
+  anChart1=new Chart(document.getElementById('anChart1').getContext('2d'),{type:'line',
+    data:{labels:mkKeys.map(k=>monthLabel(k)),datasets:[
+      {label:'Gesamt',data:mkKeys.map(k=>+(months[k].hCost+months[k].pCost).toFixed(2)),borderColor:'#111',backgroundColor:'rgba(0,0,0,0.04)',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#111',tension:0.3,fill:true},
+      {label:'Wallbox',data:mkKeys.map(k=>+months[k].hCost.toFixed(2)),borderColor:'#1D9E75',backgroundColor:'transparent',borderWidth:1.5,pointRadius:3,tension:0.3,borderDash:[4,3]},
+      {label:'Öffentlich',data:mkKeys.map(k=>+months[k].pCost.toFixed(2)),borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:1.5,pointRadius:3,tension:0.3,borderDash:[4,3]},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},boxWidth:12,padding:10}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)} €`}}},
+      scales:{x:{ticks:{color:'#888',font:{size:10}},grid:{color:gridC},border:{display:false}},y:{ticks:{color:'#aaa',font:{size:10},callback:v=>v+' €'},grid:{color:gridC},border:{display:false}}}}
+  });
+
+  // Chart 2: Ranking horizontal
+  const c2keys=[...mkKeys].sort((a,b)=>(months[a].hCost+months[a].pCost)-(months[b].hCost+months[b].pCost));
+  anChart2=new Chart(document.getElementById('anChart2').getContext('2d'),{type:'bar',
+    data:{labels:c2keys.map(k=>monthLabel(k)),datasets:[
+      {label:'Wallbox',data:c2keys.map(k=>+months[k].hCost.toFixed(2)),backgroundColor:'rgba(29,158,117,0.30)',borderColor:'#1D9E75',borderWidth:1.5,borderRadius:3,borderSkipped:false,stack:'s'},
+      {label:'Öffentlich',data:c2keys.map(k=>+months[k].pCost.toFixed(2)),backgroundColor:'rgba(55,138,221,0.12)',borderColor:'#378ADD',borderWidth:1.5,borderRadius:{topLeft:3,topRight:3},borderSkipped:false,stack:'s'},
+    ]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,layout:{padding:{right:70}},
+      plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},boxWidth:12,padding:10}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.x.toFixed(2)} €`}}},
+      scales:{x:{stacked:true,ticks:{color:'#aaa',font:{size:10},callback:v=>v+' €'},grid:{color:gridC},border:{display:false}},y:{stacked:true,ticks:{color:'#888',font:{size:10}},grid:{display:false},border:{display:false}}},
+      animation:{onComplete:function(){
+        const ctx=this.ctx;ctx.save();ctx.font='bold 10px -apple-system,sans-serif';ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillStyle='#555';
+        const meta=this.getDatasetMeta(1);
+        c2keys.forEach((k,i)=>{const bar=meta.data[i];if(!bar)return;ctx.fillText((months[k].hCost+months[k].pCost).toFixed(2)+' €',this.chartArea.right+4,bar.y);});
+        ctx.restore();
+      }}
+    }
+  });
+
+  // Chart 3: Wochentag
+  anChart3=new Chart(document.getElementById('anChart3').getContext('2d'),{type:'bar',
+    data:{labels:weekdays,datasets:[{label:'Sessions',data:wdCount,
+      backgroundColor:wdCount.map((_,i)=>i>=5?'rgba(55,138,221,0.25)':'rgba(29,158,117,0.25)'),
+      borderColor:wdCount.map((_,i)=>i>=5?'#378ADD':'#1D9E75'),borderWidth:1.5,borderRadius:3}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.parsed.y} Sessions · ${wdKwh[ctx.dataIndex].toFixed(1)} kWh`}}},
+      scales:{x:{ticks:{color:'#888',font:{size:11}},grid:{display:false},border:{display:false}},y:{ticks:{color:'#aaa',font:{size:10},callback:v=>Math.round(v)+'×'},grid:{color:gridC},border:{display:false}}}}
+  });
+
+  // Chart 4: Tageszeit Donut
+  anChart4=new Chart(document.getElementById('anChart4').getContext('2d'),{type:'doughnut',
+    data:{labels:timeSlots,datasets:[{data:tsCount,
+      backgroundColor:['rgba(55,138,221,0.7)','rgba(29,158,117,0.7)','rgba(255,183,77,0.7)','rgba(102,102,102,0.6)'],
+      borderColor:['#378ADD','#1D9E75','#FFB74D','#666'],borderWidth:1.5}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'62%',
+      plugins:{legend:{display:true,position:'right',labels:{font:{size:10},boxWidth:10,padding:6}},
+        tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${ctx.parsed} (${totalSess>0?Math.round(ctx.parsed/totalSess*100):0}%)`}}}}
+  });
+}
+
 function renderFilesList(){
   const el=document.getElementById('flist');
   el.style.display='flex';
