@@ -369,7 +369,7 @@ tr.overview-row.active td{background:#f0f8f0;}
   </div>
 
   <!-- TAB CONTENTS -->
-  <div id="tOverview" style="display: block;">
+  <div id="tOverview">
     <p class="section-title">Monatsübersicht kombiniert</p>
     <div class="tbl-wrap"><table><thead><tr>
       <th>Monat</th>
@@ -2156,14 +2156,14 @@ tr.overview-row.active td{background:#f0f8f0;}
       <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:.75rem" id="hChartLegend"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #1D9E75"></span>PV-Überschuss</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #8BD5B8"></span>Netzbezug</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>Ø 186.19 kWh</span></div>
       <div style="position:relative;width:100%;height:220px"><canvas id="hTabCanvas" role="img" aria-label="Wallbox Monatsvergleich" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas></div>
     </div></div>
-  <div id="tPublic" style="display: none;">
+  <div id="tPublic" style="display:none">
     <!-- EINGABEMASKE (klappbar) -->
     <div style="margin-bottom:1.25rem;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
       <div onclick="toggleManualInput()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;padding:.5rem .75rem;background:#fafafa">
         <span id="manualInputChevron" style="font-size:11px;color:var(--muted)">▶</span>
         <span style="font-size:12px;color:var(--muted)">Manuelle Eingabe</span>
       </div>
-      <div id="manualInputBody" style="display: none; padding: 1rem 1.25rem; border-top: 1px solid var(--border);">
+      <div id="manualInputBody" style="display:none;padding:1rem 1.25rem;border-top:1px solid var(--border)">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.6rem;margin-bottom:.75rem">
           <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Datum</label>
             <input type="date" id="mDatum" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px"></div>
@@ -2502,7 +2502,7 @@ tr.overview-row.active td{background:#f0f8f0;}
         </div>
       </div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:.75rem" id="pChartLegend"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #378ADD"></span>Ladekosten</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #1a73e8"></span>Grundgebühr</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>Ø 50.17 €</span></div>
-      <div style="position:relative;width:100%;height:220px"><canvas id="pTabCanvas" role="img" aria-label="Öffentlich Monatsvergleich" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 852px;" width="852"></canvas></div>
+      <div style="position:relative;width:100%;height:220px"><canvas id="pTabCanvas" role="img" aria-label="Öffentlich Monatsvergleich" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas></div>
     </div></div>
   <div id="tMonths" style="display:none"><div style="display:flex;gap:14px;font-size:11px;color:var(--muted);margin-bottom:.75rem;flex-wrap:wrap">
     <span><span class="ld" style="background:var(--green)"></span>PV</span>
