@@ -369,7 +369,7 @@ tr.overview-row.active td{background:#f0f8f0;}
   </div>
 
   <!-- TAB CONTENTS -->
-  <div id="tOverview">
+  <div id="tOverview" style="display: block;">
     <p class="section-title">Monatsübersicht kombiniert</p>
     <div class="tbl-wrap"><table><thead><tr>
       <th>Monat</th>
@@ -520,7 +520,7 @@ tr.overview-row.active td{background:#f0f8f0;}
       </div>
       <div style="position:relative;width:100%;height:220px"><canvas id="ec" width="852" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 852px;"></canvas></div>
     </div></div>
-  <div id="tHome" style="display:none">
+  <div id="tHome" style="display: none;">
     <p class="section-title">Alle Wallbox-Sessions <span style="font-size:11px;font-weight:400;color:var(--muted)">(▶ Monate → Tage aufklappen)</span></p>
     <div class="tbl-wrap"><table><thead><tr>
       <th style="cursor:pointer;user-select:none" onclick="sortHomeTab('date')">Monat / Tag ↓</th>
@@ -2154,16 +2154,16 @@ tr.overview-row.active td{background:#f0f8f0;}
         </div>
       </div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:.75rem" id="hChartLegend"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #1D9E75"></span>PV-Überschuss</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #8BD5B8"></span>Netzbezug</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>Ø 186.19 kWh</span></div>
-      <div style="position:relative;width:100%;height:220px"><canvas id="hTabCanvas" role="img" aria-label="Wallbox Monatsvergleich" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas></div>
+      <div style="position:relative;width:100%;height:220px"><canvas id="hTabCanvas" role="img" aria-label="Wallbox Monatsvergleich" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 852px;" width="852"></canvas></div>
     </div></div>
-  <div id="tPublic" style="display:none">
+  <div id="tPublic" style="display: none;">
     <!-- EINGABEMASKE (klappbar) -->
     <div style="margin-bottom:1.25rem;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
       <div onclick="toggleManualInput()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;padding:.5rem .75rem;background:#fafafa">
         <span id="manualInputChevron" style="font-size:11px;color:var(--muted)">▶</span>
         <span style="font-size:12px;color:var(--muted)">Manuelle Eingabe</span>
       </div>
-      <div id="manualInputBody" style="display:none;padding:1rem 1.25rem;border-top:1px solid var(--border)">
+      <div id="manualInputBody" style="display: none; padding: 1rem 1.25rem; border-top: 1px solid var(--border);">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.6rem;margin-bottom:.75rem">
           <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Datum</label>
             <input type="date" id="mDatum" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px"></div>
@@ -2502,7 +2502,7 @@ tr.overview-row.active td{background:#f0f8f0;}
         </div>
       </div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:.75rem" id="pChartLegend"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #378ADD"></span>Ladekosten</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #1a73e8"></span>Grundgebühr</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>Ø 50.17 €</span></div>
-      <div style="position:relative;width:100%;height:220px"><canvas id="pTabCanvas" role="img" aria-label="Öffentlich Monatsvergleich" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas></div>
+      <div style="position:relative;width:100%;height:220px"><canvas id="pTabCanvas" role="img" aria-label="Öffentlich Monatsvergleich" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 852px;" width="852"></canvas></div>
     </div></div>
   <div id="tMonths" style="display:none"><div style="display:flex;gap:14px;font-size:11px;color:var(--muted);margin-bottom:.75rem;flex-wrap:wrap">
     <span><span class="ld" style="background:var(--green)"></span>PV</span>
@@ -2647,7 +2647,144 @@ tr.overview-row.active td{background:#f0f8f0;}
     <div id="amortNote" style="font-size:11px;color:var(--muted);margin-top:.75rem;line-height:1.6"><strong>Amortisationspunkt:</strong> ca. <strong>Juli 2028</strong> (≈ 34 Monate ab Kauf Sep 2025).
      Echte Daten bis April 2026, danach Prognose.</div>
   </div></div>
-  <div id="tTrip" style="display:none"></div>
+  <div id="tTrip" style="display: none;">
+  <p class="section-title">⚡ Trip-Planer – Ladebedarfsrechner</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem">
+
+    <!-- EINGABEN -->
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem">
+      <p class="section-title" style="margin-bottom:.875rem">Fahrzeug &amp; Strecke</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
+
+        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Akkukapazität</label>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input type="number" id="tBattCap" value="73" step="0.1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
+            <span style="font-size:11px;color:var(--muted);white-space:nowrap">kWh</span>
+          </div>
+        </div>
+
+        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Aktuelle Ladung</label>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input type="number" id="tSoC" value="33" min="0" max="100" step="1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
+            <span style="font-size:11px;color:var(--muted)">%</span>
+          </div>
+        </div>
+
+        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Strecke (hin + zurück)</label>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input type="number" id="tKm" value="38" step="1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
+            <span style="font-size:11px;color:var(--muted)">km</span>
+          </div>
+        </div>
+
+        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">
+          Verbrauch
+          
+        </label>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input type="number" id="tConsumption" value="22" step="0.1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
+            <span style="font-size:11px;color:var(--muted);white-space:nowrap">kWh/100km</span>
+          </div>
+        </div>
+
+        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Ziel-Ladestand nach Trip</label>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input type="number" id="tTargetSoC" value="10" min="0" max="100" step="1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
+            <span style="font-size:11px;color:var(--muted)">%</span>
+          </div>
+        </div>
+
+        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Max. Ladestand (Batterieschonung)</label>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input type="number" id="tMaxSoC" value="80" min="50" max="100" step="1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
+            <span style="font-size:11px;color:var(--muted)">%</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:.875rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:6px">
+          <label style="font-size:11px;color:var(--muted)">Wallbox-Leistung</label>
+          <input type="number" id="tWallboxKw" value="11" step="0.1" style="width:60px;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
+          <span style="font-size:11px;color:var(--muted)">kW</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <label style="font-size:11px;color:var(--muted)">Ladestart</label>
+          <input type="time" id="tStartTime" value="20:00" style="padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
+        </div>
+      </div>
+    </div>
+
+    <!-- ERGEBNIS -->
+    <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem">
+      <p class="section-title" style="margin-bottom:.875rem">Ergebnis</p>
+      <div id="tripResult" style="font-size:13px;color:var(--muted)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:.75rem">
+        <span style="font-size:22px">✅</span>
+        <div>
+          <div style="font-size:15px;font-weight:600;color:#111">Kein Laden nötig!</div>
+          <div style="font-size:12px;color:var(--muted)">Aktuelle Ladung reicht für den Trip inkl. Reserve</div>
+        </div>
+      </div>
+      <div style="display:grid;gap:.5rem;margin-top:.5rem">
+        <div style="display:flex;justify-content:space-between;padding:.5rem .75rem;background:#f8f8f8;border-radius:6px">
+          <span style="font-size:12px;color:var(--muted)">Jetzt</span>
+          <span style="font-size:13px;font-weight:700;color:#111">33% · 24.1 kWh</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:.5rem .75rem;background:#f8f8f8;border-radius:6px">
+          <span style="font-size:12px;color:var(--muted)">Nach dem Trip</span>
+          <span style="font-size:13px;font-weight:700;color:var(--green)">22% · 15.7 kWh</span>
+        </div>
+        <div style="font-size:11px;color:#bbb;margin-top:2px">Benötigt: 8.4 kWh · Verfügbar: 24.1 kWh</div>
+      </div></div>
+    </div>
+
+  </div>
+
+  <!-- AKKU-VISUALISIERUNG -->
+  <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem">
+    <p class="section-title" style="margin-bottom:.75rem">Akkustand-Visualisierung</p>
+    <div id="tripBattViz" style="font-size:12px;color:var(--muted)">
+    
+    <div style="margin-bottom:.5rem">
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px">
+        <span>Jetzt</span><span></span>
+      </div>
+      <div style="height:22px;background:#f0f0f0;border-radius:4px;overflow:hidden;position:relative">
+        <div style="height:100%;width:33%;background:#8BD5B8;border-radius:4px;transition:width .4s"></div>
+        <div style="position:absolute;top:0;bottom:0;left:10%;width:1.5px;background:rgba(0,0,0,0.2)" title="Ziel-Reserve 10%"></div>
+        <div style="position:absolute;top:0;bottom:0;left:80%;width:1.5px;background:rgba(0,0,0,0.35)" title="Max 80%"></div>
+      </div>
+    </div>
+    
+    <div style="margin-bottom:.5rem">
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px">
+        <span>Nach dem Laden</span><span></span>
+      </div>
+      <div style="height:22px;background:#f0f0f0;border-radius:4px;overflow:hidden;position:relative">
+        <div style="height:100%;width:33%;background:#1D9E75;border-radius:4px;transition:width .4s"></div>
+        <div style="position:absolute;top:0;bottom:0;left:10%;width:1.5px;background:rgba(0,0,0,0.2)" title="Ziel-Reserve 10%"></div>
+        <div style="position:absolute;top:0;bottom:0;left:80%;width:1.5px;background:rgba(0,0,0,0.35)" title="Max 80%"></div>
+      </div>
+    </div>
+    
+    <div style="margin-bottom:.5rem">
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px">
+        <span>Nach dem Trip</span><span></span>
+      </div>
+      <div style="height:22px;background:#f0f0f0;border-radius:4px;overflow:hidden;position:relative">
+        <div style="height:100%;width:21.54794520547945%;background:#FFA726;border-radius:4px;transition:width .4s"></div>
+        <div style="position:absolute;top:0;bottom:0;left:10%;width:1.5px;background:rgba(0,0,0,0.2)" title="Ziel-Reserve 10%"></div>
+        <div style="position:absolute;top:0;bottom:0;left:80%;width:1.5px;background:rgba(0,0,0,0.35)" title="Max 80%"></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:1.5rem;margin-top:.5rem;font-size:11px;color:#bbb">
+      <span>│ = Ziel-Reserve (10%)</span>
+      <span>│ = Max. Ladestand (80%)</span>
+    </div></div>
+  </div></div>
 </div>
 
 <div class="footer">Die Verarbeitung läuft vollständig in deinem Browser · Keine Daten werden übertragen</div>
@@ -5131,10 +5268,15 @@ window.addEventListener('DOMContentLoaded',()=>{
   if(READONLY_MODE){
     const disableStyle='opacity:0.38;cursor:not-allowed;pointer-events:none;filter:grayscale(0.4)';
 
-    // Nav-Buttons ausgrauen
+    // Nav-Buttons ausgrauen und deaktivieren
     ['importBtn','exportMenuBtn','ghPublishBtn'].forEach(id=>{
       const el=document.getElementById(id);
-      if(el) el.setAttribute('style', el.getAttribute('style')||'' + ';' + disableStyle);
+      if(!el) return;
+      el.style.opacity='0.38';
+      el.style.cursor='not-allowed';
+      el.style.pointerEvents='none';
+      el.style.filter='grayscale(0.4)';
+      el.onclick=null;
     });
 
     // Export-Dropdown-Items deaktivieren
@@ -5158,31 +5300,26 @@ window.addEventListener('DOMContentLoaded',()=>{
     if(hero) hero.style.display='none';
     if(upload) upload.style.display='none';
 
-    // Manuelle Eingabe Box: Overlay mit Ansichtsmodus-Hinweis
-    // wird nach renderPublicTab() gesetzt – daher per MutationObserver
+    // Manuelle Eingabe Box: aufklappbar aber Inhalt ausgegraut + Overlay
     const applyManualOverlay=()=>{
       const body=document.getElementById('manualInputBody');
-      const toggle=document.getElementById('manualInputChevron')?.parentElement;
-      if(toggle){
-        toggle.style.pointerEvents='none';
-        toggle.style.opacity='0.38';
-        toggle.style.cursor='not-allowed';
-      }
-      const container=document.querySelector('#tPublic > div');
-      if(container && !container.querySelector('#readonlyOverlay')){
-        container.style.position='relative';
-        const overlay=document.createElement('div');
-        overlay.id='readonlyOverlay';
-        overlay.style.cssText='position:absolute;inset:0;background:rgba(255,255,255,0.6);z-index:10;border-radius:var(--radius);display:flex;align-items:flex-end;justify-content:flex-end;padding:8px 10px;pointer-events:all;cursor:not-allowed';
-        overlay.innerHTML='<span style="font-size:11px;color:#999;background:#f5f5f5;border:1px solid #e0e0e0;padding:2px 8px;border-radius:999px">👁 Ansichtsmodus</span>';
-        container.appendChild(overlay);
-      }
+      if(!body||body.dataset.overlayApplied) return;
+      body.dataset.overlayApplied='1';
+      body.style.position='relative';
+      // Inhalt ausgrauen
+      body.style.opacity='0.45';
+      body.style.pointerEvents='none';
+      // Overlay mit Badge unten rechts
+      const overlay=document.createElement('div');
+      overlay.style.cssText='position:absolute;inset:0;z-index:10;display:flex;align-items:flex-end;justify-content:flex-end;padding:8px 10px;pointer-events:none';
+      overlay.innerHTML='<span style="font-size:11px;color:#888;background:#f5f5f5;border:1px solid #e0e0e0;padding:2px 8px;border-radius:999px">👁 Ansichtsmodus</span>';
+      body.appendChild(overlay);
     };
-    // Initial und bei Tab-Wechsel anwenden
-    const origShowTab=window.showTab;
-    window.showTab=(name,btn,color)=>{
-      origShowTab(name,btn,color);
-      if(name==='public') setTimeout(applyManualOverlay,50);
+    // Accordion-Toggle wrappen: öffnen erlaubt, aber Overlay anwenden
+    const origToggleManual=window.toggleManualInput;
+    window.toggleManualInput=()=>{
+      origToggleManual();
+      setTimeout(applyManualOverlay,10);
     };
 
     // "Ansichtsmodus"-Badge in Nav einfügen
