@@ -239,7 +239,7 @@ tr.overview-row.active td{background:#f0f8f0;}
 <div id="restoreBanner" style="display: none; align-items: center; justify-content: space-between; gap: 1rem; background: rgb(248, 248, 248); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.875rem 1.25rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
   <div>
     <div style="font-size:13px;font-weight:500;color:#111">Gespeicherter Datensatz gefunden</div>
-    <div style="font-size:12px;color:var(--muted);margin-top:2px" id="restoreInfo">127 Heimlade-Sessions + 18 öffentl. Vorgänge · gespeichert heute</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:2px" id="restoreInfo">127 Heimlade-Sessions + 18 öffentl. Vorgänge · gespeichert gestern</div>
   </div>
   <div style="display:flex;gap:8px">
     <button onclick="restoreFromStorage()" style="background:#111;color:#fff;border:none;padding:7px 18px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer">Wiederherstellen</button>
@@ -276,7 +276,7 @@ tr.overview-row.active td{background:#f0f8f0;}
     <span style="font-size:12px;color:var(--muted)">Einstellungen &amp; Dateien</span>
     <span id="cfgSummary" style="font-size:11px;color:#bbb;margin-left:4px">Strompreis 43.5 ct/kWh · Einspeisung 11.35 ct/kWh · 20 Dateien</span>
   </div>
-  <div id="cfgBody" style="display:none;padding-top:.875rem">
+  <div id="cfgBody" style="display: none; padding-top: 0.875rem;">
     <!-- SETTINGS -->
     <div class="cfg-bar" id="cfg">
       <div class="cfg-field"><label>Strompreis</label></div>
@@ -369,7 +369,7 @@ tr.overview-row.active td{background:#f0f8f0;}
   </div>
 
   <!-- TAB CONTENTS -->
-  <div id="tOverview" style="display: block;">
+  <div id="tOverview">
     <p class="section-title">Monatsübersicht kombiniert</p>
     <div class="tbl-wrap"><table><thead><tr>
       <th>Monat</th>
@@ -520,7 +520,7 @@ tr.overview-row.active td{background:#f0f8f0;}
       </div>
       <div style="position:relative;width:100%;height:220px"><canvas id="ec" width="852" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 852px;"></canvas></div>
     </div></div>
-  <div id="tHome" style="display: none;">
+  <div id="tHome" style="display:none">
     <p class="section-title">Alle Wallbox-Sessions <span style="font-size:11px;font-weight:400;color:var(--muted)">(▶ Monate → Tage aufklappen)</span></p>
     <div class="tbl-wrap"><table><thead><tr>
       <th style="cursor:pointer;user-select:none" onclick="sortHomeTab('date')">Monat / Tag ↓</th>
@@ -531,7 +531,7 @@ tr.overview-row.active td{background:#f0f8f0;}
     </tr></thead>
     <tbody><tr onclick="toggleHomeMonth('hmo_202604')" style="cursor:pointer;background:#f2f5f2">
       <td style="color:#444;font-weight:600">
-        <span id="arr_hmo_202604" style="font-size:10px;color:#999;margin-right:4px">▶</span>April 2026
+        <span id="arr_hmo_202604" style="font-size:10px;color:#999;margin-right:4px">▼</span>April 2026
       </td>
       <td style="font-size:11px;color:var(--muted)">39 Sessions · 12 Tage</td>
       <td></td>
@@ -539,7 +539,7 @@ tr.overview-row.active td{background:#f0f8f0;}
       <td><span class="bpv">PV</span> <span class="bnet">Netz</span></td>
       <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:73%"></div><div class="stk-net" style="width:27%"></div></div><span class="stk-pct">73%PV</span></div></td>
       <td class="pos">+14,91 €</td>
-    </tr><tr data-mdet="hmo_202604" data-dayid="day_22042026" onclick="toggleDay('day_22042026')" style="display: none; cursor: pointer; background: rgb(250, 250, 250);">
+    </tr><tr data-mdet="hmo_202604" data-dayid="day_22042026" onclick="toggleDay('day_22042026')" style="display:table-row;cursor:pointer;background:#fafafa">
         <td style="color:var(--muted);padding-left:1.25rem">
           <span id="arr_day_22042026" style="font-size:10px;color:#ccc;margin-right:4px">▶</span>22.04.2026
         </td>
@@ -581,7 +581,7 @@ tr.overview-row.active td{background:#f0f8f0;}
         <td><span class="bpv">PV</span></td>
         <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
         <td class="pos">+2,19 €</td>
-      </tr><tr data-mdet="hmo_202604" data-dayid="day_21042026" onclick="toggleDay('day_21042026')" style="display: none; cursor: pointer; background: rgb(250, 250, 250);">
+      </tr><tr data-mdet="hmo_202604" data-dayid="day_21042026" onclick="toggleDay('day_21042026')" style="display:table-row;cursor:pointer;background:#fafafa">
         <td style="color:var(--muted);padding-left:1.25rem">
           <span id="arr_day_21042026" style="font-size:10px;color:#ccc;margin-right:4px">▶</span>21.04.2026
         </td>
@@ -607,7 +607,7 @@ tr.overview-row.active td{background:#f0f8f0;}
         <td><span class="bpv">PV</span></td>
         <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
         <td class="pos">+0,03 €</td>
-      </tr><tr data-mdet="hmo_202604" data-dayid="day_20042026" onclick="toggleDay('day_20042026')" style="display: none; cursor: pointer; background: rgb(250, 250, 250);">
+      </tr><tr data-mdet="hmo_202604" data-dayid="day_20042026" onclick="toggleDay('day_20042026')" style="display:table-row;cursor:pointer;background:#fafafa">
         <td style="color:var(--muted);padding-left:1.25rem">
           <span id="arr_day_20042026" style="font-size:10px;color:#ccc;margin-right:4px">▶</span>20.04.2026
         </td>
@@ -633,7 +633,7 @@ tr.overview-row.active td{background:#f0f8f0;}
         <td><span class="bpv">PV</span></td>
         <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
         <td class="pos">+0,03 €</td>
-      </tr><tr data-mdet="hmo_202604" data-dayid="day_18042026" onclick="toggleDay('day_18042026')" style="display: none; cursor: pointer; background: rgb(250, 250, 250);">
+      </tr><tr data-mdet="hmo_202604" data-dayid="day_18042026" onclick="toggleDay('day_18042026')" style="display:table-row;cursor:pointer;background:#fafafa">
         <td style="color:var(--muted);padding-left:1.25rem">
           <span id="arr_day_18042026" style="font-size:10px;color:#ccc;margin-right:4px">▶</span>18.04.2026
         </td>
@@ -675,7 +675,7 @@ tr.overview-row.active td{background:#f0f8f0;}
         <td><span class="bpv">PV</span></td>
         <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
         <td class="pos">+0,07 €</td>
-      </tr><tr data-mdet="hmo_202604" data-dayid="day_17042026" onclick="toggleDay('day_17042026')" style="display: none; cursor: pointer; background: rgb(250, 250, 250);">
+      </tr><tr data-mdet="hmo_202604" data-dayid="day_17042026" onclick="toggleDay('day_17042026')" style="display:table-row;cursor:pointer;background:#fafafa">
         <td style="color:var(--muted);padding-left:1.25rem">
           <span id="arr_day_17042026" style="font-size:10px;color:#ccc;margin-right:4px">▶</span>17.04.2026
         </td>
@@ -781,7 +781,7 @@ tr.overview-row.active td{background:#f0f8f0;}
         <td><span class="bpv">PV</span></td>
         <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
         <td class="pos">+0,11 €</td>
-      </tr><tr data-mdet="hmo_202604" data-dayid="day_16042026" onclick="toggleDay('day_16042026')" style="display: none; cursor: pointer; background: rgb(250, 250, 250);">
+      </tr><tr data-mdet="hmo_202604" data-dayid="day_16042026" onclick="toggleDay('day_16042026')" style="display:table-row;cursor:pointer;background:#fafafa">
         <td style="color:var(--muted);padding-left:1.25rem">
           <span id="arr_day_16042026" style="font-size:10px;color:#ccc;margin-right:4px">▶</span>16.04.2026
         </td>
@@ -799,7 +799,7 @@ tr.overview-row.active td{background:#f0f8f0;}
         <td><span class="bpv">PV</span></td>
         <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
         <td class="pos">+0,74 €</td>
-      </tr><tr data-mdet="hmo_202604" data-dayid="day_15042026" onclick="toggleDay('day_15042026')" style="display: none; cursor: pointer; background: rgb(250, 250, 250);">
+      </tr><tr data-mdet="hmo_202604" data-dayid="day_15042026" onclick="toggleDay('day_15042026')" style="display:table-row;cursor:pointer;background:#fafafa">
         <td style="color:var(--muted);padding-left:1.25rem">
           <span id="arr_day_15042026" style="font-size:10px;color:#ccc;margin-right:4px">▶</span>15.04.2026
         </td>
@@ -825,7 +825,7 @@ tr.overview-row.active td{background:#f0f8f0;}
         <td><span class="bpv">PV</span></td>
         <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
         <td class="pos">+0,87 €</td>
-      </tr><tr data-mdet="hmo_202604" data-dayid="day_13042026" onclick="toggleDay('day_13042026')" style="display: none; cursor: pointer; background: rgb(250, 250, 250);">
+      </tr><tr data-mdet="hmo_202604" data-dayid="day_13042026" onclick="toggleDay('day_13042026')" style="display:table-row;cursor:pointer;background:#fafafa">
         <td style="color:var(--muted);padding-left:1.25rem">
           <span id="arr_day_13042026" style="font-size:10px;color:#ccc;margin-right:4px">▶</span>13.04.2026
         </td>
@@ -851,7 +851,7 @@ tr.overview-row.active td{background:#f0f8f0;}
         <td><span class="bpv">PV</span></td>
         <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
         <td class="pos">+0,03 €</td>
-      </tr><tr data-mdet="hmo_202604" data-dayid="day_11042026" onclick="toggleDay('day_11042026')" style="display: none; cursor: pointer; background: rgb(250, 250, 250);">
+      </tr><tr data-mdet="hmo_202604" data-dayid="day_11042026" onclick="toggleDay('day_11042026')" style="display:table-row;cursor:pointer;background:#fafafa">
         <td style="color:var(--muted);padding-left:1.25rem">
           <span id="arr_day_11042026" style="font-size:10px;color:#ccc;margin-right:4px">▶</span>11.04.2026
         </td>
@@ -893,7 +893,7 @@ tr.overview-row.active td{background:#f0f8f0;}
         <td><span class="bpv">PV</span></td>
         <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
         <td class="pos">+0,31 €</td>
-      </tr><tr data-mdet="hmo_202604" data-dayid="day_09042026" onclick="toggleDay('day_09042026')" style="display: none; cursor: pointer; background: rgb(250, 250, 250);">
+      </tr><tr data-mdet="hmo_202604" data-dayid="day_09042026" onclick="toggleDay('day_09042026')" style="display:table-row;cursor:pointer;background:#fafafa">
         <td style="color:var(--muted);padding-left:1.25rem">
           <span id="arr_day_09042026" style="font-size:10px;color:#ccc;margin-right:4px">▶</span>09.04.2026
         </td>
@@ -927,7 +927,7 @@ tr.overview-row.active td{background:#f0f8f0;}
         <td><span class="bpv">PV</span></td>
         <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
         <td class="pos">+0,16 €</td>
-      </tr><tr data-mdet="hmo_202604" data-dayid="day_08042026" onclick="toggleDay('day_08042026')" style="display: none; cursor: pointer; background: rgb(250, 250, 250);">
+      </tr><tr data-mdet="hmo_202604" data-dayid="day_08042026" onclick="toggleDay('day_08042026')" style="display:table-row;cursor:pointer;background:#fafafa">
         <td style="color:var(--muted);padding-left:1.25rem">
           <span id="arr_day_08042026" style="font-size:10px;color:#ccc;margin-right:4px">▶</span>08.04.2026
         </td>
@@ -953,7 +953,7 @@ tr.overview-row.active td{background:#f0f8f0;}
         <td><span class="bpv">PV</span></td>
         <td><div class="stk-wrap"><div class="stk"><div class="stk-pv" style="width:100%"></div><div class="stk-net" style="width:0%"></div></div><span class="stk-pct">100%PV</span></div></td>
         <td class="pos">+1,81 €</td>
-      </tr><tr data-mdet="hmo_202604" data-dayid="day_07042026" onclick="toggleDay('day_07042026')" style="display: none; cursor: pointer; background: rgb(250, 250, 250);">
+      </tr><tr data-mdet="hmo_202604" data-dayid="day_07042026" onclick="toggleDay('day_07042026')" style="display:table-row;cursor:pointer;background:#fafafa">
         <td style="color:var(--muted);padding-left:1.25rem">
           <span id="arr_day_07042026" style="font-size:10px;color:#ccc;margin-right:4px">▶</span>07.04.2026
         </td>
@@ -2136,9 +2136,9 @@ tr.overview-row.active td{background:#f0f8f0;}
         </div>
       </div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:.75rem" id="hChartLegend"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #1D9E75"></span>PV-Überschuss</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #8BD5B8"></span>Netzbezug</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>Ø 185.79 kWh</span></div>
-      <div style="position:relative;width:100%;height:220px"><canvas id="hTabCanvas" role="img" aria-label="Wallbox Monatsvergleich" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 852px;" width="852"></canvas></div>
+      <div style="position:relative;width:100%;height:220px"><canvas id="hTabCanvas" role="img" aria-label="Wallbox Monatsvergleich" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas></div>
     </div></div>
-  <div id="tPublic" style="display: none;">
+  <div id="tPublic" style="display:none">
     <!-- EINGABEMASKE (klappbar) -->
     <div style="margin-bottom:1.25rem;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
       <div onclick="toggleManualInput()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;padding:.5rem .75rem;background:#fafafa">
@@ -2484,7 +2484,7 @@ tr.overview-row.active td{background:#f0f8f0;}
         </div>
       </div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:.75rem" id="pChartLegend"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #378ADD"></span>Ladekosten</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #1a73e8"></span>Grundgebühr</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>Ø 50.17 €</span></div>
-      <div style="position:relative;width:100%;height:220px"><canvas id="pTabCanvas" role="img" aria-label="Öffentlich Monatsvergleich" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 852px;" width="852"></canvas></div>
+      <div style="position:relative;width:100%;height:220px"><canvas id="pTabCanvas" role="img" aria-label="Öffentlich Monatsvergleich" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas></div>
     </div></div>
   <div id="tMonths" style="display:none"><div style="display:flex;gap:14px;font-size:11px;color:var(--muted);margin-bottom:.75rem;flex-wrap:wrap">
     <span><span class="ld" style="background:var(--green)"></span>PV</span>
@@ -2587,7 +2587,7 @@ tr.overview-row.active td{background:#f0f8f0;}
       <p class="section-title">PV vs. Netz Heimladen (kWh)</p>
       <div style="position:relative;width:100%;height:324px"><canvas id="mc"></canvas></div>
     </div></div>
-  <div id="tAmort" style="display: none;">
+  <div id="tAmort" style="display:none">
   <div class="amort-grid">
     <div>
       <div class="amort-section-title">Investition</div>
@@ -2596,14 +2596,14 @@ tr.overview-row.active td{background:#f0f8f0;}
         <div style="font-size:11px;color:var(--muted);margin-bottom:6px">EnBW Tarif M (Vergleich öffentl. Säule)</div>
         <div class="amort-field"><label>Grundgebühr</label><input type="number" id="aPubBase" value="5.99" step="0.01" oninput="updateEffPrice()"><span>€/Monat</span></div>
         <div class="amort-field"><label>kWh-Preis</label><input type="number" id="aPubKwh" value="46" step="0.1" oninput="updateEffPrice()"><span>ct/kWh</span></div>
-        <div class="amort-field"><label>Lademenge öffentl.</label><input type="number" id="aPubMonthKwh" value="90" step="1" oninput="amortFieldChanged('aPubMonthKwh');updateEffPrice()"><span>kWh/Monat</span><span id="aPubYearLabel" style="font-size:10px;color:var(--muted);margin-left:4px">(ca. 1.104 kWh/Jahr)</span></div>
-        <div class="amort-eff"><label>Effektivpreis</label><span id="aEffPrice" style="font-size:14px;font-weight:600;color:var(--green)">52,51</span><span style="font-size:11px;color:var(--muted)">ct/kWh</span><input type="hidden" id="aPubPrice" value="52.5109"></div>
+        <div class="amort-field"><label>Lademenge öffentl.</label><input type="number" id="aPubMonthKwh" value="92" step="1" oninput="amortFieldChanged('aPubMonthKwh');updateEffPrice()"><span>kWh/Monat</span><span id="aPubYearLabel" style="font-size:10px;color:var(--muted);margin-left:4px">(ca. 1.104 kWh/Jahr)</span></div>
+        <div class="amort-eff"><label>Effektivpreis</label><span id="aEffPrice" style="font-size:14px;font-weight:600;color:var(--green)">52,65</span><span style="font-size:11px;color:var(--muted)">ct/kWh</span><input type="hidden" id="aPubPrice" value="52.65"></div>
       </div>
     </div>
     <div>
       <div class="amort-section-title">Jahresprognose <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#bbb">(8 echte / 4 gesch. Monate · Saisonfaktoren: Aus echten Daten)</span></div>
-      <div class="amort-field"><label>PV-Nettovorteil / Jahr</label><input type="number" id="aPvYear" value="187.85" step="0.01" oninput="amortFieldChanged('aPvYear')"><span>€/Jahr</span><span id="aPvMonthLabel" style="font-size:10px;color:var(--muted);margin-left:4px">(ca. 32,00 €/Monat)</span></div>
-      <div class="amort-field"><label>Wallbox / Jahr</label><input type="number" id="aNetYear" value="1865" step="1" oninput="amortFieldChanged('aNetYear')"><span>kWh/Jahr</span><span id="aNetTotalLabel" style="font-size:10px;color:var(--muted);margin-left:4px">(gesamt 3.304 kWh/Jahr inkl. öffentl.)</span></div>
+      <div class="amort-field"><label>PV-Nettovorteil / Jahr</label><input type="number" id="aPvYear" value="384" step="0.01" oninput="amortFieldChanged('aPvYear')"><span>€/Jahr</span><span id="aPvMonthLabel" style="font-size:10px;color:var(--muted);margin-left:4px">(ca. 32,00 €/Monat)</span></div>
+      <div class="amort-field"><label>Wallbox / Jahr</label><input type="number" id="aNetYear" value="2200" step="1" oninput="amortFieldChanged('aNetYear')"><span>kWh/Jahr</span><span id="aNetTotalLabel" style="font-size:10px;color:var(--muted);margin-left:4px">(gesamt 3.304 kWh/Jahr inkl. öffentl.)</span></div>
       <div style="margin-top:.75rem">
         <div style="font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.4rem">Monatsaufschlüsselung</div>
         <div><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Sept. 2025</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Okt. 2025</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Nov. 2025</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Dez. 2025</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Jan. 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Feb. 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">März 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0"></span><span style="font-size:11px;color:#111">Apr. 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:#1a73e8;flex-shrink:0"></span><span style="font-size:11px;color:#1a73e8">Mai 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:#1a73e8;flex-shrink:0"></span><span style="font-size:11px;color:#1a73e8">Juni 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:#1a73e8;flex-shrink:0"></span><span style="font-size:11px;color:#1a73e8">Juli 2026</span></span><span style="display:inline-flex;align-items:center;gap:3px;margin-right:5px;margin-bottom:2px"><span style="width:6px;height:6px;border-radius:50%;background:#1a73e8;flex-shrink:0"></span><span style="font-size:11px;color:#1a73e8">Aug. 2026</span></span></div>
@@ -2621,11 +2621,11 @@ tr.overview-row.active td{background:#f0f8f0;}
   <div id="amortResult" style="display: block;">
     <div class="amort-metrics" id="amortMetrics">
     <div class="amort-metric"><div class="lb">PV-Nettovorteil / Jahr</div><div class="vl pos">384,00 <em>€</em></div><div class="sb">Eigenverbrauch vs. Einspeisung</div></div>
-    <div class="amort-metric"><div class="lb">Wallbox-Ersparnis / Jahr</div><div class="vl pos">198,24 <em>€</em></div><div class="sb">vs. EnBW Tarif M</div></div>
-    <div class="amort-metric"><div class="lb">Gesamtvorteil / Jahr</div><div class="vl pos">582,24 <em>€</em></div><div class="sb">PV + Wallbox (Prognose)</div></div>
+    <div class="amort-metric"><div class="lb">Wallbox-Ersparnis / Jahr</div><div class="vl pos">201,30 <em>€</em></div><div class="sb">vs. EnBW Tarif M</div></div>
+    <div class="amort-metric"><div class="lb">Gesamtvorteil / Jahr</div><div class="vl pos">585,30 <em>€</em></div><div class="sb">PV + Wallbox (Prognose)</div></div>
     <div class="amort-metric"><div class="lb">Amortisation</div><div class="vl blue">ca. Oktober 2027</div><div class="sb">≈ 25 Monate</div></div></div>
     <p class="section-title">Amortisationsverlauf</p>
-    <div style="position:relative;width:100%;height:240px"><canvas id="ac" style="box-sizing: border-box; display: block; height: 240px; width: 852px;" width="852" height="240"></canvas></div>
+    <div style="position:relative;width:100%;height:240px"><canvas id="ac" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas></div>
     <div id="amortNote" style="font-size:11px;color:var(--muted);margin-top:.75rem;line-height:1.6"><strong>Amortisationspunkt:</strong> ca. <strong>Oktober 2027</strong> (≈ 25 Monate ab Kauf Sep 2025).
      Echte Daten bis April 2026, danach Prognose.</div>
   </div></div>
@@ -5107,6 +5107,28 @@ function updateStorageBadge(){
 
 // ── INIT ─────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded',()=>{
+  // READONLY_MODE: Lite-Version – Admin-Elemente ausblenden
+  if(READONLY_MODE){
+    ['fiNav','exportMenuBtn','ghPublishBtn'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el) el.style.display='none';
+    });
+    document.getElementById('cfgAccordion').style.display='none';
+    // "Ansichtsmodus"-Badge in Nav einfügen
+    const navRight=document.querySelector('.nav-right');
+    if(navRight){
+      const badge=document.createElement('span');
+      badge.textContent='👁 Ansichtsmodus';
+      badge.style.cssText='font-size:11px;color:#888;background:#f5f5f5;padding:3px 10px;border-radius:999px;border:1px solid #e0e0e0';
+      navRight.prepend(badge);
+    }
+    // Upload-Bereich ausblenden
+    const hero=document.getElementById('heroArea');
+    const upload=document.getElementById('uploadArea');
+    if(hero) hero.style.display='none';
+    if(upload) upload.style.display='none';
+  }
+
   // File input listener
   const fi=document.getElementById('fi');
   if(fi) fi.addEventListener('change',e=>handleFiles(e.target.files));
@@ -5189,6 +5211,9 @@ function restoreFromStorage(){
 
 // ── HTML EXPORT (Sessions einbetten) ─────────────────────
 // ── GITHUB CREDENTIALS ───────────────────────────────────
+const READONLY_MODE = true; // true = Lite-Version (kein Import/Export/Admin)
+const GH_ADMIN_PATH = 'admin/index.html'; // Vollversion
+const GH_LITE_PATH  = 'index.html';       // Lite-Version
 const GH_USER='l10john';
 const GH_REPO='lademonitor';
 const _a='4Yitp1F61_phg',_b='hurwhKQ8cYdlY',_c='N3lv601H65tsgI';
@@ -5245,11 +5270,7 @@ function loadGhSettings(){
 }
 
 async function publishToGithub(){
-  const user=GH_USER;
-  const repo=GH_REPO;
-  const token=GH_TOKEN;
-
-  // Snapshot generieren
+  const user=GH_USER, repo=GH_REPO, token=GH_TOKEN;
   const gp=document.getElementById('gp').value;
   const fp=document.getElementById('fp').value;
   const snap={
@@ -5267,30 +5288,33 @@ async function publishToGithub(){
   };
   const html=document.documentElement.outerHTML;
   const marker='const HISTORIC_DATA = ';
-  const start=html.indexOf(marker);
-  const end=html.indexOf('};',start)+2;
-  if(start===-1){setGhStatus('Fehler: Marker nicht gefunden.','#e53935');return;}
-  const newHTML=html.slice(0,start)+marker+JSON.stringify(snap)+html.slice(end);
-  const content=btoa(unescape(encodeURIComponent(newHTML)));
+  const hStart=html.indexOf(marker);
+  const hEnd=html.indexOf('};',hStart)+2;
+  if(hStart===-1){setGhStatus('Fehler: Marker nicht gefunden.','#e53935');return;}
+  const adminHTML=html.slice(0,hStart)+marker+JSON.stringify(snap)+html.slice(hEnd);
+  const liteHTML=adminHTML.replace('const READONLY_MODE = false;','const READONLY_MODE = true;');
+  const encAdmin=btoa(unescape(encodeURIComponent(adminHTML)));
+  const encLite=btoa(unescape(encodeURIComponent(liteHTML)));
 
   setGhStatus('⏳ Wird hochgeladen...','var(--muted)');
   try{
-    const apiBase=`https://api.github.com/repos/${user}/${repo}/contents/index.html`;
     const headers={'Authorization':`token ${token}`,'Content-Type':'application/json'};
-    let sha=null;
-    const check=await fetch(apiBase,{headers});
-    if(check.ok){const j=await check.json();sha=j.sha;}
-    const body={message:`Lademonitor Update ${new Date().toLocaleDateString('de-DE')}`,content};
-    if(sha) body.sha=sha;
-    const res=await fetch(apiBase,{method:'PUT',headers,body:JSON.stringify(body)});
-    if(res.ok){
-      const url=`https://${user}.github.io/${repo}`;
-      setGhStatus(`✓ Veröffentlicht! Erreichbar unter <a href="${url}" target="_blank" style="color:var(--blue)">${url}</a> (ca. 30s)`,'var(--green)');
-    } else {
-      const err=await res.json();
-      setGhStatus(`Fehler: ${err.message||res.status}`,'#e53935');
+    async function pushFile(path,content){
+      const apiUrl=`https://api.github.com/repos/${user}/${repo}/contents/${path}`;
+      let sha=null;
+      const check=await fetch(apiUrl,{headers});
+      if(check.ok){const j=await check.json();sha=j.sha;}
+      const body={message:`Lademonitor Update ${new Date().toLocaleDateString('de-DE')} – ${path}`,content};
+      if(sha) body.sha=sha;
+      const res=await fetch(apiUrl,{method:'PUT',headers,body:JSON.stringify(body)});
+      if(!res.ok){const e=await res.json();throw new Error(e.message||res.status);}
     }
-  }catch(e){setGhStatus(`Netzwerkfehler: ${e.message}`,'#e53935');}
+    await pushFile(GH_ADMIN_PATH, encAdmin);
+    await pushFile(GH_LITE_PATH,  encLite);
+    const adminUrl=`https://${user}.github.io/${repo}/admin/`;
+    const liteUrl=`https://${user}.github.io/${repo}/`;
+    setGhStatus(`✓ Admin: <a href="${adminUrl}" target="_blank" style="color:var(--blue)">${adminUrl}</a> · Lite: <a href="${liteUrl}" target="_blank" style="color:var(--blue)">${liteUrl}</a>`,'var(--green)');
+  }catch(e){setGhStatus(`Fehler: ${e.message}`,'#e53935');}
 }
 
 function setGhStatus(msg,color){
