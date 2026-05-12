@@ -187,7 +187,7 @@ tr.overview-row.active td{background:#f0f8f0;}
   </div>
   <div class="nav-right" style="flex-direction:column;align-items:flex-end;gap:4px">
     <div style="display:flex;align-items:center;gap:8px">
-      <span id="intervalBadge" style="display: inline;">Intervall: 1min · 59.036 Punkte</span>
+      <span id="intervalBadge"></span>
       <!-- IMPORT BUTTON -->
       <button id="importBtn" onclick="document.getElementById('fiNav').click()" style="background:#dde8e0;color:#3a6b52;border:1px solid #b8d4c2;padding:5px 13px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:-.01em">
         📂 Importieren
@@ -239,7 +239,7 @@ tr.overview-row.active td{background:#f0f8f0;}
 <div id="restoreBanner" style="display: none; align-items: center; justify-content: space-between; gap: 1rem; background: rgb(248, 248, 248); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.875rem 1.25rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
   <div>
     <div style="font-size:13px;font-weight:500;color:#111">Gespeicherter Datensatz gefunden</div>
-    <div style="font-size:12px;color:var(--muted);margin-top:2px" id="restoreInfo">127 Heimlade-Sessions + 18 öffentl. Vorgänge · gespeichert vor 19 Tagen</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:2px" id="restoreInfo">135 Heimlade-Sessions + 18 öffentl. Vorgänge · gespeichert heute</div>
   </div>
   <div style="display:flex;gap:8px">
     <button onclick="restoreFromStorage()" style="background:#111;color:#fff;border:none;padding:7px 18px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer">Wiederherstellen</button>
@@ -264,7 +264,7 @@ tr.overview-row.active td{background:#f0f8f0;}
   </div>
 </div>
 
-<div id="progressArea" style="display: none;" class="progress">
+<div id="progressArea" style="display:none" class="progress">
   Dateien werden verarbeitet...
   <div class="progress-bar"><div class="progress-fill"></div></div>
 </div>
@@ -276,7 +276,7 @@ tr.overview-row.active td{background:#f0f8f0;}
     <span style="font-size:12px;color:var(--muted)">Einstellungen &amp; Dateien</span>
     <span id="cfgSummary" style="font-size:11px;color:#bbb;margin-left:4px">Strompreis 43.5 ct/kWh · Einspeisung 11.35 ct/kWh · 20 Dateien</span>
   </div>
-  <div id="cfgBody" style="display: none; padding-top: 0.875rem;">
+  <div id="cfgBody" style="display:none;padding-top:.875rem">
     <!-- SETTINGS -->
     <div class="cfg-bar" id="cfg">
       <div class="cfg-field"><label>Strompreis</label></div>
@@ -348,9 +348,9 @@ tr.overview-row.active td{background:#f0f8f0;}
       <div class="kachel-metric"><div class="lb">Effektivpreis gesamt</div>
         <div class="vl blue" style="display:flex;align-items:baseline;gap:4px">
           41.69<em>ct/kWh</em>
-          <span style="font-size:16px;color:var(--green);margin-left:2px" title="-0.32 ct günstiger">↘</span>
+          <span style="font-size:16px;color:var(--muted);margin-left:2px" title="Stabil">→</span>
         </div>
-        <div class="sb">-0.32 ct günstiger</div>
+        <div class="sb">Ø aller Ladevorgänge</div>
       </div>
       <div class="kachel-metric"><div class="lb">Gesamtkosten</div><div class="vl neg">939,87 €</div><div class="sb">Netz Wallbox + öffentl.</div></div>
     </div>
@@ -370,7 +370,7 @@ tr.overview-row.active td{background:#f0f8f0;}
   </div>
 
   <!-- TAB CONTENTS -->
-  <div id="tOverview" style="display: block;">
+  <div id="tOverview">
     <p class="section-title">Monatsübersicht kombiniert</p>
     <div class="tbl-wrap"><table><thead><tr>
       <th>Monat</th>
@@ -498,22 +498,20 @@ tr.overview-row.active td{background:#f0f8f0;}
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem;flex-wrap:wrap;gap:.5rem">
         <p class="section-title" style="margin:0">Monatsvergleich</p>
         <div style="display:flex;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;font-size:12px">
-          <button id="toggleKwh" onclick="switchOverviewChart('kwh')" style="padding: 4px 14px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; background: rgb(255, 255, 255); color: var(--muted); cursor: pointer; font-size: 12px; font-weight: 400;">kWh</button>
-          <button id="toggleEur" onclick="switchOverviewChart('eur')" style="padding: 4px 14px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; background: rgb(17, 17, 17); color: rgb(255, 255, 255); cursor: pointer; font-size: 12px; font-weight: 600;">€</button>
+          <button id="toggleKwh" onclick="switchOverviewChart('kwh')" style="padding:4px 14px;border:none;background:#111;color:#fff;cursor:pointer;font-size:12px;font-weight:600">kWh</button>
+          <button id="toggleEur" onclick="switchOverviewChart('eur')" style="padding:4px 14px;border:none;background:#fff;color:var(--muted);cursor:pointer;font-size:12px">€</button>
         </div>
       </div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:.75rem" id="overviewLegend"><span style="display:inline-flex;align-items:center;gap:4px">
-           <span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #8BD5B8"></span>Netzkosten Heim
+           <span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #1D9E75"></span>PV-Überschuss
          </span><span style="display:inline-flex;align-items:center;gap:4px">
-           <span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #5FA8E8"></span>Ladekosten öffentl.
+           <span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #8BD5B8"></span>Netzbezug Heim
          </span><span style="display:inline-flex;align-items:center;gap:4px">
-           <span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #1a73e8"></span>Grundgebühr EnBW
+           <span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #378ADD"></span>Öffentlich laden
          </span><span style="display:inline-flex;align-items:center;gap:4px">
-           <span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #1D9E75"></span>PV-Nettovorteil (Ersparnis)
-         </span><span style="display:inline-flex;align-items:center;gap:4px">
-           <span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>Ø 105.71 €
+           <span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>Ø 250.51 kWh
          </span></div>
-      <div style="position:relative;width:100%;height:360px"><canvas id="overviewChart" style="box-sizing: border-box; display: block; height: 360px; width: 852px;" width="852" height="360"></canvas></div>
+      <div style="position:relative;width:100%;height:360px"><canvas id="overviewChart" height="360" style="display: block; box-sizing: border-box; height: 360px; width: 852px;" width="852"></canvas></div>
     </div>
 
     <div style="margin-top:2rem">
@@ -533,7 +531,7 @@ tr.overview-row.active td{background:#f0f8f0;}
       </div>
       <div style="position:relative;width:100%;height:220px"><canvas id="ec" width="852" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 852px;"></canvas></div>
     </div></div>
-  <div id="tHome" style="display: none;">
+  <div id="tHome" style="display:none">
     <p class="section-title">Alle Wallbox-Sessions <span style="font-size:11px;font-weight:400;color:var(--muted)">(▶ Monate → Tage aufklappen)</span></p>
     <div class="tbl-wrap"><table><thead><tr>
       <th style="cursor:pointer;user-select:none" onclick="sortHomeTab('date')">Monat / Tag ↓</th>
@@ -2258,14 +2256,14 @@ tr.overview-row.active td{background:#f0f8f0;}
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem">
         <p class="section-title" style="margin:0">Wallbox – Monatsvergleich</p>
         <div style="display:flex;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;font-size:12px">
-          <button id="hToggleKwh" onclick="switchHomeChart('kwh')" style="padding: 4px 14px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; background: rgb(255, 255, 255); color: var(--muted); cursor: pointer; font-size: 12px; font-weight: 400;">kWh</button>
-          <button id="hToggleEur" onclick="switchHomeChart('eur')" style="padding: 4px 14px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; background: rgb(17, 17, 17); color: rgb(255, 255, 255); cursor: pointer; font-size: 12px; font-weight: 600;">€</button>
+          <button id="hToggleKwh" onclick="switchHomeChart('kwh')" style="padding:4px 14px;border:none;background:#111;color:#fff;cursor:pointer;font-size:12px;font-weight:600">kWh</button>
+          <button id="hToggleEur" onclick="switchHomeChart('eur')" style="padding:4px 14px;border:none;background:#fff;color:var(--muted);cursor:pointer;font-size:12px">€</button>
         </div>
       </div>
-      <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:.75rem" id="hChartLegend"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #8BD5B8"></span>Netzkosten</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #1D9E75"></span>PV-Nettovorteil (Ersparnis)</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>Ø 68.74 €</span></div>
-      <div style="position:relative;width:100%;height:220px"><canvas id="hTabCanvas" role="img" aria-label="Wallbox Monatsvergleich" style="box-sizing: border-box; display: block; height: 220px; width: 852px;" width="852" height="220"></canvas></div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:.75rem" id="hChartLegend"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #1D9E75"></span>PV-Überschuss</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #8BD5B8"></span>Netzbezug</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>Ø 168.21 kWh</span></div>
+      <div style="position:relative;width:100%;height:220px"><canvas id="hTabCanvas" role="img" aria-label="Wallbox Monatsvergleich" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas></div>
     </div></div>
-  <div id="tPublic" style="display: none;">
+  <div id="tPublic" style="display:none">
     <!-- EINGABEMASKE (klappbar) -->
     <div style="margin-bottom:1.25rem;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
       <div onclick="toggleManualInput()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;padding:.5rem .75rem;background:#fafafa">
@@ -2611,7 +2609,7 @@ tr.overview-row.active td{background:#f0f8f0;}
         </div>
       </div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:.75rem" id="pChartLegend"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #378ADD"></span>Ladekosten</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #1a73e8"></span>Grundgebühr</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>Ø 50.17 €</span></div>
-      <div style="position:relative;width:100%;height:220px"><canvas id="pTabCanvas" role="img" aria-label="Öffentlich Monatsvergleich" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 852px;" width="852"></canvas></div>
+      <div style="position:relative;width:100%;height:220px"><canvas id="pTabCanvas" role="img" aria-label="Öffentlich Monatsvergleich" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas></div>
     </div></div>
   <div id="tMonths" style="display:none"><div style="display:flex;gap:14px;font-size:11px;color:var(--muted);margin-bottom:.75rem;flex-wrap:wrap">
     <span><span class="ld" style="background:var(--green)"></span>PV</span>
@@ -2722,7 +2720,7 @@ tr.overview-row.active td{background:#f0f8f0;}
       <p class="section-title">PV vs. Netz Heimladen (kWh)</p>
       <div style="position:relative;width:100%;height:360px"><canvas id="mc"></canvas></div>
     </div></div>
-  <div id="tAmort" style="display: none;">
+  <div id="tAmort" style="display:none">
   <div class="amort-grid">
     <div>
       <div class="amort-section-title">Investition</div>
@@ -2731,8 +2729,8 @@ tr.overview-row.active td{background:#f0f8f0;}
         <div style="font-size:11px;color:var(--muted);margin-bottom:6px">EnBW Tarif M (Vergleich öffentl. Säule)</div>
         <div class="amort-field"><label>Grundgebühr</label><input type="number" id="aPubBase" value="5.99" step="0.01" oninput="updateEffPrice()"><span>€/Monat</span></div>
         <div class="amort-field"><label>kWh-Preis</label><input type="number" id="aPubKwh" value="46" step="0.1" oninput="updateEffPrice()"><span>ct/kWh</span></div>
-        <div class="amort-field"><label>Lademenge öffentl.</label><input type="number" id="aPubMonthKwh" value="90" step="1" oninput="amortFieldChanged('aPubMonthKwh');updateEffPrice()"><span>kWh/Monat</span><span id="aPubYearLabel" style="font-size:10px;color:var(--muted);margin-left:4px">(ca. 600 kWh/Jahr)</span></div>
-        <div class="amort-eff"><label>Effektivpreis</label><span id="aEffPrice" style="font-size:14px;font-weight:600;color:var(--green)">57,98</span><span style="font-size:11px;color:var(--muted)">ct/kWh</span><input type="hidden" id="aPubPrice" value="57.9800"></div>
+        <div class="amort-field"><label>Lademenge öffentl.</label><input type="number" id="aPubMonthKwh" value="50" step="1" oninput="amortFieldChanged('aPubMonthKwh');updateEffPrice()"><span>kWh/Monat</span><span id="aPubYearLabel" style="font-size:10px;color:var(--muted);margin-left:4px">(ca. 600 kWh/Jahr)</span></div>
+        <div class="amort-eff"><label>Effektivpreis</label><span id="aEffPrice" style="font-size:14px;font-weight:600;color:var(--green)">52,65</span><span style="font-size:11px;color:var(--muted)">ct/kWh</span><input type="hidden" id="aPubPrice" value="52.65"></div>
       </div>
     </div>
     <div>
@@ -2756,152 +2754,15 @@ tr.overview-row.active td{background:#f0f8f0;}
   <div id="amortResult" style="display: block;">
     <div class="amort-metrics" id="amortMetrics">
     <div class="amort-metric"><div class="lb">PV-Nettovorteil / Jahr</div><div class="vl pos">130,23 <em>€</em></div><div class="sb">Eigenverbrauch vs. Einspeisung</div></div>
-    <div class="amort-metric"><div class="lb">Wallbox-Ersparnis / Jahr</div><div class="vl pos">245,87 <em>€</em></div><div class="sb">vs. EnBW Tarif M</div></div>
-    <div class="amort-metric"><div class="lb">Gesamtvorteil / Jahr</div><div class="vl pos">376,10 <em>€</em></div><div class="sb">PV + Wallbox (Prognose)</div></div>
-    <div class="amort-metric"><div class="lb">Amortisation</div><div class="vl blue">ca. Mai 2028</div><div class="sb">≈ 32 Monate</div></div></div>
+    <div class="amort-metric"><div class="lb">Wallbox-Ersparnis / Jahr</div><div class="vl pos">155,37 <em>€</em></div><div class="sb">vs. EnBW Tarif M</div></div>
+    <div class="amort-metric"><div class="lb">Gesamtvorteil / Jahr</div><div class="vl pos">285,60 <em>€</em></div><div class="sb">PV + Wallbox (Prognose)</div></div>
+    <div class="amort-metric"><div class="lb">Amortisation</div><div class="vl blue">ca. März 2029</div><div class="sb">≈ 42 Monate</div></div></div>
     <p class="section-title">Amortisationsverlauf</p>
-    <div style="position:relative;width:100%;height:240px"><canvas id="ac" style="box-sizing: border-box; display: block; height: 240px; width: 852px;" width="852" height="240"></canvas></div>
-    <div id="amortNote" style="font-size:11px;color:var(--muted);margin-top:.75rem;line-height:1.6"><strong>Amortisationspunkt:</strong> ca. <strong>Mai 2028</strong> (≈ 32 Monate ab Kauf Sep 2025).
+    <div style="position:relative;width:100%;height:240px"><canvas id="ac" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas></div>
+    <div id="amortNote" style="font-size:11px;color:var(--muted);margin-top:.75rem;line-height:1.6"><strong>Amortisationspunkt:</strong> ca. <strong>März 2029</strong> (≈ 42 Monate ab Kauf Sep 2025).
      Echte Daten bis Mai 2026, danach Prognose.</div>
   </div></div>
-  <div id="tTrip" style="display: none;">
-  <p class="section-title">⚡ Trip-Planer – Ladebedarfsrechner</p>
-
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem">
-
-    <!-- EINGABEN -->
-    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem">
-      <p class="section-title" style="margin-bottom:.875rem">Fahrzeug &amp; Strecke</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
-
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Akkukapazität</label>
-          <div style="display:flex;align-items:center;gap:6px">
-            <input type="number" id="tBattCap" value="73" step="0.1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
-            <span style="font-size:11px;color:var(--muted);white-space:nowrap">kWh</span>
-          </div>
-        </div>
-
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Aktuelle Ladung</label>
-          <div style="display:flex;align-items:center;gap:6px">
-            <input type="number" id="tSoC" value="37" min="0" max="100" step="1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
-            <span style="font-size:11px;color:var(--muted)">%</span>
-          </div>
-        </div>
-
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Strecke (hin + zurück)</label>
-          <div style="display:flex;align-items:center;gap:6px">
-            <input type="number" id="tKm" value="40" step="1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
-            <span style="font-size:11px;color:var(--muted)">km</span>
-          </div>
-        </div>
-
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">
-          Verbrauch
-          
-        </label>
-          <div style="display:flex;align-items:center;gap:6px">
-            <input type="number" id="tConsumption" value="20" step="0.1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
-            <span style="font-size:11px;color:var(--muted);white-space:nowrap">kWh/100km</span>
-          </div>
-        </div>
-
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Ziel-Ladestand nach Trip</label>
-          <div style="display:flex;align-items:center;gap:6px">
-            <input type="number" id="tTargetSoC" value="10" min="0" max="100" step="1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
-            <span style="font-size:11px;color:var(--muted)">%</span>
-          </div>
-        </div>
-
-        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Max. Ladestand (Batterieschonung)</label>
-          <div style="display:flex;align-items:center;gap:6px">
-            <input type="number" id="tMaxSoC" value="80" min="50" max="100" step="1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
-            <span style="font-size:11px;color:var(--muted)">%</span>
-          </div>
-        </div>
-
-      </div>
-
-      <div style="margin-top:.875rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
-        <div style="display:flex;align-items:center;gap:6px">
-          <label style="font-size:11px;color:var(--muted)">Wallbox-Leistung</label>
-          <input type="number" id="tWallboxKw" value="11" step="0.1" style="width:60px;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
-          <span style="font-size:11px;color:var(--muted)">kW</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:6px">
-          <label style="font-size:11px;color:var(--muted)">Ladestart</label>
-          <input type="time" id="tStartTime" value="20:00" style="padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
-        </div>
-      </div>
-    </div>
-
-    <!-- ERGEBNIS -->
-    <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem">
-      <p class="section-title" style="margin-bottom:.875rem">Ergebnis</p>
-      <div id="tripResult" style="font-size:13px;color:var(--muted)">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:.75rem">
-        <span style="font-size:22px">✅</span>
-        <div>
-          <div style="font-size:15px;font-weight:600;color:#111">Kein Laden nötig!</div>
-          <div style="font-size:12px;color:var(--muted)">Aktuelle Ladung reicht für den Trip inkl. Reserve</div>
-        </div>
-      </div>
-      <div style="display:grid;gap:.5rem;margin-top:.5rem">
-        <div style="display:flex;justify-content:space-between;padding:.5rem .75rem;background:#f8f8f8;border-radius:6px">
-          <span style="font-size:12px;color:var(--muted)">Jetzt</span>
-          <span style="font-size:13px;font-weight:700;color:#111">21% · 15.3 kWh</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:.5rem .75rem;background:#f8f8f8;border-radius:6px">
-          <span style="font-size:12px;color:var(--muted)">Nach dem Trip</span>
-          <span style="font-size:13px;font-weight:700;color:#e53935">10% · 7.3 kWh</span>
-        </div>
-        <div style="font-size:11px;color:#bbb;margin-top:2px">Benötigt: 8.0 kWh · Verfügbar: 15.3 kWh</div>
-      </div></div>
-    </div>
-
-  </div>
-
-  <!-- AKKU-VISUALISIERUNG -->
-  <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem">
-    <p class="section-title" style="margin-bottom:.75rem">Akkustand-Visualisierung</p>
-    <div id="tripBattViz" style="font-size:12px;color:var(--muted)">
-    
-    <div style="margin-bottom:.5rem">
-      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px">
-        <span>Jetzt</span><span></span>
-      </div>
-      <div style="height:22px;background:#f0f0f0;border-radius:4px;overflow:hidden;position:relative">
-        <div style="height:100%;width:21%;background:#8BD5B8;border-radius:4px;transition:width .4s"></div>
-        <div style="position:absolute;top:0;bottom:0;left:10%;width:1.5px;background:rgba(0,0,0,0.2)" title="Ziel-Reserve 10%"></div>
-        <div style="position:absolute;top:0;bottom:0;left:80%;width:1.5px;background:rgba(0,0,0,0.35)" title="Max 80%"></div>
-      </div>
-    </div>
-    
-    <div style="margin-bottom:.5rem">
-      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px">
-        <span>Nach dem Laden</span><span></span>
-      </div>
-      <div style="height:22px;background:#f0f0f0;border-radius:4px;overflow:hidden;position:relative">
-        <div style="height:100%;width:21%;background:#1D9E75;border-radius:4px;transition:width .4s"></div>
-        <div style="position:absolute;top:0;bottom:0;left:10%;width:1.5px;background:rgba(0,0,0,0.2)" title="Ziel-Reserve 10%"></div>
-        <div style="position:absolute;top:0;bottom:0;left:80%;width:1.5px;background:rgba(0,0,0,0.35)" title="Max 80%"></div>
-      </div>
-    </div>
-    
-    <div style="margin-bottom:.5rem">
-      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px">
-        <span>Nach dem Trip</span><span></span>
-      </div>
-      <div style="height:22px;background:#f0f0f0;border-radius:4px;overflow:hidden;position:relative">
-        <div style="height:100%;width:10.04109589041096%;background:#e53935;border-radius:4px;transition:width .4s"></div>
-        <div style="position:absolute;top:0;bottom:0;left:10%;width:1.5px;background:rgba(0,0,0,0.2)" title="Ziel-Reserve 10%"></div>
-        <div style="position:absolute;top:0;bottom:0;left:80%;width:1.5px;background:rgba(0,0,0,0.35)" title="Max 80%"></div>
-      </div>
-    </div>
-    <div style="display:flex;gap:1.5rem;margin-top:.5rem;font-size:11px;color:#bbb">
-      <span>│ = Ziel-Reserve (10%)</span>
-      <span>│ = Max. Ladestand (80%)</span>
-    </div></div>
-  </div></div>
+  <div id="tTrip" style="display:none"></div>
   <div id="tAnalyse" style="display:none"></div>
 </div>
 
