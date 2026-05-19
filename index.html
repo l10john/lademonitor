@@ -218,7 +218,7 @@ tr.overview-row.active td{background:#f0f8f0;}
 </div>
 
 <!-- PUBLISH TOAST -->
-<div id="publishToast" style="display:none;padding:.6rem 1rem;border-radius:var(--radius);font-size:12px;margin-bottom:.75rem;border:1px solid transparent;transition:all .2s"></div>
+<div id="publishToast" style="display: none; padding: 0.6rem 1rem; border-radius: var(--radius); font-size: 12px; margin-bottom: 0.75rem; border: 1px solid rgb(159, 225, 203); transition: 0.2s; color: rgb(15, 110, 86); background: rgb(225, 245, 238);">✓ Admin: <a href="https://l10john.github.io/lademonitor/admin/" target="_blank" style="color:var(--blue)">https://l10john.github.io/lademonitor/admin/</a> · Lite: <a href="https://l10john.github.io/lademonitor/" target="_blank" style="color:var(--blue)">https://l10john.github.io/lademonitor/</a></div>
 
 <!-- HERO -->
 <div class="hero" id="heroArea" style="display: none;">
@@ -272,11 +272,11 @@ tr.overview-row.active td{background:#f0f8f0;}
 <!-- SETTINGS ACCORDION -->
 <div id="cfgAccordion" style="display: block; margin-bottom: 1.25rem;">
   <div onclick="toggleCfg()" style="display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;padding:.5rem 0;border-bottom:1px solid var(--border)">
-    <span id="cfgChevron" style="font-size:11px;color:var(--muted);transition:transform .2s">▼</span>
+    <span id="cfgChevron" style="font-size:11px;color:var(--muted);transition:transform .2s">▶</span>
     <span style="font-size:12px;color:var(--muted)">Einstellungen &amp; Dateien</span>
     <span id="cfgSummary" style="font-size:11px;color:#bbb;margin-left:4px">Strompreis 43.5 ct/kWh · Einspeisung 11.35 ct/kWh · 20 Dateien</span>
   </div>
-  <div id="cfgBody" style="display: block; padding-top: 0.875rem;">
+  <div id="cfgBody" style="display: none; padding-top: 0.875rem;">
     <!-- SETTINGS -->
     <div class="cfg-bar" id="cfg">
       <div class="cfg-field"><label>Strompreis</label></div>
@@ -308,7 +308,7 @@ tr.overview-row.active td{background:#f0f8f0;}
       </div>
       <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
         <button onclick="saveGhSettings()" style="background:#111;color:#fff;border:none;padding:6px 16px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer">Einstellungen speichern</button>
-        <span id="ghStatus" style="font-size:12px;color:var(--muted)"></span>
+        <span id="ghStatus" style="font-size: 12px; color: var(--green);">✓ Admin: <a href="https://l10john.github.io/lademonitor/admin/" target="_blank" style="color:var(--blue)">https://l10john.github.io/lademonitor/admin/</a> · Lite: <a href="https://l10john.github.io/lademonitor/" target="_blank" style="color:var(--blue)">https://l10john.github.io/lademonitor/</a></span>
       </div>
       <p style="font-size:11px;color:#bbb;margin-top:.5rem;margin-bottom:0">Token wird nur lokal gespeichert · URL: <span id="ghUrl"><a href="https://l10john.github.io/lademonitor" target="_blank" style="color:var(--blue)">https://l10john.github.io/lademonitor</a></span></p>
     </div>
