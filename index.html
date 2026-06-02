@@ -187,7 +187,7 @@ tr.overview-row.active td{background:#f0f8f0;}
   </div>
   <div class="nav-right" style="flex-direction:column;align-items:flex-end;gap:4px">
     <div style="display:flex;align-items:center;gap:8px">
-      <span id="intervalBadge" style="display: inline;">Intervall: 1min · 2.341 Punkte</span>
+      <span id="intervalBadge"></span>
       <!-- IMPORT BUTTON -->
       <button id="importBtn" onclick="document.getElementById('fiNav').click()" style="background:#dde8e0;color:#3a6b52;border:1px solid #b8d4c2;padding:5px 13px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:-.01em">
         📂 Importieren
@@ -239,7 +239,7 @@ tr.overview-row.active td{background:#f0f8f0;}
 <div id="restoreBanner" style="display: none; align-items: center; justify-content: space-between; gap: 1rem; background: rgb(248, 248, 248); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.875rem 1.25rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
   <div>
     <div style="font-size:13px;font-weight:500;color:#111">Gespeicherter Datensatz gefunden</div>
-    <div style="font-size:12px;color:var(--muted);margin-top:2px" id="restoreInfo">304 Heimlade-Sessions + 18 öffentl. Vorgänge · gespeichert gestern</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:2px" id="restoreInfo">305 Heimlade-Sessions + 18 öffentl. Vorgänge · gespeichert heute</div>
   </div>
   <div style="display:flex;gap:8px">
     <button onclick="restoreFromStorage()" style="background:#111;color:#fff;border:none;padding:7px 18px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer">Wiederherstellen</button>
@@ -264,7 +264,7 @@ tr.overview-row.active td{background:#f0f8f0;}
   </div>
 </div>
 
-<div id="progressArea" style="display: none;" class="progress">
+<div id="progressArea" style="display:none" class="progress">
   Dateien werden verarbeitet...
   <div class="progress-bar"><div class="progress-fill"></div></div>
 </div>
@@ -348,9 +348,9 @@ tr.overview-row.active td{background:#f0f8f0;}
       <div class="kachel-metric"><div class="lb">Effektivpreis gesamt</div>
         <div class="vl blue" style="display:flex;align-items:baseline;gap:4px">
           37.64<em>ct/kWh</em>
-          <span style="font-size:16px;color:var(--green);margin-left:2px" title="-0.13 ct günstiger">↘</span>
+          <span style="font-size:16px;color:var(--muted);margin-left:2px" title="Stabil">→</span>
         </div>
-        <div class="sb">-0.13 ct günstiger</div>
+        <div class="sb">Ø aller Ladevorgänge</div>
       </div>
       <div class="kachel-metric"><div class="lb">Gesamtkosten</div><div class="vl neg">915,99 €</div><div class="sb">Netz Wallbox + öffentl.</div></div>
     </div>
@@ -361,8 +361,8 @@ tr.overview-row.active td{background:#f0f8f0;}
 
   <!-- TABS -->
   <div class="tabs" id="mainTabs">
-    <button class="tab" onclick="showTab('overview',this,'dark')">Übersicht</button>
-    <button class="tab active-green" onclick="showTab('home',this,'green')">Wallbox</button>
+    <button class="tab active-dark" onclick="showTab('overview',this,'dark')">Übersicht</button>
+    <button class="tab" onclick="showTab('home',this,'green')">Wallbox</button>
     <button class="tab" onclick="showTab('public',this,'blue')">Öffentlich</button>
     <button class="tab" onclick="showTab('amort',this,'dark')">Amortisation</button>
     <button class="tab" onclick="showTab('trip',this,'green')">⚡ Trip-Planer</button>
@@ -370,7 +370,7 @@ tr.overview-row.active td{background:#f0f8f0;}
   </div>
 
   <!-- TAB CONTENTS -->
-  <div id="tOverview" style="display: none;">
+  <div id="tOverview">
     <p class="section-title">Monatsübersicht kombiniert</p>
     <div class="tbl-wrap"><table><thead><tr>
       <th>Monat</th>
@@ -521,7 +521,7 @@ tr.overview-row.active td{background:#f0f8f0;}
          </span><span style="display:inline-flex;align-items:center;gap:4px">
            <span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>Ø 243.37 kWh
          </span></div>
-      <div style="position:relative;width:100%;height:396px"><canvas id="overviewChart" width="852" height="396" style="display: block; box-sizing: border-box; height: 396px; width: 852px;"></canvas></div>
+      <div style="position:relative;width:100%;height:396px"><canvas id="overviewChart" height="396" style="display: block; box-sizing: border-box; height: 396px; width: 852px;" width="852"></canvas></div>
     </div>
 
     <div style="margin-top:2rem">
@@ -541,7 +541,7 @@ tr.overview-row.active td{background:#f0f8f0;}
       </div>
       <div style="position:relative;width:100%;height:220px"><canvas id="ec" width="852" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 852px;"></canvas></div>
     </div></div>
-  <div id="tHome" style="display: block;">
+  <div id="tHome" style="display:none">
     <p class="section-title">Alle Wallbox-Sessions <span style="font-size:11px;font-weight:400;color:var(--muted)">(▶ Monate → Tage aufklappen)</span></p>
     <div class="tbl-wrap"><table><thead><tr>
       <th style="cursor:pointer;user-select:none" onclick="sortHomeTab('date')">Monat / Tag ↓</th>
@@ -3801,7 +3801,7 @@ tr.overview-row.active td{background:#f0f8f0;}
         </div>
       </div>
       <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:.75rem" id="hChartLegend"><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #1D9E75"></span>PV-Überschuss</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,0.06);border:1.5px solid #8BD5B8"></span>Netzbezug</span><span style="display:inline-flex;align-items:center;gap:4px"><span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>Ø 169.29 kWh</span></div>
-      <div style="position:relative;width:100%;height:220px"><canvas id="hTabCanvas" role="img" aria-label="Wallbox Monatsvergleich" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 852px;" width="852"></canvas></div>
+      <div style="position:relative;width:100%;height:220px"><canvas id="hTabCanvas" role="img" aria-label="Wallbox Monatsvergleich" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas></div>
     </div></div>
   <div id="tPublic" style="display:none">
     <!-- EINGABEMASKE (klappbar) -->
