@@ -308,7 +308,7 @@ tr.overview-row.active td{background:#f0f8f0;}
       </div>
       <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
         <button onclick="saveGhSettings()" style="background:#111;color:#fff;border:none;padding:6px 16px;border-radius:var(--radius);font-size:12px;font-weight:600;cursor:pointer">Einstellungen speichern</button>
-        <span id="ghStatus" style="font-size:12px;color:var(--muted)">⏳ Wird hochgeladen...</span>
+        <span id="ghStatus" style="font-size: 12px; color: var(--muted);">⏳ Wird hochgeladen...</span>
       </div>
       <p style="font-size:11px;color:#bbb;margin-top:.5rem;margin-bottom:0">Token wird nur lokal gespeichert · URL: <span id="ghUrl"><a href="https://l10john.github.io/lademonitor" target="_blank" style="color:var(--blue)">https://l10john.github.io/lademonitor</a></span></p>
     </div>
@@ -361,8 +361,8 @@ tr.overview-row.active td{background:#f0f8f0;}
 
   <!-- TABS -->
   <div class="tabs" id="mainTabs">
-    <button class="tab" onclick="showTab('overview',this,'dark')">Übersicht</button>
-    <button class="tab active-green" onclick="showTab('home',this,'green')">Wallbox</button>
+    <button class="tab active-dark" onclick="showTab('overview',this,'dark')">Übersicht</button>
+    <button class="tab" onclick="showTab('home',this,'green')">Wallbox</button>
     <button class="tab" onclick="showTab('public',this,'blue')">Öffentlich</button>
     <button class="tab" onclick="showTab('amort',this,'dark')">Amortisation</button>
     <button class="tab" onclick="showTab('trip',this,'green')">⚡ Trip-Planer</button>
@@ -370,7 +370,7 @@ tr.overview-row.active td{background:#f0f8f0;}
   </div>
 
   <!-- TAB CONTENTS -->
-  <div id="tOverview" style="display: none;">
+  <div id="tOverview" style="display: block;">
     <p class="section-title">Monatsübersicht kombiniert</p>
     <div class="tbl-wrap"><table><thead><tr>
       <th>Monat</th>
@@ -521,7 +521,7 @@ tr.overview-row.active td{background:#f0f8f0;}
          </span><span style="display:inline-flex;align-items:center;gap:4px">
            <span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>Ø 263.51 kWh
          </span></div>
-      <div style="position:relative;width:100%;height:396px"><canvas id="overviewChart" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas></div>
+      <div style="position:relative;width:100%;height:396px"><canvas id="overviewChart" height="396" style="display: block; box-sizing: border-box; height: 396px; width: 852px;" width="852"></canvas></div>
     </div>
 
     <div style="margin-top:2rem">
@@ -539,9 +539,9 @@ tr.overview-row.active td{background:#f0f8f0;}
         <span style="display:inline-flex;align-items:center;gap:4px"><span style="display:inline-block;width:18px;height:2px;background:repeating-linear-gradient(90deg,#999 0,#999 4px,transparent 4px,transparent 8px);vertical-align:middle"></span>Vergleichstarif</span>
         <span id="effSavingLabel" style="margin-left: 4px; font-weight: 600; color: var(--green);">▼ Ø 23.11 ct/kWh günstiger als Vergleichstarif</span>
       </div>
-      <div style="position:relative;width:100%;height:220px"><canvas id="ec" height="0" style="display: block; box-sizing: border-box; height: 0px; width: 0px;" width="0"></canvas></div>
+      <div style="position:relative;width:100%;height:220px"><canvas id="ec" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 852px;" width="852"></canvas></div>
     </div></div>
-  <div id="tHome" style="display: block;">
+  <div id="tHome" style="display: none;">
     <p class="section-title">Alle Wallbox-Sessions <span style="font-size:11px;font-weight:400;color:var(--muted)">(▶ Monate → Tage aufklappen)</span></p>
     <div class="tbl-wrap"><table><thead><tr>
       <th style="cursor:pointer;user-select:none" onclick="sortHomeTab('date')">Monat / Tag ↓</th>
@@ -4731,8 +4731,193 @@ tr.overview-row.active td{background:#f0f8f0;}
     <div id="amortNote" style="font-size:11px;color:var(--muted);margin-top:.75rem;line-height:1.6"><strong>Amortisationspunkt:</strong> ca. <strong>August 2029</strong> (≈ 47 Monate ab Kauf Sep 2025).
      Echte Daten bis Juni 2026, danach Prognose.</div>
   </div></div>
-  <div id="tTrip" style="display:none"></div>
-  <div id="tAnalyse" style="display:none"></div>
+  <div id="tTrip" style="display: none;">
+  <p class="section-title">⚡ Trip-Planer – Ladebedarfsrechner</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem">
+
+    <!-- EINGABEN -->
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem">
+      <p class="section-title" style="margin-bottom:.875rem">Fahrzeug &amp; Strecke</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
+
+        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Akkukapazität</label>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input type="number" id="tBattCap" value="73" step="0.1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
+            <span style="font-size:11px;color:var(--muted);white-space:nowrap">kWh</span>
+          </div>
+        </div>
+
+        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Aktuelle Ladung</label>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input type="number" id="tSoC" value="45" min="0" max="100" step="1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
+            <span style="font-size:11px;color:var(--muted)">%</span>
+          </div>
+        </div>
+
+        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Strecke (hin + zurück)</label>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input type="number" id="tKm" value="76" step="1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
+            <span style="font-size:11px;color:var(--muted)">km</span>
+          </div>
+        </div>
+
+        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">
+          Verbrauch
+          
+        </label>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input type="number" id="tConsumption" value="19" step="0.1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
+            <span style="font-size:11px;color:var(--muted);white-space:nowrap">kWh/100km</span>
+          </div>
+        </div>
+
+        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Ziel-Ladestand nach Trip</label>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input type="number" id="tTargetSoC" value="10" min="0" max="100" step="1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
+            <span style="font-size:11px;color:var(--muted)">%</span>
+          </div>
+        </div>
+
+        <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Max. Ladestand (Batterieschonung)</label>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input type="number" id="tMaxSoC" value="80" min="50" max="100" step="1" style="width:100%;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
+            <span style="font-size:11px;color:var(--muted)">%</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:.875rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:6px">
+          <label style="font-size:11px;color:var(--muted)">Wallbox-Leistung</label>
+          <input type="number" id="tWallboxKw" value="11" step="0.1" style="width:60px;padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
+          <span style="font-size:11px;color:var(--muted)">kW</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <label style="font-size:11px;color:var(--muted)">Ladestart</label>
+          <input type="time" id="tStartTime" value="16:00" style="padding:5px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px" oninput="calcTrip()">
+        </div>
+      </div>
+    </div>
+
+    <!-- ERGEBNIS -->
+    <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem">
+      <p class="section-title" style="margin-bottom:.875rem">Ergebnis</p>
+      <div id="tripResult" style="font-size:13px;color:var(--muted)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:.75rem">
+        <span style="font-size:22px">✅</span>
+        <div>
+          <div style="font-size:15px;font-weight:600;color:#111">Kein Laden nötig!</div>
+          <div style="font-size:12px;color:var(--muted)">Aktuelle Ladung reicht für den Trip inkl. Reserve</div>
+        </div>
+      </div>
+      <div style="display:grid;gap:.5rem;margin-top:.5rem">
+        <div style="display:flex;justify-content:space-between;padding:.5rem .75rem;background:#f8f8f8;border-radius:6px">
+          <span style="font-size:12px;color:var(--muted)">Jetzt</span>
+          <span style="font-size:13px;font-weight:700;color:#111">45% · 32.9 kWh</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:.5rem .75rem;background:#f8f8f8;border-radius:6px">
+          <span style="font-size:12px;color:var(--muted)">Nach dem Trip</span>
+          <span style="font-size:13px;font-weight:700;color:var(--green)">25% · 18.4 kWh</span>
+        </div>
+        <div style="font-size:11px;color:#bbb;margin-top:2px">Benötigt: 14.4 kWh · Verfügbar: 32.9 kWh</div>
+      </div></div>
+    </div>
+
+  </div>
+
+  <!-- AKKU-VISUALISIERUNG -->
+  <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem">
+    <p class="section-title" style="margin-bottom:.75rem">Akkustand-Visualisierung</p>
+    <div id="tripBattViz" style="font-size:12px;color:var(--muted)">
+    
+    <div style="margin-bottom:.5rem">
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px">
+        <span>Jetzt</span><span></span>
+      </div>
+      <div style="height:22px;background:#f0f0f0;border-radius:4px;overflow:hidden;position:relative">
+        <div style="height:100%;width:45%;background:#8BD5B8;border-radius:4px;transition:width .4s"></div>
+        <div style="position:absolute;top:0;bottom:0;left:10%;width:1.5px;background:rgba(0,0,0,0.2)" title="Ziel-Reserve 10%"></div>
+        <div style="position:absolute;top:0;bottom:0;left:80%;width:1.5px;background:rgba(0,0,0,0.35)" title="Max 80%"></div>
+      </div>
+    </div>
+    
+    <div style="margin-bottom:.5rem">
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px">
+        <span>Nach dem Laden</span><span></span>
+      </div>
+      <div style="height:22px;background:#f0f0f0;border-radius:4px;overflow:hidden;position:relative">
+        <div style="height:100%;width:45%;background:#1D9E75;border-radius:4px;transition:width .4s"></div>
+        <div style="position:absolute;top:0;bottom:0;left:10%;width:1.5px;background:rgba(0,0,0,0.2)" title="Ziel-Reserve 10%"></div>
+        <div style="position:absolute;top:0;bottom:0;left:80%;width:1.5px;background:rgba(0,0,0,0.35)" title="Max 80%"></div>
+      </div>
+    </div>
+    
+    <div style="margin-bottom:.5rem">
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px">
+        <span>Nach dem Trip</span><span></span>
+      </div>
+      <div style="height:22px;background:#f0f0f0;border-radius:4px;overflow:hidden;position:relative">
+        <div style="height:100%;width:25.219178082191785%;background:#378ADD;border-radius:4px;transition:width .4s"></div>
+        <div style="position:absolute;top:0;bottom:0;left:10%;width:1.5px;background:rgba(0,0,0,0.2)" title="Ziel-Reserve 10%"></div>
+        <div style="position:absolute;top:0;bottom:0;left:80%;width:1.5px;background:rgba(0,0,0,0.35)" title="Max 80%"></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:1.5rem;margin-top:.5rem;font-size:11px;color:#bbb">
+      <span>│ = Ziel-Reserve (10%)</span>
+      <span>│ = Max. Ladestand (80%)</span>
+    </div></div>
+  </div></div>
+  <div id="tAnalyse" style="display: none;">
+
+  <p class="section-title">Kosten-Übersicht</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:.75rem;margin-bottom:1.25rem">
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Ø Gesamtkosten / Monat</div><div style="font-size:22px;font-weight:700;color:#111">103,95 €<span style="font-size:14px;color:var(--green);margin-left:4px"> ↘</span></div><div style="font-size:11px;color:#bbb">Wallbox + öffentlich</div></div>
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Ø Wallbox / Monat</div><div style="font-size:22px;font-weight:700;color:var(--green)">60,52 €</div><div style="font-size:11px;color:#bbb">inkl. PV-Vorteil</div></div>
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Ø Öffentlich / Monat</div><div style="font-size:22px;font-weight:700;color:var(--blue)">43,43 €</div><div style="font-size:11px;color:#bbb">inkl. Grundgebühr</div></div>
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Jahreshochrechnung</div><div style="font-size:22px;font-weight:700;color:#111">1.247,36 €</div><div style="font-size:11px;color:#bbb">Ø Monat × 12</div></div>
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Kosten / 100 km</div><div style="font-size:22px;font-weight:700;color:#111">7,49 €</div><div style="font-size:11px;color:#bbb">bei 19 kWh/100km</div></div>
+  </div>
+
+  <div style="background:linear-gradient(135deg,rgba(29,158,117,0.04),rgba(55,138,221,0.04));border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1.25rem">
+    <p class="section-title" style="margin-bottom:.5rem">📈 Kostenprognose Juli 2026</p>
+    <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px">
+      <span style="font-size:24px;font-weight:700;color:#111">ca. 32,55 €</span>
+      <span style="font-size:12px;color:var(--muted)">erwartete Gesamtkosten</span>
+    </div>
+    <div style="font-size:11px;color:#bbb">Basiert auf Ø der letzten 3 Monate</div>
+    <p style="font-size:11px;color:#bbb;margin:4px 0 0">Basiert auf 3 Monaten – wird mit mehr Daten präziser</p>
+  </div>
+
+  <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem;margin-bottom:1.5rem">
+    <p class="section-title" style="margin-bottom:.75rem">Monatliche Gesamtkosten im Verlauf</p>
+    <div style="position:relative;height:200px"><canvas id="anChart1" width="818" height="200" style="display: block; box-sizing: border-box; height: 200px; width: 818px;"></canvas></div>
+    <p style="font-size:11px;color:#bbb;margin:4px 0 0">Basiert auf 10 Monaten – wird mit mehr Daten präziser</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.75rem;margin-bottom:1.25rem">
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem"><div style="font-size:11px;color:var(--muted);margin-bottom:6px">🏆 Günstigster Monat</div><div style="font-size:15px;font-weight:700;color:var(--green)">Juni 2026</div><div style="font-size:13px;color:#555">0,00 €</div></div>
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem"><div style="font-size:11px;color:var(--muted);margin-bottom:6px">💸 Teuerster Monat</div><div style="font-size:15px;font-weight:700;color:#e53935">Nov. 2025</div><div style="font-size:13px;color:#555">174,07 €</div></div>
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem"><div style="font-size:11px;color:var(--muted);margin-bottom:6px">☀️ Meister PV-Anteil</div><div style="font-size:15px;font-weight:700;color:var(--green)">Juni 2026</div><div style="font-size:13px;color:#555">100% PV-Anteil</div></div>
+  </div>
+  <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem;margin-bottom:1.5rem">
+    <p class="section-title" style="margin-bottom:.75rem">Kostenvergleich alle Monate</p>
+    <div style="position:relative;height:360px"><canvas id="anChart2" width="818" height="360" style="display: block; box-sizing: border-box; height: 360px; width: 818px;"></canvas></div>
+  </div>
+
+  <p class="section-title">Ladeverhalten</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem">
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem">
+      <p class="section-title" style="margin-bottom:4px">Wochentag-Verteilung</p>
+      <div style="font-size:11px;color:#bbb;margin-bottom:.5rem">Ø 7.7 Sessions / Woche</div>
+      <div style="position:relative;height:160px"><canvas id="anChart3" width="384" height="160" style="display: block; box-sizing: border-box; height: 160px; width: 384px;"></canvas></div>
+    </div>
+    <div style="background:#fafafa;border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem">
+      <p class="section-title" style="margin-bottom:4px">Tageszeit-Verteilung</p>
+      <div style="font-size:11px;color:#bbb;margin-bottom:.5rem">332 Wallbox-Sessions gesamt</div>
+      <div style="position:relative;height:160px"><canvas id="anChart4" width="384" height="160" style="display: block; box-sizing: border-box; height: 160px; width: 384px;"></canvas></div>
+    </div>
+  </div></div>
 </div>
 
 <div class="footer">Die Verarbeitung läuft vollständig in deinem Browser · Keine Daten werden übertragen</div>
